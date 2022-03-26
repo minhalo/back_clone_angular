@@ -1,0 +1,536 @@
+
+import userService from "../services/userService"
+const EmailValidator = require('email-deep-validator');
+const multer = require('multer')
+
+
+
+
+let handleLogin = async (req,res) =>
+{
+    let email = req.body.email;
+    let password = req.body.password;
+   
+    
+
+    if(!email && !password)
+    {
+        return res.status(500).json({
+            errCode:1,
+            message: "Please enter your username",
+            messages: "Please enter your password"
+        })
+    }
+    else if(!email){
+        return res.status(500).json({
+            errCode:1,
+            message: "Please enter your username",
+            messages: null
+        })
+    }
+    else if( !password)
+    {
+        return res.status(500).json({
+            errCode:1,
+            message: null,
+            messages: "Please enter your password"
+        })
+    }
+    else
+    {
+    let userData = await userService.handleUserLogin(email,password)
+    return res.status(200).json({
+        errCode: userData.errCode,
+        message: userData.errMessage,
+        messages: userData.errMessages,
+        user: userData.user ? userData.user : {}
+    })
+}
+}
+
+let handleRegister = async (req,res) => {
+    let email = req.body.email;
+    let password = req.body.password;
+    let cpassword = req.body.cpassword;
+    const emailValidator = new EmailValidator();
+    const { wellFormed, validDomain, validMailbox } = await emailValidator.verify(email);
+    if (!email)
+    {
+        return res.status(500).json({
+            errCode: 1,
+            messages: null,
+            messagesx: null,
+            message: "Please enter email",
+            messagesxt: null
+        })
+    }
+    else if(validMailbox === false)
+    {
+        return res.status(500).json({
+            errCode: 1,
+            messages: null,
+            messagesx: null,
+            message: "Your mail does not exist",
+            messagesxt: null
+        })
+    }
+    else if(password.length < 8){
+        return res.status(500).json({
+            errCode: 1,
+            message: null,
+            messages: "Password must have more than 8 characters",
+            messagesx: null,
+            messagesxt: null
+        })
+    }
+    else if(!cpassword)
+    {
+        return res.status(500).json({
+            errCode: 1,
+            message: null,
+            messages: null,
+            messagesx: "Please enter confirm password",
+            messagesxt: null
+        })
+    }
+    else{
+        let userData = await userService.handleUserReg(email, password,cpassword)
+        return res.status(200).json({
+            errCode: userData.errCode,
+            message: userData.errMessage,
+            //email
+            messages: userData.errMessages,
+            //password
+            messagesx: userData.errMessagesx,
+            //cpassword
+            messagesxt: userData.errMessagesxt
+        })
+    }
+}
+
+let handleGetusers = async (req,res) =>
+{
+    let id = req.query.id;
+    console.log(id)
+    if(!id){
+        return res.status(200).json({
+            errCode: 1,
+            message: 'Missing parameter',
+            users: []
+        })
+    }
+
+    let userData = await userService.getUsers(id)
+    return res.status(200).json({
+        errCode: 0,
+        message: 'ok',
+        data: userData
+    })
+}
+
+
+
+let handlePut = async (req,res) =>
+{
+    let id = req.body.id;
+    let firstName = req.body.firstName
+    let lastName = req.body.lastName
+    let address = req.body.address
+    let phonenumber = req.body.phonenumber
+    let name = req.body.name
+    let textt = req.body.textt
+    let profileImg = req.body.profileImg
+    let age = req.body.age
+    let password = req.body.password
+    
+    if (!firstName)
+    {
+        return res.status(500).json({
+            errCode:2,
+            message: "Please enter your First Name",
+            messages: null,
+            messagesx: null,
+            messagesxz: null,
+            messagesxzt: null,
+            messagesxztu: null,
+            messagesxztuk: null,
+            messagesxztuko: null,
+            messagesxztukoi: null,
+            messagesxztukop: null
+        })
+    }
+    else if (!lastName) {
+        return res.status(500).json({
+            errCode:3,
+            message: null,
+            messages: "Please enter your Last Name",
+            messagesx: null,
+            messagesxz: null,
+            messagesxzt: null,
+            messagesxztu: null,
+            messagesxztuk: null,
+            messagesxztuko: null,
+            messagesxztukoi: null,
+            messagesxztukop:null
+        })
+    }
+    else if (!address) {
+        return res.status(500).json({
+            errCode:4,
+            message: null,
+            messages: null,
+            messagesx: "Please enter your Address",
+            messagesxz: null,
+            messagesxzt: null,
+            messagesxztu: null,
+            messagesxztuk: null,
+            messagesxztuko: null,
+            messagesxztukoi: null,
+            messagesxztukop:null
+
+        })
+    }
+    else if (!phonenumber) {
+        return res.status(500).json({
+            errCode:5,
+            message: null,
+            messages: null,
+            messagesx: null,
+            messagesxz: "Please enter your phonenumber",
+            messagesxzt: null,
+            messagesxztu: null,
+            messagesxztuk: null,
+            messagesxztuko: null,
+            messagesxztukoi: null,
+            messagesxztukop:null
+
+        })
+    }
+    else if (!name){
+        return res.status(500).json({
+            errCode:5,
+            message: null,
+            messages: null,
+            messagesx: null,
+            messagesxz: null,
+            messagesxzt: "Missing gender",
+            messagesxztu: null,
+            messagesxztuk: null,
+            messagesxztuko: null,
+            messagesxztukoi: null,
+            messagesxztukop:null
+
+        })
+    }
+    else if (!textt){
+        return res.status(500).json({
+            errCode:5,
+            message: null,
+            messages: null,
+            messagesx: null,
+            messagesxz: null,
+            messagesxzt: null,
+            messagesxztu: "Please enter your description",
+            messagesxztuk: null,
+            messagesxztuko: null,
+            messagesxztukoi: null,
+            messagesxztukop:null
+
+        })
+    }
+    // "https://banner2.cleanpng.com/20180623/iqh/kisspng-computer-icons-avatar-social-media-blog-font-aweso-avatar-icon-5b2e99c40ce333.6524068515297806760528.jpg"
+    else if (profileImg === null){
+        return res.status(500).json({
+            errCode:5,
+            message: null,
+            messages: null,
+            messagesx: null,
+            messagesxz: null,
+            messagesxzt: null,
+            messagesxztu: null,
+            messagesxztuk: "Please choose your profile",
+            messagesxztuko: null,
+            messagesxztukoi: null,
+            messagesxztukop:null
+
+        })
+    }
+    else if (!age){
+        return res.status(500).json({
+            errCode:5,
+            message: null,
+            messages: null,
+            messagesx: null,
+            messagesxz: null,
+            messagesxzt: null,
+            messagesxztu: null,
+            messagesxztuk: null,
+            messagesxztuko: "Please enter your age",
+            messagesxztukoi: null,
+            messagesxztukop:null
+
+        })
+    }
+    else if (!password){
+        return res.status(500).json({
+            errCode:5,
+            message: null,
+            messages: null,
+            messagesx: null,
+            messagesxz: null,
+            messagesxzt: null,
+            messagesxztu: null,
+            messagesxztuk: null,
+            messagesxztuko: null,
+            messagesxztukoi: "Please enter your current password",
+            messagesxztukop:null
+        })
+    }
+    else{
+        let userData = await userService.handleEdit(id,firstName,lastName,address,phonenumber,name,textt,profileImg,age,password)
+        return res.status(200).json({
+            errCode: userData.errCode,
+            message: userData.errMessage,
+            messages: userData.errMessages,
+            messagesx: userData.errMessagesx,
+            messagesxz: userData.errMessagesxz,
+            messagesxzt: userData.errMessagesxzt,
+            messagesxztu: userData.errMessagesxztu,
+            messagesxztuk: userData.errMessagesxztuk,
+            messagesxztuko: userData.errMessagesxztuko,
+            messagesxztukoi:userData.errMessagesxztukoi,
+            messagesxztukop: userData.errMessagesxztukop
+        })
+    }
+}
+
+let handleDelete = async (req,res) => {
+    let id = req.query.id
+    let pass = req.query.password
+    if( !pass)
+    {
+        return res.status(500).json({
+            errCode:2,
+            message: "Please enter your password",
+        })
+        
+    }
+    if (id)
+    {
+        let userData = await userService.handleDele(id,pass)
+        return res.status(200).json({
+            errCode:userData.errCode,
+            message: userData.errMessage
+        })
+    }
+}
+
+let handlePassword = async (req,res) => {
+    let id = req.body.id
+    let curpass = req.body.curpass
+    let password = req.body.password
+    let cpassword = req.body.cpassword
+    console.log(id)
+    console.log(curpass)
+    if(!curpass)
+    {
+        return res.status(500).json({
+            errCode:1,
+            message: null,
+            messages: null,
+            messagesx: "Please enter your current password"
+        })
+    }
+    else if(!password)
+    {
+        return res.status(500).json({
+            errCode:1,
+            message: "Please enter your new password",
+            messages: null,
+            messagesx: null
+        })
+    }
+    else if(!cpassword)
+    {
+        return res.status(500).json({
+            errCode:1,
+            message: null,
+            messages: "Please enter your confirm password",
+            messagesx: null
+        })
+    }
+    else
+    {
+        let userData = await userService.handlePass(id,curpass,password,cpassword)
+        return res.status(200).json({
+            errCode:userData.errCode,
+            message: userData.errMessage,
+            messages: userData.errMessages,
+            messagesx:userData.errMessagesx
+            // messagesx:userData.errMessagesx
+            // userData
+        })
+    }
+}
+
+let handleForgot = async (req,res) => {
+    let email = req.body.email
+    
+    if (email)
+    {
+        let userData = await userService.handleForgot(email)
+        return res.status(200).json({
+            errCode:userData.errCode,
+            message: userData.errMessage,
+            id: userData.errId
+        })
+    }
+    else{
+        return res.status(200).json({
+            errCode: 1,
+            message: "Please enter your email",
+            errId: null
+        })
+    }
+}
+
+let handleChange = async (req, res) =>
+{
+    let id = req.query.id
+    let password = req.body.password
+    let cpassword = req.body.cpassword
+    console.log(id)
+    if (password.length < 8)
+    {
+        return res.status(500).json({
+            errCode:2,
+            message: null,
+            messages: "Password length must have more than 8 character",
+            messagesx: null
+        })
+    }
+    else if (!id)
+    {
+        return res.status(500).json({
+            errCode:2,
+            message: "You can't update password, please try again",
+            messages: null,
+            messagesx: null
+        })
+    }
+    else if (!cpassword) {
+        return res.status(500).json({
+            errCode:3,
+            message: null,
+            messages: null,
+            messagesx: "Missing confirm password"
+        })
+    }
+    else{
+        let userData = await userService.handleChange(id, password,cpassword)
+        return res.status(200).json({
+            errCode: userData.errCode,
+            message: userData.errMessage,
+            messages: userData.errMessages,
+            messagesx: userData.errMessagesx
+        })
+    }
+}
+
+let handleGetbox = async (req,res) => {
+    let users = await userService.getAllUsers();
+    return res.status(200).json({
+        users
+    })
+}
+
+
+let handlePost =  async (req,res) => {
+    let id = req.query.id
+    let users = await userService.getRefresh(id)
+    return res.status(200).json({
+        users
+    })
+}
+
+let getHeader = async (req,res) => {
+    let id = req.query.id
+    let userData = await userService.header(id)
+    return res.status(200).json({
+        userData
+    })
+
+}
+
+let allusers = async (req,res) => {
+    let id = req.query.id
+    let userData = await userService.allaccount(id)
+    return res.status(200).json({
+       userData
+    })
+}
+
+let allFriend = async (req,res) => {
+    let id = req.query.id
+    let ids = req.query.ids
+    let users = await userService.getFriends(id,ids);
+    return res.status(200).json({
+        users
+    })
+}
+
+let fusers = async (req,res) => {
+    let id = req.query.id
+    console.log(id)
+    let users = await userService.ffriednd(id)
+    return res.status(200).json({
+        users
+    })
+}
+
+let delfusers = async (req,res) => {
+    let id = req.query.id
+    let ids = req.query.ids
+    let users = await userService.delffriednd(id,ids)
+    return res.status(200).json({
+        users
+    })
+}
+
+let search = async (req,res) => {
+    let name = req.query.firstName
+    let id = req.query.id
+    let userData = await userService.fsearch(name,id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let fri = async (req,res) => {
+    let id = req.query.id
+    let userData = await userService.ffri(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+module.exports = {
+    search:search,
+    handleLogin:handleLogin,
+    delfusers:delfusers,
+    // handleGetAllUsers:handleGetAllUsers,
+    handleRegister:handleRegister,
+    handleGetusers:handleGetusers,
+    handlePut:handlePut,
+    handleDelete:handleDelete,
+    handlePassword:handlePassword,
+    handleForgot:handleForgot,
+    handleChange:handleChange,
+    handleGetbox:handleGetbox,
+    handlePost:handlePost,
+    getHeader:getHeader,
+    allusers:allusers,
+    allFriend:allFriend,
+    fusers:fusers,
+    fri:fri
+}
