@@ -35,6 +35,9 @@ module.exports = {
       image: {
         type: Sequelize.TEXT('long')
       },
+      status: {
+        type: Sequelize.INTEGER
+      },
       age: {
         type:Sequelize.INTEGER
       },

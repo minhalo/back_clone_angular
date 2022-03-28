@@ -7,6 +7,7 @@ import userController from "../controllers/userController";
 let router = express.Router();
 
 let initWebRoutes = (app) => {
+    router.post('/api/logout', userController.logout);
     router.get("/", homecontroller.getHomepage);
     router.post('/api/login', userController.handleLogin);
     router.post('/api/register', userController.handleRegister);
@@ -25,6 +26,15 @@ let initWebRoutes = (app) => {
     router.delete('/api/getdelFusers', userController.delfusers)
     router.get('/api/getSearch', userController.search)
     router.get('/api/getfri', userController.fri)
+    router.get('/api/getser', userController.ser)
+    router.get('/api/bre', userController.bre)
+    router.get('/api/getReqFr', userController.getReqFt)
+    router.get('/api/rendom', userController.rendom)
+    router.get('/api/count', userController.count)
+    router.get('/api/kdp', userController.kdp)
+    router.post('/api/accept', userController.accept)
+    router.get('/get/profile', userController.prof)
+
     return app.use("/", router)
 }
 

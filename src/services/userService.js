@@ -70,7 +70,8 @@ let handleUserReg = (email, password, cpassword) => {
                                 ids: idstx,
                                 image: "https://banner2.cleanpng.com/20180623/iqh/kisspng-computer-icons-avatar-social-media-blog-font-aweso-avatar-icon-5b2e99c40ce333.6524068515297806760528.jpg",
                                 gender: null,
-                                age: null
+                                age: null,
+                                status: 0
                             })
 
                             userData.errCode = 0;
@@ -117,7 +118,7 @@ let handleUserLogin = (email, password) => {
             if (isExist) {
                 let user = await db.User.findOne({
                     where: { email: email },
-                    attributes: ['id', 'email', 'password', 'firstName', 'address', 'lastName', 'phonenumber'],
+                    attributes: ['id', 'email', 'password', 'firstName', 'address', 'lastName', 'status', 'phonenumber'],
                     raw: true
                 })
                 if (user) {
@@ -128,6 +129,11 @@ let handleUserLogin = (email, password) => {
                         userData.errMessages = "Right password"
                         delete user.password;
                         userData.user = user;
+                        await sequelize.query(`
+                        UPDATE users
+                        SET status = 1
+                        WHERE email = '${email}';
+                        `);
                     }
                     else {
                         userData.errCode = 3;
@@ -196,7 +202,6 @@ let getUsers = (userId) => {
 let handleEdit = (id, firstName, lastName, address, phonenumber, name, textt, profileImg, age, password) => {
     return new Promise(async (resolve, reject) => {
         try {
-            // console.log(profileImg)
             let userData = {}
             let user = await db.User.findOne({
                 where: { id: id },
@@ -260,6 +265,31 @@ let handleEdit = (id, firstName, lastName, address, phonenumber, name, textt, pr
     })
 }
 
+let logou = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            let userData = {}
+            let user = await db.User.findOne({
+                where: { id: id },
+                raw: false,
+            })
+            if (user) {
+                await sequelize.query(`
+                UPDATE users
+                SET status = 0
+                WHERE id = '${id}';
+                `);
+                userData.mes = "change successfully"
+            }
+            resolve(userData)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
 let handlePass = (id, curpass, password, cpassword) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -294,7 +324,7 @@ let handlePass = (id, curpass, password, cpassword) => {
                 if (cpassword === password) {
                     if (user) {
                         let bro = bcrypt.compareSync(curpass, user.password);
-                        console.log(bro)
+
                         if (bro === true) {
                             const hash = bcrypt.hashSync(password, 12);
                             user.password = hash
@@ -346,7 +376,7 @@ let handleDele = (id, pass) => {
             const row = await db.User.findOne({
                 where: { id: id },
             });
-            //   console.log(row)
+
             let hit = bcrypt.compareSync(pass, row.password)
             let userData = {}
             if (row) {
@@ -480,7 +510,7 @@ let handleChange = (id, password, cpassword) => {
 
 
             }
-            // console.log(id)
+
 
             if (cpassword !== password) {
                 userData.errCode = 2;
@@ -617,7 +647,7 @@ let getFriends = (id, ids) => {
     return new Promise(async (resolve, reject) => {
         try {
             let userData = true
-            let usercheck = await db.Add.findOne({
+            let usercheck = await db.Addfr.findOne({
                 where: { idFriend: ids, idAccount: id },
                 raw: true
             })
@@ -640,11 +670,118 @@ let ffriednd = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
             let [test] = await sequelize.query(`
-            SELECT users.id, users.lastName, users.firstName, users.description, users.image
-            FROM users, adds
-            WHERE users.id = adds.idFriend and adds.idAccount = ${id};
+            SELECT users.id, users.status, users.lastName, users.firstName, users.description, users.image
+            FROM users, addfrs
+            WHERE users.id = addfrs.idFriend and addfrs.idAccount = ${id};
             `);
             resolve(test)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let countt = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let testl = await db.Add.count({
+                where: { idFriend: id },
+            });
+            resolve(testl)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let commit = (id, ids) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let testl = true
+            if (id && ids) {
+                let usercheck = await db.Addfr.findOne({
+                    where: { idFriend: ids, idAccount: id },
+                    raw: true
+                })
+                if (!usercheck) {
+                    let user = await db.Addfr.create({
+                        idAccount: id,
+                        idFriend: ids
+                    })
+                    await db.Add.destroy({
+                        where: {
+                            idAccount: ids,
+                            idFriend: id
+                        },
+                    });
+                }
+                let userchecks = await db.Addfr.findOne({
+                    where: { idFriend: id, idAccount: ids },
+                    raw: true
+                })
+                if (!userchecks) {
+                    let users = await db.Addfr.create({
+                        idAccount: ids,
+                        idFriend: id
+                    })
+                    await db.Add.destroy({
+                        where: {
+                            idAccount: id,
+                            idFriend: ids
+                        },
+                    });
+                }
+
+
+
+
+            }
+            resolve(testl)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let reqfr = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [test] = await sequelize.query(`
+            SELECT users.id, users.lastName, users.firstName, users.description, users.image FROM users, adds WHERE users.id = adds.idAccount and adds.idFriend = ${id}`);
+            resolve(test)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+let kdps = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [test] = await sequelize.query(`
+            SELECT users.id, users.lastName, users.firstName, users.description, users.image 
+            FROM users, addfrs
+            WHERE users.id = addfrs.idFriend and addfrs.idAccount = ${id}`);
+            resolve(test)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let brei = (id, ids) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let usercheck = await db.Add.findOne({
+                where: { idFriend: ids, idAccount: id },
+                raw: true
+            })
+
+            if (usercheck) {
+                resolve(true)
+            }
+            else {
+                resolve(false)
+            }
         } catch (error) {
             reject(error)
         }
@@ -654,15 +791,17 @@ let ffriednd = (id) => {
 let delffriednd = (id, ids) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let ok = true
-            const check = await db.Add.findOne({
+            let ok = false
+            const check = await db.Addfr.findOne({
                 where: { idAccount: id, idFriend: ids },
             });
             if (check) {
-                await db.Add.destroy({
+                await db.Addfr.destroy({
                     where: { idAccount: id, idFriend: ids },
                 });
-                ok = false
+                await db.Addfr.destroy({
+                    where: { idAccount: ids, idFriend: id },
+                });
             }
             resolve(ok)
         } catch (error) {
@@ -671,10 +810,10 @@ let delffriednd = (id, ids) => {
     })
 }
 
-let fsearch = (name,id) => {
+let fsearch = (name, id) => {
     return new Promise(async (resolve, reject) => {
         try {
-            // let userData = []
+            let userData = []
             if (name) {
                 let check = await db.User.findAll({
                     where: {
@@ -696,7 +835,7 @@ let fsearch = (name,id) => {
                         exclude: ['password', 'ids']
                     }
                 })
-                // userData.push(check)
+                userData.push(check)
                 resolve(check)
             }
             // resolve(userData)
@@ -706,9 +845,85 @@ let fsearch = (name,id) => {
     })
 }
 
+let fsearched = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // let userData = []
+            if (id) {
+                let check = await db.User.findAll({
+                    where: {
+                        id: { [Op.notIn]: [id] }
+                    },
+                    attributes: {
+                        exclude: ['password', 'ids']
+                    }
+                });
+                resolve(check)
+            }
+            else {
+                // let check = await db.User.findAll({
+                //     where: {
+                //         id: { [Op.notIn]: [id] }
+                //     },
+                //     attributes: {
+                //         exclude: ['password', 'ids']
+                //     }
+                // })
+                // userData.push(check)
+                // resolve(check)
+            }
+            // resolve(userData)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
+let random = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [test] = await sequelize.query(`
+            SELECT 
+            *
+            FROM users
+            ORDER BY RAND()
+            LIMIT 10;`);
+            resolve(test)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let profile = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = await db.User.findOne({
+                where: { id: id },
+                raw: false,
+                attributes: {
+                    exclude: ['password', 'id', 'email']
+                }
+            })
+            resolve(user)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 
 
 module.exports = {
+    profile:profile,
+    kdps:kdps,
+    commit: commit,
+    countt: countt,
+    random: random,
+    reqfr: reqfr,
+    fsearched: fsearched,
+    brei: brei,
     delffriednd: delffriednd,
     handleUserLogin: handleUserLogin,
     getUsers: getUsers,
@@ -725,5 +940,6 @@ module.exports = {
     allaccount: allaccount,
     getFriends: getFriends,
     ffriednd: ffriednd,
-    fsearch: fsearch
+    fsearch: fsearch,
+    logou: logou
 }

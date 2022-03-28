@@ -1,5 +1,17 @@
 'use strict';
 
+// email: DataTypes.STRING,
+//     password: DataTypes.STRING,
+//     firstName: DataTypes.STRING,
+//     lastName: DataTypes.STRING,
+//     address: DataTypes.STRING,
+//     phonenumber: DataTypes.INTEGER,
+//     description: DataTypes.TEXT,
+//     ids: DataTypes.STRING,
+//     image: DataTypes.TEXT('long'),
+//     age:DataTypes.INTEGER,
+//     gender:DataTypes.STRING,
+//     status: DataTypes.INTEGER
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Users', [{
@@ -8,9 +20,14 @@ module.exports = {
       firstName: 'minh',
       lastName: 'duong',
       address: 'hanoi',
-      gender: 1,
+      gender: 'female',
       typeRole: 'ROLE',
-      keyRole: 'R1',
+      phonenumber: 123,
+      image: 'R1',
+      description: 'ok',
+      ids: 'ok',
+      age: 1,
+      status: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     }]);

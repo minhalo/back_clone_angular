@@ -111,7 +111,6 @@ let handleRegister = async (req,res) => {
 let handleGetusers = async (req,res) =>
 {
     let id = req.query.id;
-    console.log(id)
     if(!id){
         return res.status(200).json({
             errCode: 1,
@@ -330,8 +329,7 @@ let handlePassword = async (req,res) => {
     let curpass = req.body.curpass
     let password = req.body.password
     let cpassword = req.body.cpassword
-    console.log(id)
-    console.log(curpass)
+   
     if(!curpass)
     {
         return res.status(500).json({
@@ -399,7 +397,7 @@ let handleChange = async (req, res) =>
     let id = req.query.id
     let password = req.body.password
     let cpassword = req.body.cpassword
-    console.log(id)
+   
     if (password.length < 8)
     {
         return res.status(500).json({
@@ -481,17 +479,58 @@ let allFriend = async (req,res) => {
 
 let fusers = async (req,res) => {
     let id = req.query.id
-    console.log(id)
+  
     let users = await userService.ffriednd(id)
     return res.status(200).json({
         users
     })
 }
 
+let bre = async (req,res) => {
+    let id = req.query.id
+    let ids = req.query.ids
+  
+    let users = await userService.brei(id,ids)
+    return res.status(200).json({
+        users
+    })
+}
 let delfusers = async (req,res) => {
     let id = req.query.id
     let ids = req.query.ids
     let users = await userService.delffriednd(id,ids)
+    return res.status(200).json({
+        users
+    })
+}
+
+let prof = async (req,res) => {
+    let id = req.query.id  
+    let users = await userService.profile(id)
+    return res.status(200).json({
+        users
+    })
+}
+
+let getReqFt =async(req,res) => {
+    let id = req.query.id
+  
+    let users = await userService.reqfr(id)
+    return res.status(200).json({
+        users
+    })
+}
+
+let kdp = async(req,res) => {
+    let id = req.query.id
+    let users = await userService.kdps(id)
+    return res.status(200).json({
+        users
+    })
+}
+
+let rendom = async(req,res) => {
+    let users = await userService.random()
     return res.status(200).json({
         users
     })
@@ -514,11 +553,52 @@ let fri = async (req,res) => {
     })
 }
 
+let logout = async (req,res) => {
+    let id = req.query.id
+    let userData = await userService.logou(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let ser =async (req,res) => {
+    let id = req.query.id
+    
+    let userData = await userService.fsearched(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let count = async (req, res) => {
+    let id = req.query.id
+    let userData = await userService.countt(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let accept = async (req,res) => {
+    let id = req.query.id
+    let ids = req.query.ids
+    
+    let userData = await userService.commit(id,ids)
+    return res.status(200).json({
+        userData
+    })
+}
+
 module.exports = {
+    prof:prof,
+    kdp:kdp,
+    accept:accept,
+    count:count,
+    rendom:rendom,
+    getReqFt:getReqFt,
     search:search,
     handleLogin:handleLogin,
     delfusers:delfusers,
-    // handleGetAllUsers:handleGetAllUsers,
+    ser:ser,
     handleRegister:handleRegister,
     handleGetusers:handleGetusers,
     handlePut:handlePut,
@@ -532,5 +612,7 @@ module.exports = {
     allusers:allusers,
     allFriend:allFriend,
     fusers:fusers,
-    fri:fri
+    fri:fri,
+    logout:logout,
+    bre:bre
 }
