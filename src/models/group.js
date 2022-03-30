@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   Group.init({
     groupname: DataTypes.STRING,
+    idaccount: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Group',

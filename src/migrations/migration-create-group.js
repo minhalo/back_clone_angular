@@ -11,6 +11,9 @@ module.exports = {
       groupname: {
         type:Sequelize.STRING
       },
+      idaccount:{
+        type:Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

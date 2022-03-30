@@ -21,6 +21,7 @@ let initWebRoutes = (app) => {
     router.post('/api/refresh', userController.handlePost)
     router.get('/api/header', userController.getHeader)
     router.get('/api/allusers', userController.allusers)
+
     router.post('/api/allFriend', userController.allFriend)
     router.get('/api/getFusers', userController.fusers)
     router.delete('/api/getdelFusers', userController.delfusers)
@@ -34,6 +35,17 @@ let initWebRoutes = (app) => {
     router.get('/api/kdp', userController.kdp)
     router.post('/api/accept', userController.accept)
     router.get('/get/profile', userController.prof)
+
+    router.get('/api/okgr', userController.okgr)
+    router.post('/api/group', userController.group)
+    router.post('/api/task', userController.take)
+    router.post('/api/activate', userController.activate)
+
+    router.get('/api/dmm', userController.dmm)
+
+
+    router.get('/api/messa', userController.messa)
+    router.get('/api/getnamegr', userController.getnamegr)
 
     return app.use("/", router)
 }

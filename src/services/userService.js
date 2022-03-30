@@ -5,6 +5,180 @@ const nodemailer = require("nodemailer");
 const { Sequelize, and } = require('sequelize');
 const Op = Sequelize.Op;
 
+import {Server, Socket} from 'socket.io'
+
+
+export const io = new Server(7000,{
+    cors: {
+        origin: 'http://localhost:3000',
+        methods: ["GET","POST"]
+    }
+    
+})
+
+io.on("connection", (socket) => {
+    // console.log(socket.id)
+    socket.on("disconnect", ()=> {
+        // console.log("User Disconected", socket.id)
+    })
+    socket.on("sen_message", (data) => {
+        // console.log(data)
+        let user = db.Group.create({
+           groupname: data.room
+        })
+        socket.to(data.idFriend).emit("recivedata", data)
+    })
+})
+
+
+let groups = (id,ids) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // let userData = {};
+
+            let usi = 1
+            let user = db.Group.create({
+                groupname: id ,
+                idaccount: ids
+             })
+            resolve(usi)
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
+
+
+let okkgr = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // let userData = {};
+
+            // let usi = 1
+            let [test] = await sequelize.query(`
+            SELECT groupId, groups.groupname, groups.id, accountId from groups, subgroups WHERE groupId = groups.id and accountId = ${id}
+            `);
+            resolve(test)
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+let nameger = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let users = await db.Group.findOne({
+                where: {
+                    id: id,
+                    },
+                raw: true
+            })
+            resolve(users)
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
+let mop = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // let userData = {};
+
+            // let usi = 1
+            let [test] = await sequelize.query(`
+            SELECT firstName, image, groupchatId, message from users, chats WHERE chats.accountchatId = users.id and groupchatId = ${id} ORDER by chats.id;
+            `);
+            resolve(test)
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
+let takeaway = (id,ids,idss) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let ok = 1
+            let users = await db.Subgroup.findOne({
+                where: {
+                    groupId: ids ,
+                    accountId: id
+                    },
+                // attributes: ['id', 'email', 'password', 'firstName', 'address', 'lastName', 'status', 'phonenumber'],
+                raw: true
+            })
+            if(users)
+            {
+                let user = db.Chat.create({
+                accountchatId: id,
+                groupchatId: ids,
+                message: idss
+             })
+            }
+            
+            resolve(ok)
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let activa = (id,ids) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let ok = 1
+            if(ids && ids != 0)
+            {
+            let users = await db.Subgroup.findOne({
+                where: {
+                    groupId: id ,
+                    accountId: ids
+                    },
+                // attributes: ['id', 'email', 'password', 'firstName', 'address', 'lastName', 'status', 'phonenumber'],
+                raw: true
+            })
+            if(!users){
+               let user = db.Subgroup.create({
+                groupId: id,
+                accountId: ids,
+             }) 
+            }}
+            
+            resolve(ok)
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
+let dmmn = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+           
+            let [test] = await sequelize.query(`
+            SELECT lastName, firstName, image from users, subgroups where groupId = ${id} and subgroups.accountId = users.id;
+            `);
+            
+            resolve(test)
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 
 // Option 3: Passing parameters separately (other dialects)
 const sequelize = new Sequelize('coursework', 'root', null, {
@@ -615,7 +789,7 @@ let header = (id) => {
                 where: { id: id },
                 raw: false,
                 attributes: {
-                    exclude: ['password', 'id', 'email', 'address', 'phonenumber', 'description', 'ids', 'age', 'gender']
+                    exclude: ['password', 'email', 'address', 'phonenumber', 'description', 'ids', 'age', 'gender']
                 }
             })
             resolve(user)
@@ -916,6 +1090,13 @@ let profile = (id) => {
 
 
 module.exports = {
+    nameger:nameger,
+    mop:mop,
+    dmmn:dmmn,
+    activa:activa,
+    takeaway:takeaway,
+    okkgr:okkgr,
+    groups:groups,
     profile:profile,
     kdps:kdps,
     commit: commit,

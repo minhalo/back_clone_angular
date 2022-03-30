@@ -3,10 +3,13 @@ import bodyParser from "body-parser";
 import configViewEngine from "./config/viewEngine";
 import initWebRoutes from './route/web';
 import connectDB from "./config/connectDB";
-// import cors from 'cors'
+
+import cors from 'cors'
+
 require('dotenv').config();
 
 let app = express();
+app.use(cors())
 // app.use(cors({origin: false}));
 
 app.use(function (req, res, next) {
@@ -28,6 +31,7 @@ app.use(function (req, res, next) {
     next();
 });
 
+
 //config app
 
 app.use(bodyParser.json({limit: '50mb'}));
@@ -39,6 +43,10 @@ connectDB();
 
 let port = process.env.PORT || 6969;
 //Port === undefined => port = 6969
+// const server = http.createServer(app)
+
+
+
 
 app.listen(port, () => {
     console.log("Backend Nodejs is runing on the port : " + port)

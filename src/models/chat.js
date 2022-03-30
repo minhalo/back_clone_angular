@@ -7,7 +7,9 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {}
   };
   Chat.init({
-    groupname: DataTypes.STRING,
+    accountchatId: DataTypes.INTEGER,
+    groupchatId:DataTypes.INTEGER,
+    message:DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Chat',

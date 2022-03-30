@@ -6,56 +6,51 @@ const multer = require('multer')
 
 
 
-let handleLogin = async (req,res) =>
-{
+let handleLogin = async (req, res) => {
     let email = req.body.email;
     let password = req.body.password;
-   
-    
 
-    if(!email && !password)
-    {
+
+
+    if (!email && !password) {
         return res.status(500).json({
-            errCode:1,
+            errCode: 1,
             message: "Please enter your username",
             messages: "Please enter your password"
         })
     }
-    else if(!email){
+    else if (!email) {
         return res.status(500).json({
-            errCode:1,
+            errCode: 1,
             message: "Please enter your username",
             messages: null
         })
     }
-    else if( !password)
-    {
+    else if (!password) {
         return res.status(500).json({
-            errCode:1,
+            errCode: 1,
             message: null,
             messages: "Please enter your password"
         })
     }
-    else
-    {
-    let userData = await userService.handleUserLogin(email,password)
-    return res.status(200).json({
-        errCode: userData.errCode,
-        message: userData.errMessage,
-        messages: userData.errMessages,
-        user: userData.user ? userData.user : {}
-    })
-}
+    else {
+        let userData = await userService.handleUserLogin(email, password)
+        return res.status(200).json({
+            errCode: userData.errCode,
+            message: userData.errMessage,
+            messages: userData.errMessages,
+            user: userData.user ? userData.user : {}
+        })
+    }
 }
 
-let handleRegister = async (req,res) => {
+let handleRegister = async (req, res) => {
     let email = req.body.email;
     let password = req.body.password;
     let cpassword = req.body.cpassword;
     const emailValidator = new EmailValidator();
     const { wellFormed, validDomain, validMailbox } = await emailValidator.verify(email);
-    if (!email)
-    {
+    if (!email) {
         return res.status(500).json({
             errCode: 1,
             messages: null,
@@ -64,8 +59,7 @@ let handleRegister = async (req,res) => {
             messagesxt: null
         })
     }
-    else if(validMailbox === false)
-    {
+    else if (validMailbox === false) {
         return res.status(500).json({
             errCode: 1,
             messages: null,
@@ -74,7 +68,7 @@ let handleRegister = async (req,res) => {
             messagesxt: null
         })
     }
-    else if(password.length < 8){
+    else if (password.length < 8) {
         return res.status(500).json({
             errCode: 1,
             message: null,
@@ -83,8 +77,7 @@ let handleRegister = async (req,res) => {
             messagesxt: null
         })
     }
-    else if(!cpassword)
-    {
+    else if (!cpassword) {
         return res.status(500).json({
             errCode: 1,
             message: null,
@@ -93,8 +86,8 @@ let handleRegister = async (req,res) => {
             messagesxt: null
         })
     }
-    else{
-        let userData = await userService.handleUserReg(email, password,cpassword)
+    else {
+        let userData = await userService.handleUserReg(email, password, cpassword)
         return res.status(200).json({
             errCode: userData.errCode,
             message: userData.errMessage,
@@ -108,10 +101,9 @@ let handleRegister = async (req,res) => {
     }
 }
 
-let handleGetusers = async (req,res) =>
-{
+let handleGetusers = async (req, res) => {
     let id = req.query.id;
-    if(!id){
+    if (!id) {
         return res.status(200).json({
             errCode: 1,
             message: 'Missing parameter',
@@ -129,8 +121,7 @@ let handleGetusers = async (req,res) =>
 
 
 
-let handlePut = async (req,res) =>
-{
+let handlePut = async (req, res) => {
     let id = req.body.id;
     let firstName = req.body.firstName
     let lastName = req.body.lastName
@@ -141,11 +132,10 @@ let handlePut = async (req,res) =>
     let profileImg = req.body.profileImg
     let age = req.body.age
     let password = req.body.password
-    
-    if (!firstName)
-    {
+
+    if (!firstName) {
         return res.status(500).json({
-            errCode:2,
+            errCode: 2,
             message: "Please enter your First Name",
             messages: null,
             messagesx: null,
@@ -160,7 +150,7 @@ let handlePut = async (req,res) =>
     }
     else if (!lastName) {
         return res.status(500).json({
-            errCode:3,
+            errCode: 3,
             message: null,
             messages: "Please enter your Last Name",
             messagesx: null,
@@ -170,12 +160,12 @@ let handlePut = async (req,res) =>
             messagesxztuk: null,
             messagesxztuko: null,
             messagesxztukoi: null,
-            messagesxztukop:null
+            messagesxztukop: null
         })
     }
     else if (!address) {
         return res.status(500).json({
-            errCode:4,
+            errCode: 4,
             message: null,
             messages: null,
             messagesx: "Please enter your Address",
@@ -185,13 +175,13 @@ let handlePut = async (req,res) =>
             messagesxztuk: null,
             messagesxztuko: null,
             messagesxztukoi: null,
-            messagesxztukop:null
+            messagesxztukop: null
 
         })
     }
     else if (!phonenumber) {
         return res.status(500).json({
-            errCode:5,
+            errCode: 5,
             message: null,
             messages: null,
             messagesx: null,
@@ -201,13 +191,13 @@ let handlePut = async (req,res) =>
             messagesxztuk: null,
             messagesxztuko: null,
             messagesxztukoi: null,
-            messagesxztukop:null
+            messagesxztukop: null
 
         })
     }
-    else if (!name){
+    else if (!name) {
         return res.status(500).json({
-            errCode:5,
+            errCode: 5,
             message: null,
             messages: null,
             messagesx: null,
@@ -217,13 +207,13 @@ let handlePut = async (req,res) =>
             messagesxztuk: null,
             messagesxztuko: null,
             messagesxztukoi: null,
-            messagesxztukop:null
+            messagesxztukop: null
 
         })
     }
-    else if (!textt){
+    else if (!textt) {
         return res.status(500).json({
-            errCode:5,
+            errCode: 5,
             message: null,
             messages: null,
             messagesx: null,
@@ -233,14 +223,14 @@ let handlePut = async (req,res) =>
             messagesxztuk: null,
             messagesxztuko: null,
             messagesxztukoi: null,
-            messagesxztukop:null
+            messagesxztukop: null
 
         })
     }
     // "https://banner2.cleanpng.com/20180623/iqh/kisspng-computer-icons-avatar-social-media-blog-font-aweso-avatar-icon-5b2e99c40ce333.6524068515297806760528.jpg"
-    else if (profileImg === null){
+    else if (profileImg === null) {
         return res.status(500).json({
-            errCode:5,
+            errCode: 5,
             message: null,
             messages: null,
             messagesx: null,
@@ -250,13 +240,13 @@ let handlePut = async (req,res) =>
             messagesxztuk: "Please choose your profile",
             messagesxztuko: null,
             messagesxztukoi: null,
-            messagesxztukop:null
+            messagesxztukop: null
 
         })
     }
-    else if (!age){
+    else if (!age) {
         return res.status(500).json({
-            errCode:5,
+            errCode: 5,
             message: null,
             messages: null,
             messagesx: null,
@@ -266,13 +256,13 @@ let handlePut = async (req,res) =>
             messagesxztuk: null,
             messagesxztuko: "Please enter your age",
             messagesxztukoi: null,
-            messagesxztukop:null
+            messagesxztukop: null
 
         })
     }
-    else if (!password){
+    else if (!password) {
         return res.status(500).json({
-            errCode:5,
+            errCode: 5,
             message: null,
             messages: null,
             messagesx: null,
@@ -282,11 +272,11 @@ let handlePut = async (req,res) =>
             messagesxztuk: null,
             messagesxztuko: null,
             messagesxztukoi: "Please enter your current password",
-            messagesxztukop:null
+            messagesxztukop: null
         })
     }
-    else{
-        let userData = await userService.handleEdit(id,firstName,lastName,address,phonenumber,name,textt,profileImg,age,password)
+    else {
+        let userData = await userService.handleEdit(id, firstName, lastName, address, phonenumber, name, textt, profileImg, age, password)
         return res.status(200).json({
             errCode: userData.errCode,
             message: userData.errMessage,
@@ -297,93 +287,86 @@ let handlePut = async (req,res) =>
             messagesxztu: userData.errMessagesxztu,
             messagesxztuk: userData.errMessagesxztuk,
             messagesxztuko: userData.errMessagesxztuko,
-            messagesxztukoi:userData.errMessagesxztukoi,
+            messagesxztukoi: userData.errMessagesxztukoi,
             messagesxztukop: userData.errMessagesxztukop
         })
     }
 }
 
-let handleDelete = async (req,res) => {
+let handleDelete = async (req, res) => {
     let id = req.query.id
     let pass = req.query.password
-    if( !pass)
-    {
+    if (!pass) {
         return res.status(500).json({
-            errCode:2,
+            errCode: 2,
             message: "Please enter your password",
         })
-        
+
     }
-    if (id)
-    {
-        let userData = await userService.handleDele(id,pass)
+    if (id) {
+        let userData = await userService.handleDele(id, pass)
         return res.status(200).json({
-            errCode:userData.errCode,
+            errCode: userData.errCode,
             message: userData.errMessage
         })
     }
 }
 
-let handlePassword = async (req,res) => {
+let handlePassword = async (req, res) => {
     let id = req.body.id
     let curpass = req.body.curpass
     let password = req.body.password
     let cpassword = req.body.cpassword
-   
-    if(!curpass)
-    {
+
+    if (!curpass) {
         return res.status(500).json({
-            errCode:1,
+            errCode: 1,
             message: null,
             messages: null,
             messagesx: "Please enter your current password"
         })
     }
-    else if(!password)
-    {
+    else if (!password) {
         return res.status(500).json({
-            errCode:1,
+            errCode: 1,
             message: "Please enter your new password",
             messages: null,
             messagesx: null
         })
     }
-    else if(!cpassword)
-    {
+    else if (!cpassword) {
         return res.status(500).json({
-            errCode:1,
+            errCode: 1,
             message: null,
             messages: "Please enter your confirm password",
             messagesx: null
         })
     }
-    else
-    {
-        let userData = await userService.handlePass(id,curpass,password,cpassword)
+    else {
+        let userData = await userService.handlePass(id, curpass, password, cpassword)
         return res.status(200).json({
-            errCode:userData.errCode,
+            errCode: userData.errCode,
             message: userData.errMessage,
             messages: userData.errMessages,
-            messagesx:userData.errMessagesx
+            messagesx: userData.errMessagesx
             // messagesx:userData.errMessagesx
             // userData
         })
     }
 }
 
-let handleForgot = async (req,res) => {
+let handleForgot = async (req, res) => {
     let email = req.body.email
-    
-    if (email)
-    {
+
+    if (email) {
         let userData = await userService.handleForgot(email)
         return res.status(200).json({
-            errCode:userData.errCode,
+            errCode: userData.errCode,
             message: userData.errMessage,
             id: userData.errId
         })
     }
-    else{
+    else {
         return res.status(200).json({
             errCode: 1,
             message: "Please enter your email",
@@ -392,25 +375,22 @@ let handleForgot = async (req,res) => {
     }
 }
 
-let handleChange = async (req, res) =>
-{
+let handleChange = async (req, res) => {
     let id = req.query.id
     let password = req.body.password
     let cpassword = req.body.cpassword
-   
-    if (password.length < 8)
-    {
+
+    if (password.length < 8) {
         return res.status(500).json({
-            errCode:2,
+            errCode: 2,
             message: null,
             messages: "Password length must have more than 8 character",
             messagesx: null
         })
     }
-    else if (!id)
-    {
+    else if (!id) {
         return res.status(500).json({
-            errCode:2,
+            errCode: 2,
             message: "You can't update password, please try again",
             messages: null,
             messagesx: null
@@ -418,14 +398,14 @@ let handleChange = async (req, res) =>
     }
     else if (!cpassword) {
         return res.status(500).json({
-            errCode:3,
+            errCode: 3,
             message: null,
             messages: null,
             messagesx: "Missing confirm password"
         })
     }
-    else{
-        let userData = await userService.handleChange(id, password,cpassword)
+    else {
+        let userData = await userService.handleChange(id, password, cpassword)
         return res.status(200).json({
             errCode: userData.errCode,
             message: userData.errMessage,
@@ -435,7 +415,7 @@ let handleChange = async (req, res) =>
     }
 }
 
-let handleGetbox = async (req,res) => {
+let handleGetbox = async (req, res) => {
     let users = await userService.getAllUsers();
     return res.status(200).json({
         users
@@ -443,7 +423,7 @@ let handleGetbox = async (req,res) => {
 }
 
 
-let handlePost =  async (req,res) => {
+let handlePost = async (req, res) => {
     let id = req.query.id
     let users = await userService.getRefresh(id)
     return res.status(200).json({
@@ -451,7 +431,7 @@ let handlePost =  async (req,res) => {
     })
 }
 
-let getHeader = async (req,res) => {
+let getHeader = async (req, res) => {
     let id = req.query.id
     let userData = await userService.header(id)
     return res.status(200).json({
@@ -460,68 +440,77 @@ let getHeader = async (req,res) => {
 
 }
 
-let allusers = async (req,res) => {
+let allusers = async (req, res) => {
     let id = req.query.id
     let userData = await userService.allaccount(id)
     return res.status(200).json({
-       userData
+        userData
     })
 }
 
-let allFriend = async (req,res) => {
+let dmm = async (req, res) => {
+    let id = req.query.id
+    let userData = await userService.dmmn(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+
+let allFriend = async (req, res) => {
     let id = req.query.id
     let ids = req.query.ids
-    let users = await userService.getFriends(id,ids);
+    let users = await userService.getFriends(id, ids);
     return res.status(200).json({
         users
     })
 }
 
-let fusers = async (req,res) => {
+let fusers = async (req, res) => {
     let id = req.query.id
-  
+
     let users = await userService.ffriednd(id)
     return res.status(200).json({
         users
     })
 }
 
-let bre = async (req,res) => {
+let bre = async (req, res) => {
     let id = req.query.id
     let ids = req.query.ids
-  
-    let users = await userService.brei(id,ids)
+
+    let users = await userService.brei(id, ids)
     return res.status(200).json({
         users
     })
 }
-let delfusers = async (req,res) => {
+let delfusers = async (req, res) => {
     let id = req.query.id
     let ids = req.query.ids
-    let users = await userService.delffriednd(id,ids)
+    let users = await userService.delffriednd(id, ids)
     return res.status(200).json({
         users
     })
 }
 
-let prof = async (req,res) => {
-    let id = req.query.id  
+let prof = async (req, res) => {
+    let id = req.query.id
     let users = await userService.profile(id)
     return res.status(200).json({
         users
     })
 }
 
-let getReqFt =async(req,res) => {
+let getReqFt = async (req, res) => {
     let id = req.query.id
-  
+
     let users = await userService.reqfr(id)
     return res.status(200).json({
         users
     })
 }
 
-let kdp = async(req,res) => {
+let kdp = async (req, res) => {
     let id = req.query.id
     let users = await userService.kdps(id)
     return res.status(200).json({
@@ -529,23 +518,23 @@ let kdp = async(req,res) => {
     })
 }
 
-let rendom = async(req,res) => {
+let rendom = async (req, res) => {
     let users = await userService.random()
     return res.status(200).json({
         users
     })
 }
 
-let search = async (req,res) => {
+let search = async (req, res) => {
     let name = req.query.firstName
     let id = req.query.id
-    let userData = await userService.fsearch(name,id)
+    let userData = await userService.fsearch(name, id)
     return res.status(200).json({
         userData
     })
 }
 
-let fri = async (req,res) => {
+let fri = async (req, res) => {
     let id = req.query.id
     let userData = await userService.ffri(id)
     return res.status(200).json({
@@ -553,7 +542,7 @@ let fri = async (req,res) => {
     })
 }
 
-let logout = async (req,res) => {
+let logout = async (req, res) => {
     let id = req.query.id
     let userData = await userService.logou(id)
     return res.status(200).json({
@@ -561,9 +550,9 @@ let logout = async (req,res) => {
     })
 }
 
-let ser =async (req,res) => {
+let ser = async (req, res) => {
     let id = req.query.id
-    
+
     let userData = await userService.fsearched(id)
     return res.status(200).json({
         userData
@@ -578,41 +567,114 @@ let count = async (req, res) => {
     })
 }
 
-let accept = async (req,res) => {
+let accept = async (req, res) => {
     let id = req.query.id
     let ids = req.query.ids
-    
-    let userData = await userService.commit(id,ids)
+
+    let userData = await userService.commit(id, ids)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let group = async (req, res) => {
+    let id = req.query.id
+    let ids = req.query.ids
+    // console.log(id)
+    let userData = await userService.groups(id, ids)
+    return res.status(200).json({
+        userData
+    })
+}
+
+
+let okgr = async (req, res) => {
+    let id = req.query.id
+
+    let userData = await userService.okkgr(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let messa = async (req, res) => {
+    let id = req.query.id
+
+    let userData = await userService.mop(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+
+
+let take = async (req, res) => {
+    let id = req.query.id
+    let ids = req.query.ids
+    let idss = req.query.idss
+    if (!ids) {
+        // console.log(ids)
+    }
+    else {
+        let userData = await userService.takeaway(id, ids, idss)
+        return res.status(200).json({
+            userData
+        })
+    }
+
+}
+
+
+let activate = async (req, res) => {
+    let id = req.query.id
+
+    let ids = req.query.ids
+    let userData = await userService.activa(id,ids)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let getnamegr = async (req,res) => {
+    let id = req.query.id
+    let userData = await userService.nameger(id)
     return res.status(200).json({
         userData
     })
 }
 
 module.exports = {
-    prof:prof,
-    kdp:kdp,
-    accept:accept,
-    count:count,
-    rendom:rendom,
-    getReqFt:getReqFt,
-    search:search,
-    handleLogin:handleLogin,
-    delfusers:delfusers,
-    ser:ser,
-    handleRegister:handleRegister,
-    handleGetusers:handleGetusers,
-    handlePut:handlePut,
-    handleDelete:handleDelete,
-    handlePassword:handlePassword,
-    handleForgot:handleForgot,
-    handleChange:handleChange,
-    handleGetbox:handleGetbox,
-    handlePost:handlePost,
-    getHeader:getHeader,
-    allusers:allusers,
-    allFriend:allFriend,
-    fusers:fusers,
-    fri:fri,
-    logout:logout,
-    bre:bre
+    getnamegr:getnamegr,
+    messa:messa,
+    dmm:dmm,
+    activate: activate,
+    take: take,
+    okgr: okgr,
+    group: group,
+    prof: prof,
+    kdp: kdp,
+    accept: accept,
+    count: count,
+    rendom: rendom,
+    getReqFt: getReqFt,
+    search: search,
+    handleLogin: handleLogin,
+    delfusers: delfusers,
+    ser: ser,
+    handleRegister: handleRegister,
+    handleGetusers: handleGetusers,
+    handlePut: handlePut,
+    handleDelete: handleDelete,
+    handlePassword: handlePassword,
+    handleForgot: handleForgot,
+    handleChange: handleChange,
+    handleGetbox: handleGetbox,
+    handlePost: handlePost,
+    getHeader: getHeader,
+    allusers: allusers,
+    allFriend: allFriend,
+    fusers: fusers,
+    fri: fri,
+    logout: logout,
+    bre: bre
 }
