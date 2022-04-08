@@ -456,6 +456,15 @@ let dmm = async (req, res) => {
     })
 }
 
+let ListActivate = async (req, res) => {
+    let id = req.query.id
+    // let ids = req.query.ids
+    let userData = await userService.listAct(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
 
 let allFriend = async (req, res) => {
     let id = req.query.id
@@ -629,6 +638,7 @@ let activate = async (req, res) => {
     let id = req.query.id
 
     let ids = req.query.ids
+   
     let userData = await userService.activa(id,ids)
     return res.status(200).json({
         userData
@@ -643,7 +653,85 @@ let getnamegr = async (req,res) => {
     })
 }
 
+let createpost = async (req,res) => {
+    let id = req.query.id
+    let text = req.query.text
+    // console.log(text)
+    if(text === '')
+    {
+
+    }
+    else{
+            let userData = await userService.poi(id,text)
+            return res.status(200).json({
+                userData
+            })
+        }
+    }
+   
+
+let listpost = async (req,res) => {
+    let userData = await userService.pioy()
+    return res.status(200).json({
+        userData
+    })
+}
+
+let like = async (req,res) => {
+    let id = req.query.id
+
+    let userData = await userService.likein(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let dislike = async (req,res) => {
+    let id = req.query.id
+
+    let userData = await userService.dislikein(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let commenti = async (req,res) => {
+    let id = req.query.id
+    let ids = req.query.ids
+    let mes = req.query.mes
+    // console.log(mes)
+    if(!mes){
+
+    }
+    else
+    {
+        let userData = await userService.commento(id,ids,mes)
+        return res.status(200).json({
+            userData
+        })
+    }
+    
+}
+
+let comment = async (req,res) => {
+        
+        // let id = req.query.id;
+        let userData = await userService.listcomment()
+        return res.status(200).json({
+            userData
+        })
+   
+}
+
+
 module.exports = {
+    comment:comment,
+    commenti:commenti,
+    dislike:dislike,
+    like:like,
+    listpost:listpost,
+    createpost:createpost,
+    ListActivate:ListActivate,
     getnamegr:getnamegr,
     messa:messa,
     dmm:dmm,

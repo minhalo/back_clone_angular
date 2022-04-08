@@ -93,7 +93,7 @@ let mop = (id) => {
 
             // let usi = 1
             let [test] = await sequelize.query(`
-            SELECT firstName, image, groupchatId, message from users, chats WHERE chats.accountchatId = users.id and groupchatId = ${id} ORDER by chats.id;
+            SELECT firstName, chats.createdAt, image, groupchatId, message from users, chats WHERE chats.accountchatId = users.id and groupchatId = ${id} ORDER by chats.id;
             `);
             resolve(test)
 
@@ -152,7 +152,8 @@ let activa = (id,ids) => {
                 groupId: id,
                 accountId: ids,
              }) 
-            }}
+            }
+        }
             
             resolve(ok)
 
@@ -168,10 +169,31 @@ let dmmn = (id) => {
         try {
            
             let [test] = await sequelize.query(`
-            SELECT lastName, firstName, image from users, subgroups where groupId = ${id} and subgroups.accountId = users.id;
+            SELECT lastName, users.id, firstName, image from users, subgroups where groupId = ${id} and subgroups.accountId = users.id;
             `);
             
             resolve(test)
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+let listAct = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+           
+            if(id != 0)
+            {
+                let [test] = await sequelize.query(`
+                SELECT lastName, groups.idaccount , groups.groupname, groups.id, firstName from users, groups where groups.idaccount = users.id and groups.idaccount = ${id};
+                `);
+            resolve(test)
+            }
+            
+            else{
+                resolve(true)
+            }
 
         } catch (error) {
             reject(error)
@@ -1087,9 +1109,123 @@ let profile = (id) => {
     })
 }
 
+let poi =   (id, text) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            console.log(text)
+            let user = db.Post.create({
+                accId: id,
+                text: text,
+                like: 0,
+                dislike: 0
+             })
+            
+            resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
 
+let pioy =   () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // console.log(text)
+            let [test] = await sequelize.query(`
+            SELECT users.firstName, posts.id,posts.createdAt, posts.like, posts.dislike, users.image, posts.text from users, posts WHERE posts.accId = users.id ORDER BY Posts.id DESC;
+            `);
+            // let test = true
+            
+            resolve(test)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let likein =   (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // console.log(text)
+            let user = await db.Post.findOne({
+                where: { id: id },
+                raw: false,
+            })
+            if(user)
+            {
+                user.like = user.like + 1
+                await user.save();
+            }
+            
+            resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+let dislikein =   (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // console.log(text)
+            let user = await db.Post.findOne({
+                where: { id: id },
+                raw: false,
+            })
+            if(user)
+            {
+                user.dislike = user.dislike + 1
+                await user.save();
+            }
+            
+            resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let commento =   (id,idk,mes) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+    
+            let user = db.Comment.create({
+                arcId: id,
+                potId: idk,
+                content: mes,
+             })
+           
+            
+            resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let listcomment=   () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+          
+            let [test] = await sequelize.query(`
+            SELECT users.firstName, comments.createdAt, posts.like, posts.dislike, users.image, posts.text from users, posts WHERE posts.accId = users.id ORDER BY Posts.id DESC;
+            `);
+           
+            
+            resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
 
 module.exports = {
+    listcomment:listcomment,
+    commento:commento,
+    dislikein:dislikein,
+    likein: likein,
+    pioy:pioy,
+    poi:poi,
+    listAct:listAct,
     nameger:nameger,
     mop:mop,
     dmmn:dmmn,

@@ -40,12 +40,21 @@ let initWebRoutes = (app) => {
     router.post('/api/group', userController.group)
     router.post('/api/task', userController.take)
     router.post('/api/activate', userController.activate)
-
+    router.post('/api/creatpost', userController.createpost)
+    router.post('/api/commenti', userController.commenti)
+    router.put('/api/like', userController.like)
+    router.put('/api/dislike', userController.dislike)
     router.get('/api/dmm', userController.dmm)
 
 
     router.get('/api/messa', userController.messa)
     router.get('/api/getnamegr', userController.getnamegr)
+    router.get('/api/listActivate', userController.ListActivate)
+    // listpost
+    router.get('/api/listpost', userController.listpost)
+
+    router.get('/api/listcomment', userController.comment)
+
 
     return app.use("/", router)
 }
