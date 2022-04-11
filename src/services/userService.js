@@ -847,7 +847,11 @@ let getFriends = (id, ids) => {
                 where: { idFriend: ids, idAccount: id },
                 raw: true
             })
-            if (!usercheck) {
+            let userchecks = await db.Add.findOne({
+                where: { idFriend: ids, idAccount: id },
+                raw: true
+            })
+            if (!usercheck && !userchecks) {
                 let user = await db.Add.create({
                     idAccount: id,
                     idFriend: ids
@@ -954,7 +958,7 @@ let kdps = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
             let [test] = await sequelize.query(`
-            SELECT users.id, users.lastName, users.firstName, users.description, users.image 
+            SELECT users.id, users.age, users.lastName, users.firstName, users.description, users.image 
             FROM users, addfrs
             WHERE users.id = addfrs.idFriend and addfrs.idAccount = ${id}`);
             resolve(test)
@@ -1040,6 +1044,22 @@ let fsearch = (name, id) => {
         }
     })
 }
+
+
+let fsearchff = (name, id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            
+            let [test] = await sequelize.query(`
+            SELECT users.firstName, users.age, users.image, users.description FROM users, addfrs WHERE users.id = addfrs.idFriend AND addfrs.idAccount = ${id} AND users.firstName LIKE '%${name}%'`);
+            resolve(test)
+          
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 
 let fsearched = (id) => {
     return new Promise(async (resolve, reject) => {
@@ -1218,7 +1238,58 @@ let listcomment=   () => {
     })
 }
 
+let deleteafk = (id, ids) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+          
+
+            let data = await db.Add.findOne({
+                where: { idAccount: ids, idFriend: id },
+            });
+            // console.log(data)
+            if (data)
+            {
+                // console.log(id,ids)
+                await db.Add.destroy({
+                    where: {
+                        idAccount: ids,
+                        idFriend: id
+                    },
+                });
+            }
+           
+            
+            resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
+let searchforaff  = (name, id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            
+           
+            let [test] = await sequelize.query(`SELECT users.firstName, users.image, users.description From users, adds WHERE users.id = adds.idAccount AND adds.idFriend = ${id} AND users.firstName LIKE '%${name}%'`);
+            resolve(test)
+           
+            
+            
+              
+            // resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
 module.exports = {
+    searchforaff:searchforaff,
+    deleteafk:deleteafk,
+    fsearchff:fsearchff,
     listcomment:listcomment,
     commento:commento,
     dislikein:dislikein,

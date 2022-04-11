@@ -543,6 +543,16 @@ let search = async (req, res) => {
     })
 }
 
+let searchffk = async (req, res) => {
+    let name = req.query.name
+    let id = req.query.id
+    console.log(name)
+    let users = await userService.fsearchff(name, id)
+    return res.status(200).json({
+        users
+    })
+}
+
 let fri = async (req, res) => {
     let id = req.query.id
     let userData = await userService.ffri(id)
@@ -724,7 +734,39 @@ let comment = async (req,res) => {
 }
 
 
+let deleteaff = async (req,res) => {
+        
+    let id = req.query.id;
+    let ids = req.query.ids;
+    
+
+    let userData = await userService.deleteafk(id, ids)
+    return res.status(200).json({
+        userData
+    })
+
+}
+
+
+let searchingfor =  async (req,res) => {
+        
+    let name = req.query.name;
+    let id = req.query.id;
+   
+    
+
+    let userData = await userService.searchforaff(name, id)
+    return res.status(200).json({
+        userData
+    })
+
+}
+
+
 module.exports = {
+    searchingfor:searchingfor,
+    deleteaff:deleteaff,
+    searchffk:searchffk,
     comment:comment,
     commenti:commenti,
     dislike:dislike,
