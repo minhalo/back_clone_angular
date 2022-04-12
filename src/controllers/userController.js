@@ -668,13 +668,14 @@ let getnamegr = async (req,res) => {
 let createpost = async (req,res) => {
     let id = req.query.id
     let text = req.query.text
+    let img = req.body.img
     // console.log(text)
     if(text === '')
     {
 
     }
     else{
-            let userData = await userService.poi(id,text)
+            let userData = await userService.poi(id,text,img)
             return res.status(200).json({
                 userData
             })
@@ -684,6 +685,14 @@ let createpost = async (req,res) => {
 
 let listpost = async (req,res) => {
     let userData = await userService.pioy()
+    return res.status(200).json({
+        userData
+    })
+}
+
+let postidk = async (req,res) => {
+    let id = req.query.id
+    let userData = await userService.idkpost(id)
     return res.status(200).json({
         userData
     })
@@ -771,7 +780,19 @@ let deleteGr = async (req,res) => {
 }
 
 
+let setc = async (req,res) => {
+    let id = req.query.id;
+    let userData = await userService.setchange(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+
 module.exports = {
+
+    setc:setc,
+    postidk:postidk,
     deleteGr:deleteGr,
     searchingfor:searchingfor,
     deleteaff:deleteaff,

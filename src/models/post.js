@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     text: DataTypes.STRING,
     like: DataTypes.INTEGER,
     dislike: DataTypes.INTEGER,
+    image: DataTypes.TEXT('long'),
   }, {
     sequelize,
     modelName: 'Post',

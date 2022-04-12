@@ -32,6 +32,8 @@ let initWebRoutes = (app) => {
     router.get('/get/profile', userController.prof)
     router.get('/api/okgr', userController.okgr)
     router.get('/api/searchrequest', userController.searchingfor)
+    router.get('/api/postidk', userController.postidk)
+    router.get('/api/setc', userController.setc)
 
 
 

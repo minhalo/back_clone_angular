@@ -14,6 +14,9 @@ module.exports = {
       text: {
         type:Sequelize.STRING
       },
+      image: {
+        type: Sequelize.TEXT('long')
+      },
 
       like: {
         type:Sequelize.INTEGER

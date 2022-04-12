@@ -1132,13 +1132,16 @@ let profile = (id) => {
     })
 }
 
-let poi =   (id, text) => {
+let poi =   (id, text, img) => {
     return new Promise(async (resolve, reject) => {
         try {
-            console.log(text)
+            // console.log(img)
+            // console.log(text)
+            // console.log(img)
             let user = db.Post.create({
                 accId: id,
                 text: text,
+                image: img,
                 like: 0,
                 dislike: 0
              })
@@ -1150,12 +1153,13 @@ let poi =   (id, text) => {
     })
 }
 
+
 let pioy =   () => {
     return new Promise(async (resolve, reject) => {
         try {
             // console.log(text)
             let [test] = await sequelize.query(`
-            SELECT users.firstName, posts.id,posts.createdAt, posts.like, posts.dislike, users.image, posts.text from users, posts WHERE posts.accId = users.id ORDER BY Posts.id DESC;
+            SELECT users.firstName, posts.image as op, posts.id,posts.createdAt, posts.like, posts.dislike, users.image, posts.text from users, posts WHERE posts.accId = users.id ORDER BY Posts.id DESC;
             `);
             // let test = true
             
@@ -1231,7 +1235,7 @@ let listcomment=   (id) => {
             // console.log(id)
             if(id){
                 let [test] = await sequelize.query(`
-                SELECT users.firstName, comments.createdAt, users.image, comments.content from users, comments WHERE users.id = comments.arcId and potId = ${id}
+                SELECT users.firstName, comments.createdAt, users.image, comments.content from users, comments WHERE users.id = comments.arcId and potId = ${id} group by comments.id DESC
                 `);
                 resolve(test)
             }
@@ -1316,8 +1320,51 @@ let deleteGroup= (id) => {
     })
 }
 
+let idkpost = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if(id)
+            {
+                let users = await db.Post.findOne({
+                    where: {
+                        id: id,
+                        },
+                    raw: true
+                })
+               
+                resolve(users)
+            }
+            
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
+let setchange =(id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if(id)
+            {
+                let [test] = await sequelize.query(`
+                SELECT users.firstName, posts.image as op, posts.id,posts.createdAt, posts.like, posts.dislike, users.image, posts.text from users, posts WHERE posts.accId = users.id and posts.accId = ${id} ORDER BY Posts.id DESC;
+                `);
+               
+                resolve(test)
+            }
+            
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
 
 module.exports = {
+    setchange:setchange,
+    idkpost:idkpost,
     deleteGroup:deleteGroup,
     searchforaff:searchforaff,
     deleteafk:deleteafk,
