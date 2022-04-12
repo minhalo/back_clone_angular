@@ -434,6 +434,7 @@ let handlePost = async (req, res) => {
 let getHeader = async (req, res) => {
     let id = req.query.id
     let userData = await userService.header(id)
+    // console.log(userData)
     return res.status(200).json({
         userData
     })
@@ -450,7 +451,8 @@ let allusers = async (req, res) => {
 
 let dmm = async (req, res) => {
     let id = req.query.id
-    let userData = await userService.dmmn(id)
+    let ids = req.query.ids
+    let userData = await userService.dmmn(id,ids)
     return res.status(200).json({
         userData
     })
@@ -709,7 +711,10 @@ let commenti = async (req,res) => {
     let id = req.query.id
     let ids = req.query.ids
     let mes = req.query.mes
-    // console.log(mes)
+    console.log(id)
+    console.log(ids)
+    console.log(mes)
+    
     if(!mes){
 
     }
@@ -725,8 +730,8 @@ let commenti = async (req,res) => {
 
 let comment = async (req,res) => {
         
-        // let id = req.query.id;
-        let userData = await userService.listcomment()
+        let id = req.query.id;
+        let userData = await userService.listcomment(id)
         return res.status(200).json({
             userData
         })
@@ -748,22 +753,26 @@ let deleteaff = async (req,res) => {
 }
 
 
-let searchingfor =  async (req,res) => {
-        
+let searchingfor =  async (req,res) => {       
     let name = req.query.name;
     let id = req.query.id;
-   
-    
-
     let userData = await userService.searchforaff(name, id)
     return res.status(200).json({
         userData
     })
+}
 
+let deleteGr = async (req,res) => {
+    let id = req.query.id;
+    let userData = await userService.deleteGroup(id)
+    return res.status(200).json({
+        userData
+    })
 }
 
 
 module.exports = {
+    deleteGr:deleteGr,
     searchingfor:searchingfor,
     deleteaff:deleteaff,
     searchffk:searchffk,

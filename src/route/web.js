@@ -63,7 +63,7 @@ let initWebRoutes = (app) => {
     router.delete('/api/getdelFusers', userController.delfusers)
     router.delete('/api/delete-users', userController.handleDelete)
     router.delete('/api/deleteAff', userController.deleteaff)
-
+    router.delete('/api/deleteGr', userController.deleteGr)
 
     return app.use("/", router)
 }

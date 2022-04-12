@@ -107,7 +107,9 @@ let mop = (id) => {
 let takeaway = (id,ids,idss) => {
     return new Promise(async (resolve, reject) => {
         try {
+            
             let ok = 1
+            // console.log(idss)
             let users = await db.Subgroup.findOne({
                 where: {
                     groupId: ids ,
@@ -116,7 +118,7 @@ let takeaway = (id,ids,idss) => {
                 // attributes: ['id', 'email', 'password', 'firstName', 'address', 'lastName', 'status', 'phonenumber'],
                 raw: true
             })
-            if(users)
+            if(users && idss)
             {
                 let user = db.Chat.create({
                 accountchatId: id,
@@ -164,12 +166,12 @@ let activa = (id,ids) => {
 }
 
 
-let dmmn = (id) => {
+let dmmn = (id,ids) => {
     return new Promise(async (resolve, reject) => {
         try {
            
             let [test] = await sequelize.query(`
-            SELECT lastName, users.id, firstName, image from users, subgroups where groupId = ${id} and subgroups.accountId = users.id;
+            SELECT lastName, users.id, firstName, image from users, subgroups where groupId = ${id} and subgroups.accountId = users.id and users.id != ${ids};
             `);
             
             resolve(test)
@@ -807,6 +809,7 @@ let getRefresh = (id) => {
 let header = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
+            
             let user = await db.User.findOne({
                 where: { id: id },
                 raw: false,
@@ -1222,16 +1225,35 @@ let commento =   (id,idk,mes) => {
     })
 }
 
-let listcomment=   () => {
+let listcomment=   (id) => {
     return new Promise(async (resolve, reject) => {
         try {
-          
-            let [test] = await sequelize.query(`
-            SELECT users.firstName, comments.createdAt, posts.like, posts.dislike, users.image, posts.text from users, posts WHERE posts.accId = users.id ORDER BY Posts.id DESC;
-            `);
+            // console.log(id)
+            if(id){
+                let [test] = await sequelize.query(`
+                SELECT users.firstName, comments.createdAt, users.image, comments.content from users, comments WHERE users.id = comments.arcId and potId = ${id}
+                `);
+                resolve(test)
+            }
+            // ORDER BY Posts.id DESC
+            // console.log(id)
+            // let user = await db.Comment.findAll({
+            //     attributes: {
+            //         exclude: ['password', 'ids']
+            //     },
+            //     where: {
+            //         // id: { [Op.notIn]: [id] }
+            //         potId: id
+            //     },
+            // })
+            else{
+                let [test] = await sequelize.query(`
+                SELECT users.firstName, comments.createdAt, users.image, comments.content from users, comments WHERE users.id = comments.arcId 
+                `);
+                resolve(test)
+            }
            
-            
-            resolve(true)
+           
         } catch (error) {
             reject(error)
         }
@@ -1269,16 +1291,25 @@ let deleteafk = (id, ids) => {
 
 let searchforaff  = (name, id) => {
     return new Promise(async (resolve, reject) => {
-        try {
-            
-           
+        try {        
             let [test] = await sequelize.query(`SELECT users.firstName, users.image, users.description From users, adds WHERE users.id = adds.idAccount AND adds.idFriend = ${id} AND users.firstName LIKE '%${name}%'`);
             resolve(test)
-           
-            
-            
-              
-            // resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let deleteGroup= (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if(id)
+            {
+                await db.Group.destroy({
+                    where: { id: id },
+                });
+            }
+            resolve(test)
         } catch (error) {
             reject(error)
         }
@@ -1287,6 +1318,7 @@ let searchforaff  = (name, id) => {
 
 
 module.exports = {
+    deleteGroup:deleteGroup,
     searchforaff:searchforaff,
     deleteafk:deleteafk,
     fsearchff:fsearchff,
