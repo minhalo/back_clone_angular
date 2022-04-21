@@ -44,6 +44,9 @@ module.exports = {
       gender: {
         type: Sequelize.STRING
       },
+      roleid: {
+        type:Sequelize.INTEGER
+      },
 
       createdAt: {
         allowNull: false,

@@ -5,42 +5,42 @@ const nodemailer = require("nodemailer");
 const { Sequelize, and } = require('sequelize');
 const Op = Sequelize.Op;
 
-import {Server, Socket} from 'socket.io'
+import { Server, Socket } from 'socket.io'
 
 
-export const io = new Server(7000,{
+export const io = new Server(7000, {
     cors: {
         origin: 'http://localhost:3000',
-        methods: ["GET","POST"]
+        methods: ["GET", "POST"]
     }
-    
+
 })
 
 io.on("connection", (socket) => {
     // console.log(socket.id)
-    socket.on("disconnect", ()=> {
+    socket.on("disconnect", () => {
         // console.log("User Disconected", socket.id)
     })
     socket.on("sen_message", (data) => {
         // console.log(data)
         let user = db.Group.create({
-           groupname: data.room
+            groupname: data.room
         })
         socket.to(data.idFriend).emit("recivedata", data)
     })
 })
 
 
-let groups = (id,ids) => {
+let groups = (id, ids) => {
     return new Promise(async (resolve, reject) => {
         try {
             // let userData = {};
 
             let usi = 1
             let user = db.Group.create({
-                groupname: id ,
+                groupname: id,
                 idaccount: ids
-             })
+            })
             resolve(usi)
 
         } catch (error) {
@@ -74,7 +74,7 @@ let nameger = (id) => {
             let users = await db.Group.findOne({
                 where: {
                     id: id,
-                    },
+                },
                 raw: true
             })
             resolve(users)
@@ -104,29 +104,28 @@ let mop = (id) => {
 }
 
 
-let takeaway = (id,ids,idss) => {
+let takeaway = (id, ids, idss) => {
     return new Promise(async (resolve, reject) => {
         try {
-            
+
             let ok = 1
             // console.log(idss)
             let users = await db.Subgroup.findOne({
                 where: {
-                    groupId: ids ,
+                    groupId: ids,
                     accountId: id
-                    },
+                },
                 // attributes: ['id', 'email', 'password', 'firstName', 'address', 'lastName', 'status', 'phonenumber'],
                 raw: true
             })
-            if(users && idss)
-            {
+            if (users && idss) {
                 let user = db.Chat.create({
-                accountchatId: id,
-                groupchatId: ids,
-                message: idss
-             })
+                    accountchatId: id,
+                    groupchatId: ids,
+                    message: idss
+                })
             }
-            
+
             resolve(ok)
 
         } catch (error) {
@@ -135,28 +134,27 @@ let takeaway = (id,ids,idss) => {
     })
 }
 
-let activa = (id,ids) => {
+let activa = (id, ids) => {
     return new Promise(async (resolve, reject) => {
         try {
             let ok = 1
-            if(ids && ids != 0)
-            {
-            let users = await db.Subgroup.findOne({
-                where: {
-                    groupId: id ,
-                    accountId: ids
+            if (ids && ids != 0) {
+                let users = await db.Subgroup.findOne({
+                    where: {
+                        groupId: id,
+                        accountId: ids
                     },
-                // attributes: ['id', 'email', 'password', 'firstName', 'address', 'lastName', 'status', 'phonenumber'],
-                raw: true
-            })
-            if(!users){
-               let user = db.Subgroup.create({
-                groupId: id,
-                accountId: ids,
-             }) 
+                    // attributes: ['id', 'email', 'password', 'firstName', 'address', 'lastName', 'status', 'phonenumber'],
+                    raw: true
+                })
+                if (!users) {
+                    let user = db.Subgroup.create({
+                        groupId: id,
+                        accountId: ids,
+                    })
+                }
             }
-        }
-            
+
             resolve(ok)
 
         } catch (error) {
@@ -166,14 +164,14 @@ let activa = (id,ids) => {
 }
 
 
-let dmmn = (id,ids) => {
+let dmmn = (id, ids) => {
     return new Promise(async (resolve, reject) => {
         try {
-           
+
             let [test] = await sequelize.query(`
             SELECT lastName, users.id, firstName, image from users, subgroups where groupId = ${id} and subgroups.accountId = users.id and users.id != ${ids};
             `);
-            
+
             resolve(test)
 
         } catch (error) {
@@ -184,16 +182,15 @@ let dmmn = (id,ids) => {
 let listAct = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
-           
-            if(id != 0)
-            {
+
+            if (id != 0) {
                 let [test] = await sequelize.query(`
                 SELECT lastName, groups.idaccount , groups.groupname, groups.id, firstName from users, groups where groups.idaccount = users.id and groups.idaccount = ${id};
                 `);
-            resolve(test)
+                resolve(test)
             }
-            
-            else{
+
+            else {
                 resolve(true)
             }
 
@@ -269,7 +266,8 @@ let handleUserReg = (email, password, cpassword) => {
                                 image: "https://banner2.cleanpng.com/20180623/iqh/kisspng-computer-icons-avatar-social-media-blog-font-aweso-avatar-icon-5b2e99c40ce333.6524068515297806760528.jpg",
                                 gender: null,
                                 age: null,
-                                status: 0
+                                status: 0,
+                                roleid: 2
                             })
 
                             userData.errCode = 0;
@@ -809,7 +807,7 @@ let getRefresh = (id) => {
 let header = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
-            
+
             let user = await db.User.findOne({
                 where: { id: id },
                 raw: false,
@@ -818,6 +816,21 @@ let header = (id) => {
                 }
             })
             resolve(user)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let getRole = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [test] = await sequelize.query(`
+            SELECT users.id, users.firstName, users.lastName, roles.name
+            FROM users, roles
+            WHERE roles.id = users.roleid and users.id != ${id}
+            `);
+            resolve(test)
         } catch (error) {
             reject(error)
         }
@@ -1052,11 +1065,11 @@ let fsearch = (name, id) => {
 let fsearchff = (name, id) => {
     return new Promise(async (resolve, reject) => {
         try {
-            
+
             let [test] = await sequelize.query(`
             SELECT users.firstName, users.age, users.image, users.description FROM users, addfrs WHERE users.id = addfrs.idFriend AND addfrs.idAccount = ${id} AND users.firstName LIKE '%${name}%'`);
             resolve(test)
-          
+
         } catch (error) {
             reject(error)
         }
@@ -1132,7 +1145,7 @@ let profile = (id) => {
     })
 }
 
-let poi =   (id, text, img) => {
+let poi = (id, text, img) => {
     return new Promise(async (resolve, reject) => {
         try {
             // console.log(img)
@@ -1144,8 +1157,8 @@ let poi =   (id, text, img) => {
                 image: img,
                 like: 0,
                 dislike: 0
-             })
-            
+            })
+
             resolve(true)
         } catch (error) {
             reject(error)
@@ -1154,15 +1167,15 @@ let poi =   (id, text, img) => {
 }
 
 
-let pioy =   () => {
+let pioy = () => {
     return new Promise(async (resolve, reject) => {
         try {
             // console.log(text)
             let [test] = await sequelize.query(`
-            SELECT users.firstName, posts.image as op, posts.id,posts.createdAt, posts.like, posts.dislike, users.image, posts.text from users, posts WHERE posts.accId = users.id ORDER BY Posts.id DESC;
+            SELECT users.firstName, users.id as pop, roles.name, posts.image as op, posts.id,posts.createdAt, posts.like, posts.dislike, users.image, posts.text from users,roles, posts WHERE posts.accId = users.id and roles.id = users.roleid ORDER BY Posts.id DESC;
             `);
             // let test = true
-            
+
             resolve(test)
         } catch (error) {
             reject(error)
@@ -1170,7 +1183,7 @@ let pioy =   () => {
     })
 }
 
-let likein =   (id) => {
+let likein = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
             // console.log(text)
@@ -1178,19 +1191,18 @@ let likein =   (id) => {
                 where: { id: id },
                 raw: false,
             })
-            if(user)
-            {
+            if (user) {
                 user.like = user.like + 1
                 await user.save();
             }
-            
+
             resolve(true)
         } catch (error) {
             reject(error)
         }
     })
 }
-let dislikein =   (id) => {
+let dislikein = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
             // console.log(text)
@@ -1198,12 +1210,11 @@ let dislikein =   (id) => {
                 where: { id: id },
                 raw: false,
             })
-            if(user)
-            {
+            if (user) {
                 user.dislike = user.dislike + 1
                 await user.save();
             }
-            
+
             resolve(true)
         } catch (error) {
             reject(error)
@@ -1211,17 +1222,17 @@ let dislikein =   (id) => {
     })
 }
 
-let commento =   (id,idk,mes) => {
+let commento = (id, idk, mes) => {
     return new Promise(async (resolve, reject) => {
         try {
-    
+
             let user = db.Comment.create({
                 arcId: id,
                 potId: idk,
                 content: mes,
-             })
-           
-            
+            })
+
+
             resolve(true)
         } catch (error) {
             reject(error)
@@ -1229,11 +1240,11 @@ let commento =   (id,idk,mes) => {
     })
 }
 
-let listcomment=   (id) => {
+let listcomment = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
             // console.log(id)
-            if(id){
+            if (id) {
                 let [test] = await sequelize.query(`
                 SELECT users.firstName, comments.createdAt, users.image, comments.content from users, comments WHERE users.id = comments.arcId and potId = ${id} group by comments.id DESC
                 `);
@@ -1250,14 +1261,14 @@ let listcomment=   (id) => {
             //         potId: id
             //     },
             // })
-            else{
+            else {
                 let [test] = await sequelize.query(`
                 SELECT users.firstName, comments.createdAt, users.image, comments.content from users, comments WHERE users.id = comments.arcId 
                 `);
                 resolve(test)
             }
-           
-           
+
+
         } catch (error) {
             reject(error)
         }
@@ -1267,14 +1278,13 @@ let listcomment=   (id) => {
 let deleteafk = (id, ids) => {
     return new Promise(async (resolve, reject) => {
         try {
-          
+
 
             let data = await db.Add.findOne({
                 where: { idAccount: ids, idFriend: id },
             });
             // console.log(data)
-            if (data)
-            {
+            if (data) {
                 // console.log(id,ids)
                 await db.Add.destroy({
                     where: {
@@ -1283,8 +1293,8 @@ let deleteafk = (id, ids) => {
                     },
                 });
             }
-           
-            
+
+
             resolve(true)
         } catch (error) {
             reject(error)
@@ -1293,9 +1303,9 @@ let deleteafk = (id, ids) => {
 }
 
 
-let searchforaff  = (name, id) => {
+let searchforaff = (name, id) => {
     return new Promise(async (resolve, reject) => {
-        try {        
+        try {
             let [test] = await sequelize.query(`SELECT users.firstName, users.image, users.description From users, adds WHERE users.id = adds.idAccount AND adds.idFriend = ${id} AND users.firstName LIKE '%${name}%'`);
             resolve(test)
         } catch (error) {
@@ -1304,11 +1314,10 @@ let searchforaff  = (name, id) => {
     })
 }
 
-let deleteGroup= (id) => {
+let deleteGroup = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if(id)
-            {
+            if (id) {
                 await db.Group.destroy({
                     where: { id: id },
                 });
@@ -1323,18 +1332,17 @@ let deleteGroup= (id) => {
 let idkpost = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if(id)
-            {
+            if (id) {
                 let users = await db.Post.findOne({
                     where: {
                         id: id,
-                        },
+                    },
                     raw: true
                 })
-               
+
                 resolve(users)
             }
-            
+
         } catch (error) {
             reject(error)
         }
@@ -1342,49 +1350,439 @@ let idkpost = (id) => {
 }
 
 
-let setchange =(id) => {
+let setchange = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if(id)
-            {
+            if (id) {
                 let [test] = await sequelize.query(`
                 SELECT users.firstName, posts.image as op, posts.id,posts.createdAt, posts.like, posts.dislike, users.image, posts.text from users, posts WHERE posts.accId = users.id and posts.accId = ${id} ORDER BY Posts.id DESC;
                 `);
-               
+
                 resolve(test)
             }
-            
+
         } catch (error) {
             reject(error)
         }
     })
 }
+
+let deleteaccounts = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (id) {
+                const row = await db.User.findOne({
+                    where: { id: id },
+                });
+
+                if (row) {
+
+                    await db.User.destroy({
+                        where: { id: id },
+                    });
+
+
+                }
+
+            }
+            resolve(true)
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let getAllAdmin = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let users = await db.Role.findAll({
+                attributes: {
+                    exclude: ['createdAt', 'updatedAt']
+                }
+            })
+            resolve(users)
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let getAccept = (id, ids) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            let user = await db.User.findOne({
+                where: {
+                    id: id,
+                },
+                raw: true
+            })
+            if (user) {
+
+                // UPDATE users SET roleid = ${ids} where users.id = ${id}
+                let [test] = await sequelize.query(`
+                UPDATE users SET roleid = ${ids} where users.id = ${id}
+                `);
+            }
+
+            resolve(true)
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let createGro = (id, name, ok) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            //         groupname: DataTypes.STRING,
+            // idaccount: DataTypes.INTEGER
+
+            let user = db.Learning.create({
+                groupname: name,
+                idaccount: id,
+                point: ok
+            })
+
+
+            resolve(true)
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let getLearn = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            let users = await db.Learning.findAll({
+                where: {
+                    idaccount: id
+                },
+            })
+
+
+            resolve(users)
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let postdelete = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            console.log(id)
+            const row = await db.Post.findOne({
+                where: { id: id },
+            });
+            await db.Post.destroy({
+                where: { id: id },
+            });
+
+
+
+            resolve(false)
+
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let rolesearch = (id, ids) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [test] = await sequelize.query(`
+            SELECT users.firstName, users.lastName, users.id, roles.name from users, roles WHERE roles.id = users.roleid and users.id != ${ids} and users.firstName like '%${id}%'
+            `);
+
+            resolve(test)
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let chartttt = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [test] = await sequelize.query(`
+            SELECT users.firstName, COUNT( posts.text) as pop from users, posts WHERE posts.accId = users.id GROUP BY users.firstName order by pop desc LIMIT 10
+            `);
+
+            resolve(test)
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+let upuser = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [currentYear] = await sequelize.query(`
+            SELECT count(users.firstName) as pop from users where year(users.createdAt) = Year(NOW())
+            `);
+            let [lastYear] = await sequelize.query(`
+            SELECT count(users.firstName) as pop from users where year(users.createdAt) = Year(NOW()) -1
+            `);
+            let [post] = await sequelize.query(`
+            SELECT count(posts.id) as pop from posts where year(posts.createdAt) = Year(NOW())
+            `);
+            let [lastpost] = await sequelize.query(`
+            SELECT count(posts.id) as pop from posts where year(posts.createdAt) = Year(NOW())-1
+            `);
+
+            let [comment] = await sequelize.query(`
+            SELECT count(comments.id) as pop from comments where year(comments.createdAt) = Year(NOW())
+            `);
+            let [lastcomment] = await sequelize.query(`
+            SELECT count(comments.id) as pop from comments where year(comments.createdAt) = Year(NOW())-1
+            `);
+
+            let user = []
+
+            user.push(currentYear)
+            user.push(lastYear)
+            user.push(post)
+            user.push(lastpost)
+            user.push(comment)
+            user.push(lastcomment)
+
+            resolve(user)
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let dellearn = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [test] = await sequelize.query(`
+            DELETE FROM learnings WHERE learnings.id = ${id};
+            `);
+
+            resolve(test)
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let pir = (id, ids, idss) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = db.Lpost.create({
+                accId: id,
+                learningId: ids,
+                text: idss
+            })
+            resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let opc = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [test] = await sequelize.query(`
+            SELECT users.id as pop, lposts.id, lposts.text from lposts,users where lposts.learningId = ${id} AND lposts.accId = users.id ORDER BY lposts.id DESC;
+
+            `);
+            resolve(test)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let offget = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [test] = await sequelize.query(`
+            SELECT users.firstName from learnings,users where users.id = learnings.idaccount and learnings.id = ${id}
+
+            `);
+            resolve(test)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
+let lpostdel = (id, ids) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [test] = await sequelize.query(`
+            DELETE FROM lposts WHERE lposts.learningId = ${ids} and lposts.id = ${id};
+            `);
+
+            resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let classcode = (id, ids) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let users = await db.Learning.findOne({
+                where: {
+                    id: ids,
+                },
+                raw: true
+            })
+
+            let userss = await db.Sublearn.findOne({
+                where: {
+                    accId: id,
+                    learningId: ids,
+                },
+                raw: true
+            })
+
+            if (users) {
+                if (!userss) {
+                    let user = db.Sublearn.create({
+                        accId: id,
+                        learningId: ids,
+                    })
+                }
+
+            }
+            resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
+let classget =(id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // console.log(id)
+            let [test] = await sequelize.query(`
+            Select  learnings.id,learnings.groupname, learnings.point from learnings, sublearns, users where  sublearns.accId = users.id AND sublearns.learningId = learnings.id and users.id = ${id}
+            `);
+           
+            resolve(test)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
+let delstuden = (id,ids) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // console.log(id)
+            // console.log(ids)
+            let [test] = await sequelize.query(`
+            DELETE FROM sublearns WHERE sublearns.accId = ${ids} and sublearns.learningId = ${id};
+            `);
+           
+            resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
+let ceot = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // console.log(id)
+            // console.log(ids)
+            let [test] = await sequelize.query(`
+            SELECT users.id,users.firstName, users.image from users, sublearns WHERE users.id = sublearns.accId and sublearns.learningId = ${id}
+            `);
+           
+            resolve(test)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let offkick = (id,ids) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [test] = await sequelize.query(`
+            DELETE FROM sublearns WHERE sublearns.accId = ${ids} and sublearns.learningId = ${id};
+            `);
+           
+            resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
 
 
 
 module.exports = {
-    setchange:setchange,
-    idkpost:idkpost,
-    deleteGroup:deleteGroup,
-    searchforaff:searchforaff,
-    deleteafk:deleteafk,
-    fsearchff:fsearchff,
-    listcomment:listcomment,
-    commento:commento,
-    dislikein:dislikein,
+    offkick:offkick,
+    ceot:ceot,
+    delstuden:delstuden,
+    classget:classget,
+    classcode: classcode,
+    lpostdel: lpostdel,
+    offget: offget,
+    opc: opc,
+    pir: pir,
+    upuser: upuser,
+    chartttt: chartttt,
+    rolesearch: rolesearch,
+    postdelete: postdelete,
+    dellearn: dellearn,
+    getLearn: getLearn,
+    createGro: createGro,
+    getAccept: getAccept,
+    getAllAdmin: getAllAdmin,
+    deleteaccounts: deleteaccounts,
+    setchange: setchange,
+    idkpost: idkpost,
+    deleteGroup: deleteGroup,
+    searchforaff: searchforaff,
+    deleteafk: deleteafk,
+    fsearchff: fsearchff,
+    listcomment: listcomment,
+    commento: commento,
+    dislikein: dislikein,
     likein: likein,
-    pioy:pioy,
-    poi:poi,
-    listAct:listAct,
-    nameger:nameger,
-    mop:mop,
-    dmmn:dmmn,
-    activa:activa,
-    takeaway:takeaway,
-    okkgr:okkgr,
-    groups:groups,
-    profile:profile,
-    kdps:kdps,
+    pioy: pioy,
+    poi: poi,
+    listAct: listAct,
+    nameger: nameger,
+    mop: mop,
+    dmmn: dmmn,
+    activa: activa,
+    takeaway: takeaway,
+    okkgr: okkgr,
+    groups: groups,
+    profile: profile,
+    kdps: kdps,
     commit: commit,
     countt: countt,
     random: random,
@@ -1408,5 +1806,6 @@ module.exports = {
     getFriends: getFriends,
     ffriednd: ffriednd,
     fsearch: fsearch,
-    logou: logou
+    logou: logou,
+    getRole: getRole
 }

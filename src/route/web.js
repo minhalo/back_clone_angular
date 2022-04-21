@@ -34,6 +34,17 @@ let initWebRoutes = (app) => {
     router.get('/api/searchrequest', userController.searchingfor)
     router.get('/api/postidk', userController.postidk)
     router.get('/api/setc', userController.setc)
+    router.get('/api/role', userController.role)
+    router.get('/api/getAdmin', userController.getAdmin)
+    router.get('/api/getlearning', userController.getlearning)
+    router.get('/api/searchRole', userController.searchRole)
+    router.get('/api/Charty', userController.Charty)
+    router.get('/api/userup', userController.userup)
+    router.get('/api/getoff', userController.getoff)
+    router.get('/api/getlearningopc', userController.getlearningopc)
+    router.get('/api/getclass', userController.getclass)
+    router.get('/api/toce', userController.toce)
+    // toce
 
 
 
@@ -51,6 +62,11 @@ let initWebRoutes = (app) => {
     router.post('/api/refresh', userController.handlePost)
     router.post('/api/register', userController.handleRegister); 
     router.post('/api/accept', userController.accept)
+    router.post('/api/createGroupl', userController.createGroupl)
+    router.post('/api/rip', userController.rip)
+    router.post('/api/codeclass', userController.codeclass)
+
+    //codeclass
     
 
     //Method PUT
@@ -59,6 +75,10 @@ let initWebRoutes = (app) => {
     router.put('/api/get-edit', userController.handlePut);
     router.put('/api/change', userController.handleChange)
     router.put('/api/get-password', userController.handlePassword);
+    router.put('/api/accept', userController.acceptt);
+
+    // createGroupl
+    // accept
 
    
     //Method DELETE
@@ -66,7 +86,18 @@ let initWebRoutes = (app) => {
     router.delete('/api/delete-users', userController.handleDelete)
     router.delete('/api/deleteAff', userController.deleteaff)
     router.delete('/api/deleteGr', userController.deleteGr)
+    router.delete('/api/deleteaccount', userController.deleteaccount)
+    router.delete('/api/deletepost', userController.deletepost)
+    router.delete('/api/learndel', userController.learndel)
+    router.delete('/api/dellpost', userController.dellpost)
+    router.delete('/api/studendel', userController.studendel)
+    router.delete('/api/kickoff', userController.kickoff)
 
+
+
+    // kickoff
+
+    // deleteaccount
     return app.use("/", router)
 }
 

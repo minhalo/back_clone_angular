@@ -449,10 +449,18 @@ let allusers = async (req, res) => {
     })
 }
 
+let role = async (req, res) => {
+    let id = req.query.id
+    let userData = await userService.getRole(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
 let dmm = async (req, res) => {
     let id = req.query.id
     let ids = req.query.ids
-    let userData = await userService.dmmn(id,ids)
+    let userData = await userService.dmmn(id, ids)
     return res.status(200).json({
         userData
     })
@@ -650,14 +658,14 @@ let activate = async (req, res) => {
     let id = req.query.id
 
     let ids = req.query.ids
-   
-    let userData = await userService.activa(id,ids)
+
+    let userData = await userService.activa(id, ids)
     return res.status(200).json({
         userData
     })
 }
 
-let getnamegr = async (req,res) => {
+let getnamegr = async (req, res) => {
     let id = req.query.id
     let userData = await userService.nameger(id)
     return res.status(200).json({
@@ -665,32 +673,31 @@ let getnamegr = async (req,res) => {
     })
 }
 
-let createpost = async (req,res) => {
+let createpost = async (req, res) => {
     let id = req.query.id
     let text = req.query.text
     let img = req.body.img
     // console.log(text)
-    if(text === '')
-    {
+    if (text === '') {
 
     }
-    else{
-            let userData = await userService.poi(id,text,img)
-            return res.status(200).json({
-                userData
-            })
-        }
+    else {
+        let userData = await userService.poi(id, text, img)
+        return res.status(200).json({
+            userData
+        })
     }
-   
+}
 
-let listpost = async (req,res) => {
+
+let listpost = async (req, res) => {
     let userData = await userService.pioy()
     return res.status(200).json({
         userData
     })
 }
 
-let postidk = async (req,res) => {
+let postidk = async (req, res) => {
     let id = req.query.id
     let userData = await userService.idkpost(id)
     return res.status(200).json({
@@ -698,7 +705,7 @@ let postidk = async (req,res) => {
     })
 }
 
-let like = async (req,res) => {
+let like = async (req, res) => {
     let id = req.query.id
 
     let userData = await userService.likein(id)
@@ -707,7 +714,7 @@ let like = async (req,res) => {
     })
 }
 
-let dislike = async (req,res) => {
+let dislike = async (req, res) => {
     let id = req.query.id
 
     let userData = await userService.dislikein(id)
@@ -716,43 +723,42 @@ let dislike = async (req,res) => {
     })
 }
 
-let commenti = async (req,res) => {
+let commenti = async (req, res) => {
     let id = req.query.id
     let ids = req.query.ids
     let mes = req.query.mes
     console.log(id)
     console.log(ids)
     console.log(mes)
-    
-    if(!mes){
+
+    if (!mes) {
 
     }
-    else
-    {
-        let userData = await userService.commento(id,ids,mes)
+    else {
+        let userData = await userService.commento(id, ids, mes)
         return res.status(200).json({
             userData
         })
     }
-    
+
 }
 
-let comment = async (req,res) => {
-        
-        let id = req.query.id;
-        let userData = await userService.listcomment(id)
-        return res.status(200).json({
-            userData
-        })
-   
+let comment = async (req, res) => {
+
+    let id = req.query.id;
+    let userData = await userService.listcomment(id)
+    return res.status(200).json({
+        userData
+    })
+
 }
 
 
-let deleteaff = async (req,res) => {
-        
+let deleteaff = async (req, res) => {
+
     let id = req.query.id;
     let ids = req.query.ids;
-    
+
 
     let userData = await userService.deleteafk(id, ids)
     return res.status(200).json({
@@ -762,7 +768,7 @@ let deleteaff = async (req,res) => {
 }
 
 
-let searchingfor =  async (req,res) => {       
+let searchingfor = async (req, res) => {
     let name = req.query.name;
     let id = req.query.id;
     let userData = await userService.searchforaff(name, id)
@@ -771,7 +777,7 @@ let searchingfor =  async (req,res) => {
     })
 }
 
-let deleteGr = async (req,res) => {
+let deleteGr = async (req, res) => {
     let id = req.query.id;
     let userData = await userService.deleteGroup(id)
     return res.status(200).json({
@@ -780,7 +786,7 @@ let deleteGr = async (req,res) => {
 }
 
 
-let setc = async (req,res) => {
+let setc = async (req, res) => {
     let id = req.query.id;
     let userData = await userService.setchange(id)
     return res.status(200).json({
@@ -789,24 +795,224 @@ let setc = async (req,res) => {
 }
 
 
-module.exports = {
+let deleteaccount = async (req, res) => {
+    let id = req.query.id;
+    let userData = await userService.deleteaccounts(id)
+    return res.status(200).json({
+        userData
+    })
+}
 
-    setc:setc,
-    postidk:postidk,
-    deleteGr:deleteGr,
-    searchingfor:searchingfor,
-    deleteaff:deleteaff,
-    searchffk:searchffk,
-    comment:comment,
-    commenti:commenti,
-    dislike:dislike,
-    like:like,
-    listpost:listpost,
-    createpost:createpost,
-    ListActivate:ListActivate,
-    getnamegr:getnamegr,
-    messa:messa,
-    dmm:dmm,
+let getAdmin = async (req, res) => {
+    let userData = await userService.getAllAdmin()
+    return res.status(200).json({
+        userData
+    })
+}
+
+let acceptt = async (req, res) => {
+    let id = req.query.id;
+    let ids = req.query.ids;
+
+
+    let userData = await userService.getAccept(id, ids)
+    return res.status(200).json({
+        userData
+    })
+}
+let createGroupl = async (req, res) => {
+    let id = req.query.id;
+    let name = req.query.name
+    let ok = req.query.ok
+    
+    // console.log(typeof parseInt(ok))
+    if (ok > 0 && name.length > 0) {
+        let userData = await userService.createGro(id, name, ok)
+        return res.status(200).json({
+            userData
+        })
+    }
+
+}
+
+let getlearning = async (req, res) => {
+    let id = req.query.id;
+
+    let userData = await userService.getLearn(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let deletepost = async (req, res) => {
+    let id = req.query.id;
+
+    let userData = await userService.postdelete(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let searchRole = async (req, res) => {
+    let id = req.query.id;
+    let ids = req.query.ids;
+
+    let userData = await userService.rolesearch(id, ids)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let Charty = async (req, res) => {
+
+    let userData = await userService.chartttt()
+    return res.status(200).json({
+        userData
+    })
+}
+
+let userup = async (req, res) => {
+
+    let userData = await userService.upuser()
+    return res.status(200).json({
+        userData
+    })
+}
+
+let learndel = async (req, res) => {
+    let id = req.query.id
+    let userData = await userService.dellearn(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let rip = async (req, res) => {
+    let id = req.query.id
+    let ids = req.query.ids
+    let idss = req.query.idss
+   
+    
+    let userData = await userService.pir(id,ids,idss)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let getlearningopc =  async (req, res) => {
+    let id = req.query.id
+    let userData = await userService.opc(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+
+let getoff =  async (req, res) => {
+    let id = req.query.id
+    let userData = await userService.offget(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let dellpost =  async (req, res) => {
+    let id = req.query.id
+    let ids = req.query.ids
+    let userData = await userService.lpostdel(id,ids)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let codeclass = async (req, res) => {
+    let id = req.query.id
+    let ids = req.query.ids
+    let userData = await userService.classcode(id,ids)
+    return res.status(200).json({
+        userData
+    })
+}
+
+
+let getclass =  async (req, res) => {
+    let id = req.query.id
+    // console.log(id)
+   
+    let userData = await userService.classget(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let studendel = async (req, res) => {
+    let id = req.query.id
+    let ids = req.query.ids
+    // console.log(id)
+   
+    let userData = await userService.delstuden(id,ids)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let toce = async (req, res) => {
+    let id = req.query.id
+   
+  
+   
+    let userData = await userService.ceot(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let kickoff = async (req, res) => {
+    let id = req.query.id
+    let ids = req.query.ids
+    let userData = await userService.offkick(id,ids)
+    return res.status(200).json({
+        userData
+    })
+}
+
+module.exports = {
+    kickoff:kickoff,
+    studendel:studendel,
+    toce:toce,
+    getclass:getclass,
+    codeclass:codeclass,
+
+    dellpost:dellpost,
+    getoff:getoff,
+    getlearningopc:getlearningopc,
+    rip:rip,
+    learndel: learndel,
+    userup: userup,
+    Charty: Charty,
+    searchRole: searchRole,
+    deletepost: deletepost,
+    getlearning: getlearning,
+    createGroupl: createGroupl,
+    acceptt: acceptt,
+    getAdmin: getAdmin,
+    deleteaccount: deleteaccount,
+    setc: setc,
+    postidk: postidk,
+    deleteGr: deleteGr,
+    searchingfor: searchingfor,
+    deleteaff: deleteaff,
+    searchffk: searchffk,
+    comment: comment,
+    commenti: commenti,
+    dislike: dislike,
+    like: like,
+    listpost: listpost,
+    createpost: createpost,
+    ListActivate: ListActivate,
+    getnamegr: getnamegr,
+    messa: messa,
+    dmm: dmm,
     activate: activate,
     take: take,
     okgr: okgr,
@@ -836,5 +1042,6 @@ module.exports = {
     fusers: fusers,
     fri: fri,
     logout: logout,
-    bre: bre
+    bre: bre,
+    role: role
 }
