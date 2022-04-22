@@ -976,7 +976,128 @@ let kickoff = async (req, res) => {
     })
 }
 
+let postput= async (req, res) => {
+    let id = req.query.id
+    let ids = req.query.ids
+    let userData = await userService.putpost(id,ids)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let filepost = async (req, res) => {
+    let id = req.body.id
+    let ids = req.body.ids
+    let idss = req.body.idss
+    // console.log(id)
+    // // console.log(ids)
+    // console.log(idss)
+    
+    let userData = await userService.postfile(id,ids,idss)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let filepoststudent = async (req, res) => {
+    let id = req.body.id
+    let ids = req.body.ids
+    let idss = req.body.idss
+    let idt =  req.body.idt
+
+    
+    // // console.log(ids)
+    // console.log(idss)
+    
+    let userData = await userService.studenfile(idt,id,ids,idss)
+    return res.status(200).json({
+        userData
+    })
+}
+
+
+
+let getallfile = async (req, res) => {
+    let id = req.query.id
+    
+    let userData = await userService.fileallget(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let pdfdel = async (req, res) => {
+    let id = req.query.id
+    
+    let userData = await userService.delpdf(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+
+let allupdate =  async (req, res) => {
+    let id = req.query.id
+    let ids = req.query.ids
+    
+    
+    let userData = await userService.updateall(id,ids)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let countew =async (req, res) => {
+    let id = req.query.id
+    let ids = req.query.ids
+    
+    
+    let userData = await userService.wcount(id,ids)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let getallscore = async (req, res) => {
+    let id = req.query.id
+    let userData = await userService.scoregetall(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+
+let  uiui =async (req, res) => {
+    let id = req.query.id
+    let userData = await userService.iuiu(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let sote=async (req, res) => {
+    let id = req.query.id
+    let ids = req.query.ids
+    let userData = await userService.eose(id,ids)
+    return res.status(200).json({
+        userData
+    })
+}
+
+
+
+
 module.exports = {
+    sote:sote,
+    uiui:uiui,
+    getallscore:getallscore,
+    countew:countew,
+    allupdate:allupdate,
+    filepoststudent:filepoststudent,
+    pdfdel:pdfdel,
+    getallfile:getallfile,
+    filepost:filepost,
+    postput:postput,
     kickoff:kickoff,
     studendel:studendel,
     toce:toce,

@@ -44,8 +44,12 @@ let initWebRoutes = (app) => {
     router.get('/api/getlearningopc', userController.getlearningopc)
     router.get('/api/getclass', userController.getclass)
     router.get('/api/toce', userController.toce)
-    // toce
-
+    router.get('/api/getallfile', userController.getallfile)
+    router.get('/api/allupdate', userController.allupdate)
+    router.get('/api/countew', userController.countew)
+    router.get('/api/getallscore', userController.getallscore)
+    router.get('/api/uiui', userController.getallscore)
+    // uiui
 
 
 
@@ -65,8 +69,10 @@ let initWebRoutes = (app) => {
     router.post('/api/createGroupl', userController.createGroupl)
     router.post('/api/rip', userController.rip)
     router.post('/api/codeclass', userController.codeclass)
+    router.post('/api/filepost', userController.filepost)
+    router.post('/api/filepoststudent', userController.filepoststudent)
 
-    //codeclass
+    //allupdate
     
 
     //Method PUT
@@ -76,8 +82,10 @@ let initWebRoutes = (app) => {
     router.put('/api/change', userController.handleChange)
     router.put('/api/get-password', userController.handlePassword);
     router.put('/api/accept', userController.acceptt);
+    router.put('/api/postput', userController.postput);
+    router.put('/api/sote', userController.sote);
 
-    // createGroupl
+    // sote
     // accept
 
    
@@ -92,10 +100,10 @@ let initWebRoutes = (app) => {
     router.delete('/api/dellpost', userController.dellpost)
     router.delete('/api/studendel', userController.studendel)
     router.delete('/api/kickoff', userController.kickoff)
+    router.delete('/api/pdfdel', userController.pdfdel)
 
 
-
-    // kickoff
+    // pdfdel
 
     // deleteaccount
     return app.use("/", router)

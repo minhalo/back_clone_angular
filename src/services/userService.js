@@ -1674,14 +1674,14 @@ let classcode = (id, ids) => {
 }
 
 
-let classget =(id) => {
+let classget = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
             // console.log(id)
             let [test] = await sequelize.query(`
             Select  learnings.id,learnings.groupname, learnings.point from learnings, sublearns, users where  sublearns.accId = users.id AND sublearns.learningId = learnings.id and users.id = ${id}
             `);
-           
+
             resolve(test)
         } catch (error) {
             reject(error)
@@ -1690,7 +1690,7 @@ let classget =(id) => {
 }
 
 
-let delstuden = (id,ids) => {
+let delstuden = (id, ids) => {
     return new Promise(async (resolve, reject) => {
         try {
             // console.log(id)
@@ -1698,7 +1698,7 @@ let delstuden = (id,ids) => {
             let [test] = await sequelize.query(`
             DELETE FROM sublearns WHERE sublearns.accId = ${ids} and sublearns.learningId = ${id};
             `);
-           
+
             resolve(true)
         } catch (error) {
             reject(error)
@@ -1715,7 +1715,7 @@ let ceot = (id) => {
             let [test] = await sequelize.query(`
             SELECT users.id,users.firstName, users.image from users, sublearns WHERE users.id = sublearns.accId and sublearns.learningId = ${id}
             `);
-           
+
             resolve(test)
         } catch (error) {
             reject(error)
@@ -1723,14 +1723,172 @@ let ceot = (id) => {
     })
 }
 
-let offkick = (id,ids) => {
+let offkick = (id, ids) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            let [test] = await sequelize.query(`
+            DELETE FROM sublearns WHERE sublearns.accId = ${id} and sublearns.learningId = ${ids}
+            `);
+
+            resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
+let putpost = (id, ids) => {
     return new Promise(async (resolve, reject) => {
         try {
             let [test] = await sequelize.query(`
-            DELETE FROM sublearns WHERE sublearns.accId = ${ids} and sublearns.learningId = ${id};
+            UPDATE lposts SET lposts.text = '${ids}' WHERE lposts.id = ${id}
             `);
-           
+
             resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let postfile = (id, ids, idss) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            console.log(idss)
+            let user = db.File.create({
+                lpostId: id,
+                file: ids,
+                fileName: idss
+            })
+            resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
+let fileallget = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let users = await db.File.findAll({
+                where: {
+                    lpostId: id
+                },
+            })
+            resolve(users)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let delpdf = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [test] = await sequelize.query(`
+            DELETE FROM files WHERE files.id = ${id}
+            `);
+            resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
+let studenfile = (idt, id, ids, idss) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // console.log(idss)
+            let user = db.Studentf.create({
+                lpostId: id,
+                file: ids,
+                fileName: idss,
+                acc: idt,
+                point: 0
+            })
+            resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let updateall = (id, ids) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let users = await db.Studentf.findAll({
+                where: {
+                    acc: id,
+                    lpostId: ids
+                },
+            })
+            resolve(users)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
+let wcount = (id, ids) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let [test] = await sequelize.query(`
+            SELECT SUM(studentfs.point) as pop 
+            FROM  studentfs    
+            WHERE studentfs.lpostId = ${ids} and studentfs.acc = ${id};  
+            `);
+
+            resolve(test)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let scoregetall = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // console.log(id)
+            let [test] = await sequelize.query(`
+            SELECT users.id as userid,studentfs.id, users.firstName, users.lastName,studentfs.fileName, studentfs.point, studentfs.file from studentfs,users where studentfs.acc = users.id and studentfs.lpostId = ${id}
+            `);
+
+            resolve(test)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let iuiu =(id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            
+            let [test] = await sequelize.query(`
+            SELECT users.id as userid, users.firstName, users.lastName,studentfs.fileName, studentfs.point, studentfs.file from studentfs,users where studentfs.acc = users.id and studentfs.lpostId = ${id}
+            `);
+
+            resolve(test)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let eose=(id,ids) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // console.log(id)
+            let [test] = await sequelize.query(`
+            UPDATE studentfs SET point = ${ids} WHERE studentfs.id = ${id};
+            `);
+
+            resolve(test)
         } catch (error) {
             reject(error)
         }
@@ -1742,10 +1900,20 @@ let offkick = (id,ids) => {
 
 
 module.exports = {
-    offkick:offkick,
-    ceot:ceot,
-    delstuden:delstuden,
-    classget:classget,
+    eose:eose,
+    iuiu:iuiu,
+    scoregetall:scoregetall,
+    wcount: wcount,
+    updateall: updateall,
+    studenfile: studenfile,
+    delpdf: delpdf,
+    fileallget: fileallget,
+    postfile: postfile,
+    putpost: putpost,
+    offkick: offkick,
+    ceot: ceot,
+    delstuden: delstuden,
+    classget: classget,
     classcode: classcode,
     lpostdel: lpostdel,
     offget: offget,

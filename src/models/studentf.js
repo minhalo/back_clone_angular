@@ -3,16 +3,18 @@ const {
   Model, NUMBER, BOOLEAN
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class File extends Model {
+  class Studentf extends Model {
     static associate(models) {}
   };
-  File.init({
+  Studentf.init({
     lpostId: DataTypes.INTEGER,
     file: DataTypes.TEXT('long'),
     fileName:DataTypes.STRING,
+    point: DataTypes.INTEGER,
+    acc:DataTypes.INTEGER,
   }, {
     sequelize,
-    modelName: 'File',
+    modelName: 'Studentf',
   });
-  return File;
+  return Studentf;
 };
