@@ -48,8 +48,12 @@ let initWebRoutes = (app) => {
     router.get('/api/allupdate', userController.allupdate)
     router.get('/api/countew', userController.countew)
     router.get('/api/getallscore', userController.getallscore)
-    router.get('/api/uiui', userController.getallscore)
-    // uiui
+    router.get('/api/uiui', userController.uiui)
+    router.get('/api/chune', userController.chune)
+    router.get('/api/jscore', userController.jscore)
+    router.get('/api/qtq', userController.qtq)
+    router.get('/api/searchText', userController.searchText)
+    // searchText
 
 
 

@@ -1322,7 +1322,7 @@ let deleteGroup = (id) => {
                     where: { id: id },
                 });
             }
-            resolve(test)
+            resolve(true)
         } catch (error) {
             reject(error)
         }
@@ -1649,21 +1649,14 @@ let classcode = (id, ids) => {
                 raw: true
             })
 
-            let userss = await db.Sublearn.findOne({
-                where: {
-                    accId: id,
-                    learningId: ids,
-                },
-                raw: true
-            })
 
             if (users) {
-                if (!userss) {
+                
                     let user = db.Sublearn.create({
                         accId: id,
                         learningId: ids,
                     })
-                }
+                
 
             }
             resolve(true)
@@ -1799,7 +1792,7 @@ let delpdf = (id) => {
 }
 
 
-let studenfile = (idt, id, ids, idss) => {
+let studenfile = (idt, id, ids, idss, iei) => {
     return new Promise(async (resolve, reject) => {
         try {
             // console.log(idss)
@@ -1808,7 +1801,8 @@ let studenfile = (idt, id, ids, idss) => {
                 file: ids,
                 fileName: idss,
                 acc: idt,
-                point: 0
+                point: 0,
+                chosan: iei
             })
             resolve(true)
         } catch (error) {
@@ -1865,10 +1859,10 @@ let scoregetall = (id) => {
     })
 }
 
-let iuiu =(id) => {
+let iuiu = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
-            
+
             let [test] = await sequelize.query(`
             SELECT users.id as userid, users.firstName, users.lastName,studentfs.fileName, studentfs.point, studentfs.file from studentfs,users where studentfs.acc = users.id and studentfs.lpostId = ${id}
             `);
@@ -1880,15 +1874,102 @@ let iuiu =(id) => {
     })
 }
 
-let eose=(id,ids) => {
+let eose = (id, ids) => {
     return new Promise(async (resolve, reject) => {
         try {
             // console.log(id)
-            let [test] = await sequelize.query(`
-            UPDATE studentfs SET point = ${ids} WHERE studentfs.id = ${id};
-            `);
+            if (ids <= 100 && ids > 0) {
+                let [test] = await sequelize.query(`
+            UPDATE studentfs SET point = ${ids} WHERE studentfs.id = ${id}           `);
 
+                resolve(true)
+            }
+            else {
+                // let usercheck = {}
+                let errM = 'Score must be > 0 and <= 100'
+                resolve(errM)
+            }
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
+let nechun = (id, ids) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            if (id) {
+                let [test] = await sequelize.query(`
+            SELECT users.id as userid, users.firstName, users.lastName, studentfs.point, studentfs.file from studentfs,users where studentfs.acc = users.id and studentfs.chosan= ${id}
+            `);
+                resolve(test)
+            }
+            else {
+                let [test] = await sequelize.query(`
+                SELECT users.id as userid, users.firstName, users.lastName, studentfs.point, studentfs.file from studentfs,users where studentfs.acc = users.id 
+                `);
+                resolve(test)
+            }
+
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let scorejs = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            let [test] = await sequelize.query(`
+            SELECT SUM(studentfs.point) as pop FROM studentfs WHERE studentfs.acc = ${id}
+            `);
+            // console.log(test.TextRow)
             resolve(test)
+
+
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
+let tqt = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            let [test] = await sequelize.query(`
+            SELECT posts.text, users.firstName, posts.id, users.lastName, users.image from posts, users WHERE posts.accId = users.id
+            `);
+            // console.log(test.TextRow)
+            resolve(test)
+
+
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let textsearch = (id, ids) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            let [test] = await sequelize.query(`
+             SELECT posts.text, users.firstName, posts.id, users.lastName, users.image from posts, users WHERE posts.accId = users.id AND posts.text LIKE '%${id}%'
+            `);
+            // console.log(test.TextRow)
+            resolve(test)
+
+
+
         } catch (error) {
             reject(error)
         }
@@ -1898,11 +1979,14 @@ let eose=(id,ids) => {
 
 
 
-
 module.exports = {
-    eose:eose,
-    iuiu:iuiu,
-    scoregetall:scoregetall,
+    textsearch: textsearch,
+    tqt: tqt,
+    scorejs: scorejs,
+    nechun: nechun,
+    eose: eose,
+    iuiu: iuiu,
+    scoregetall: scoregetall,
     wcount: wcount,
     updateall: updateall,
     studenfile: studenfile,

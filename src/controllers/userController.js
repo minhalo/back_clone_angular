@@ -1004,12 +1004,14 @@ let filepoststudent = async (req, res) => {
     let ids = req.body.ids
     let idss = req.body.idss
     let idt =  req.body.idt
-
+    let iei =  req.body.iei
+    
+    console.log(iei)
     
     // // console.log(ids)
     // console.log(idss)
     
-    let userData = await userService.studenfile(idt,id,ids,idss)
+    let userData = await userService.studenfile(idt,id,ids,idss,iei)
     return res.status(200).json({
         userData
     })
@@ -1085,9 +1087,50 @@ let sote=async (req, res) => {
 }
 
 
+let chune =async (req, res) => {
+    let id = req.query.id
+    let ids = req.query.ids
+    let userData = await userService.nechun(id,ids)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let jscore =async (req, res) => {
+    let id = req.query.id
+   
+    let userData = await userService.scorejs(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let qtq =async (req, res) => {
+    // let id = req.query.id
+   
+    let userData = await userService.tqt()
+    return res.status(200).json({
+        userData
+    })
+}
+
+let searchText =async (req, res) => {
+    let id = req.query.id
+    let ids = req.query.ids
+   
+    let userData = await userService.textsearch(id,ids)
+    return res.status(200).json({
+        userData
+    })
+}
+
 
 
 module.exports = {
+    searchText:searchText,
+    qtq:qtq,
+    jscore:jscore,
+    chune:chune,
     sote:sote,
     uiui:uiui,
     getallscore:getallscore,

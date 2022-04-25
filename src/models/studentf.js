@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     fileName:DataTypes.STRING,
     point: DataTypes.INTEGER,
     acc:DataTypes.INTEGER,
+    chosan:DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Studentf',
