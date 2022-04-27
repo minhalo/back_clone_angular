@@ -93,7 +93,7 @@ let mop = (id) => {
 
             // let usi = 1
             let [test] = await sequelize.query(`
-            SELECT firstName, chats.createdAt, image, groupchatId, message from users, chats WHERE chats.accountchatId = users.id and groupchatId = ${id} ORDER by chats.id;
+            SELECT users.id,firstName, chats.createdAt, image, groupchatId, message from users, chats WHERE chats.accountchatId = users.id and groupchatId = ${id} ORDER by chats.id;
             `);
             resolve(test)
 
@@ -107,7 +107,9 @@ let mop = (id) => {
 let takeaway = (id, ids, idss) => {
     return new Promise(async (resolve, reject) => {
         try {
-
+            // console.log(id)
+            // console.log(ids)
+            // console.log(idss)
             let ok = 1
             // console.log(idss)
             let users = await db.Subgroup.findOne({
@@ -1977,9 +1979,27 @@ let textsearch = (id, ids) => {
 }
 
 
+let tionemo = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            let [test] = await sequelize.query(`
+             SELECT * from emojis
+            `);
+            // console.log(test.TextRow)
+            resolve(test)
+
+
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
 
 
 module.exports = {
+    tionemo:tionemo,
     textsearch: textsearch,
     tqt: tqt,
     scorejs: scorejs,

@@ -53,7 +53,8 @@ let initWebRoutes = (app) => {
     router.get('/api/jscore', userController.jscore)
     router.get('/api/qtq', userController.qtq)
     router.get('/api/searchText', userController.searchText)
-    // searchText
+    router.get('/api/emotion', userController.emotion)
+    // emotion
 
 
 

@@ -638,9 +638,9 @@ let messa = async (req, res) => {
 
 
 let take = async (req, res) => {
-    let id = req.query.id
-    let ids = req.query.ids
-    let idss = req.query.idss
+    let id = req.body.id
+    let ids = req.body.ids
+    let idss = req.body.idss
     if (!ids) {
         // console.log(ids)
     }
@@ -1124,9 +1124,17 @@ let searchText =async (req, res) => {
     })
 }
 
+let emotion = async (req, res) => {
+    let userData = await userService.tionemo()
+    return res.status(200).json({
+        userData
+    })
+}
+
 
 
 module.exports = {
+    emotion:emotion,
     searchText:searchText,
     qtq:qtq,
     jscore:jscore,
