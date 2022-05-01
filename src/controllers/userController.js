@@ -72,7 +72,7 @@ let handleRegister = async (req, res) => {
         return res.status(500).json({
             errCode: 1,
             message: null,
-            messages: "Password must have more than 8 characters",
+            messages: "Invalid password",
             messagesx: null,
             messagesxt: null
         })
