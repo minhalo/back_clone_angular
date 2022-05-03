@@ -609,6 +609,7 @@ let accept = async (req, res) => {
 let group = async (req, res) => {
     let id = req.query.id
     let ids = req.query.ids
+    // let idss = req.query.idss
     // console.log(id)
     let userData = await userService.groups(id, ids)
     return res.status(200).json({

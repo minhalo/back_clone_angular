@@ -35,13 +35,60 @@ let groups = (id, ids) => {
     return new Promise(async (resolve, reject) => {
         try {
             // let userData = {};
-
-            let usi = 1
-            let user = db.Group.create({
-                groupname: id,
-                idaccount: ids
+            let uiko = await db.Group.findOne({
+                where: {
+                    groupname: id,
+                    idAccount: ids
+                },
+                raw: true
             })
-            resolve(usi)
+
+            if (!uiko) {
+                if(id)
+                {
+
+                
+                let user = await db.Group.create({
+                    groupname: id,
+                    idaccount: ids
+                })
+
+                let users = await db.Group.findOne({
+                    where: {
+                        groupname: id,
+                        idAccount: ids
+                    },
+                    raw: true
+                })
+                // console.log(users.id)
+                let doto = users.id
+                let aka = users.idaccount
+
+                let data = await db.Subgroup.findOne({
+                    where: {
+                        groupId: doto,
+                        accountId: aka
+                    },
+                    raw: true
+                })
+                if (!data) {
+                    let user = db.Subgroup.create({
+                        groupId: doto,
+                        accountId: aka
+                    })
+                }
+
+                resolve(1)
+                }
+                else{
+                    let meserro = "Invalid Groupname"
+                    resolve(meserro)
+                }
+            }
+            else {
+                let meserro = "Try another group name"
+                resolve(meserro)
+            }
 
         } catch (error) {
             reject(error)
@@ -1653,12 +1700,12 @@ let classcode = (id, ids) => {
 
 
             if (users) {
-                
-                    let user = db.Sublearn.create({
-                        accId: id,
-                        learningId: ids,
-                    })
-                
+
+                let user = db.Sublearn.create({
+                    accId: id,
+                    learningId: ids,
+                })
+
 
             }
             resolve(true)
@@ -1999,7 +2046,7 @@ let tionemo = () => {
 
 
 module.exports = {
-    tionemo:tionemo,
+    tionemo: tionemo,
     textsearch: textsearch,
     tqt: tqt,
     scorejs: scorejs,
