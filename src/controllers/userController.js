@@ -1132,9 +1132,52 @@ let emotion = async (req, res) => {
     })
 }
 
+let getPostClass = async (req, res) => {
+    let id = req.query.id
+    let userData = await userService.classpostGet(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let getdocumentclass = async (req, res) => {
+    let id = req.query.id
+    let ids = req.query.ids
+    // console.log(ids)
+    let userData = await userService.classgetdocument(id,ids)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let sendmessage = async (req, res) => {
+    let id = req.query.id
+    let ids = req.query.ids
+    let idss = req.query.idss
+    // console.log(ids)
+    let userData = await userService.msgmes(id,ids,idss)
+    return res.status(200).json({
+        userData
+    })
+}
+
+let getlistmessger = async (req, res) => {
+    let id = req.query.id
+    
+    let userData = await userService.listmsgbox(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+
 
 
 module.exports = {
+    getlistmessger:getlistmessger,
+    sendmessage:sendmessage,
+    getdocumentclass:getdocumentclass,
+    getPostClass:getPostClass,
     emotion:emotion,
     searchText:searchText,
     qtq:qtq,

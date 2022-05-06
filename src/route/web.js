@@ -54,7 +54,11 @@ let initWebRoutes = (app) => {
     router.get('/api/qtq', userController.qtq)
     router.get('/api/searchText', userController.searchText)
     router.get('/api/emotion', userController.emotion)
-    // emotion
+    router.get('/api/getPostClass', userController.getPostClass)
+    router.get('/api/getdocumentclass', userController.getdocumentclass)
+    router.get('/api/getlistmessger', userController.getlistmessger)
+
+    // getlistmessger
 
 
 
@@ -76,8 +80,9 @@ let initWebRoutes = (app) => {
     router.post('/api/codeclass', userController.codeclass)
     router.post('/api/filepost', userController.filepost)
     router.post('/api/filepoststudent', userController.filepoststudent)
+    router.post('/api/sendmessage', userController.sendmessage)
 
-    //allupdate
+    //sendmessage
     
 
     //Method PUT

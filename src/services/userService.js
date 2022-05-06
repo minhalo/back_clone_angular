@@ -1798,7 +1798,7 @@ let putpost = (id, ids) => {
 let postfile = (id, ids, idss) => {
     return new Promise(async (resolve, reject) => {
         try {
-            console.log(idss)
+            // console.log(idss)
             let user = db.File.create({
                 lpostId: id,
                 file: ids,
@@ -2044,8 +2044,77 @@ let tionemo = () => {
     })
 }
 
+let classpostGet = (id) => 
+{
+    return new Promise(async (resolve, reject) => {
+        try {
+            let uiko = await db.Lpost.findOne({
+                where: {
+                   id: id
+                },
+                raw: true
+            })
+            resolve(uiko)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let classgetdocument = (id, ids) =>
+{
+    return new Promise(async (resolve, reject) => {
+        try {
+            let uiko = await db.Studentf.findAll({
+                where: {
+                   acc: id,
+                   chosan: ids
+                },
+                raw: true
+            })
+            resolve(uiko)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let msgmes = (id,ids,idss) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = db.Messager.create({
+                idacc: id,
+                idpost: ids,
+                message: idss
+            })
+            resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+let listmsgbox = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = db.Messager.findAll({
+                where: {
+                    idpost: id
+                }
+            })
+            resolve(user)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 
 module.exports = {
+    listmsgbox:listmsgbox,
+    msgmes:msgmes,
+    classgetdocument:classgetdocument,
+    classpostGet:classpostGet,
     tionemo: tionemo,
     textsearch: textsearch,
     tqt: tqt,
