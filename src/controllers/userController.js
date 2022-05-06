@@ -1039,6 +1039,16 @@ let pdfdel = async (req, res) => {
 }
 
 
+let philadel =  async (req, res) => {
+    let id = req.query.id
+    
+    let userData = await userService.deluo(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+
 let allupdate =  async (req, res) => {
     let id = req.query.id
     let ids = req.query.ids
@@ -1170,10 +1180,22 @@ let getlistmessger = async (req, res) => {
     })
 }
 
+let getdocuio = async (req, res) => {
+    let id = req.query.id
+    
+    let userData = await userService.iogetdoc(id)
+    return res.status(200).json({
+        userData
+    })
+}
+
+
 
 
 
 module.exports = {
+    philadel:philadel,
+    getdocuio:getdocuio,
     getlistmessger:getlistmessger,
     sendmessage:sendmessage,
     getdocumentclass:getdocumentclass,

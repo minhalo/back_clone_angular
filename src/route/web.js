@@ -57,8 +57,9 @@ let initWebRoutes = (app) => {
     router.get('/api/getPostClass', userController.getPostClass)
     router.get('/api/getdocumentclass', userController.getdocumentclass)
     router.get('/api/getlistmessger', userController.getlistmessger)
+    router.get('/api/getdocuio', userController.getdocuio)
 
-    // getlistmessger
+    // getdocuio
 
 
 
@@ -111,9 +112,9 @@ let initWebRoutes = (app) => {
     router.delete('/api/studendel', userController.studendel)
     router.delete('/api/kickoff', userController.kickoff)
     router.delete('/api/pdfdel', userController.pdfdel)
+    router.delete('/api/delpdf', userController.philadel)
 
-
-    // pdfdel
+    // delpdf
 
     // deleteaccount
     return app.use("/", router)

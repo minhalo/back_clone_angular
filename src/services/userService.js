@@ -1840,6 +1840,21 @@ let delpdf = (id) => {
     })
 }
 
+let deluo = (id) => {
+
+    return new Promise(async (resolve, reject) => {
+        try {
+            console.log(id)
+            let [test] = await sequelize.query(`
+            DELETE FROM studentfs WHERE studentfs.id = ${id}
+            `);
+            resolve(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 
 let studenfile = (idt, id, ids, idss, iei) => {
     return new Promise(async (resolve, reject) => {
@@ -2110,7 +2125,26 @@ let listmsgbox = (id) => {
 }
 
 
+let iogetdoc = (id) =>
+{
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = db.Studentf.findOne({
+                where: {
+                    id: id
+                }
+            })
+            resolve(user)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+
 module.exports = {
+    deluo:deluo,
+    iogetdoc:iogetdoc,
     listmsgbox:listmsgbox,
     msgmes:msgmes,
     classgetdocument:classgetdocument,
