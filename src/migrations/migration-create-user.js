@@ -14,39 +14,7 @@ module.exports = {
       password: {
         type: Sequelize.STRING
       },
-      firstName: {
-        type: Sequelize.STRING
-      },
-      lastName: {
-        type: Sequelize.STRING
-      },
-      address: {
-        type: Sequelize.STRING
-      },
-      phonenumber: {
-        type: Sequelize.INTEGER
-      },
-      description: {
-        type: Sequelize.TEXT
-      },
-      ids: {
-        type: Sequelize.STRING
-      },
-      image: {
-        type: Sequelize.TEXT('long')
-      },
-      status: {
-        type: Sequelize.INTEGER
-      },
-      age: {
-        type:Sequelize.INTEGER
-      },
-      gender: {
-        type: Sequelize.STRING
-      },
-      roleid: {
-        type:Sequelize.INTEGER
-      },
+
 
       createdAt: {
         allowNull: false,

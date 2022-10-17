@@ -12,6 +12,7 @@ let app = express();
 app.use(cors())
 // app.use(cors({origin: false}));
 
+
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
@@ -41,7 +42,7 @@ configViewEngine(app);
 initWebRoutes(app);
 connectDB();
 
-let port = process.env.PORT || 6969;
+let port = process.env.PORT || 8081;
 //Port === undefined => port = 6969
 // const server = http.createServer(app)
 
