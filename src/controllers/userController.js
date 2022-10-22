@@ -2,8 +2,9 @@
 import userService from "../services/userService"
 
 let alluser = async (req, res) => {
-  let id = req.query.id
-  let userData = await userService.getAllUser(id)
+  let authorization = req.header("authorization")
+  let token = authorization.split(' ')[0]
+  let userData = await userService.getAllUser(token)
 
   let data = {
     errCode: userData.errCode,
@@ -20,7 +21,7 @@ let handleLogin = async (req, res) => {
   let password = req.body.password;
 
   let userData = await userService.handleUserLogin(email, password)
-
+  console.log(userData);
   let data = {
     errCode: userData.errCode,
     message: userData.errMessage,
@@ -28,9 +29,7 @@ let handleLogin = async (req, res) => {
 
   if (!userData.errCode) {
     data.token = userData.token
-    data.role = userData.role
     data.status = userData.status
-    data.id = userData.id
   }
   return res.status(200).json(data)
 }
@@ -72,8 +71,9 @@ let deleteUser = async (req, res) => {
 }
 
 let handleLogout = async (req, res) => {
-  let id = req.query.id
-  let userData = await userService.logout(id)
+  let authorization = req.header("authorization")
+  let token = authorization.split(' ')[0]
+  let userData = await userService.logout(token)
   let data = {
     errCode: userData.errCode,
     message: userData.errMessage,

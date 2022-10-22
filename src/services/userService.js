@@ -19,13 +19,10 @@ let handleUserReg = (email, password, cpassword) => {
 
       if (register_check_validator.validate) {
         if (!user) {
-
-
           const hash = bcrypt.hashSync(password, 10);
           const token = jwt.sign(
             {
               email: email,
-              password: hash,
             }, process.env.ACCESS_TOKEN_SECRET);
           let user_db = {
             email: email,
@@ -85,10 +82,10 @@ let handleUserLogin = (email, password) => {
             userData = {
               errCode: 0,
               errMessage: "Login successfully",
-              role: user.account.role,
+
               token: user.account.token,
               status: user.account.status,
-              id: user.account.id
+
             }
           }
 
@@ -111,10 +108,10 @@ let handleUserLogin = (email, password) => {
   })
 }
 
-let getAllUser = (id) => {
+let getAllUser = (token) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let user = await getAllUser_db(id)
+      let user = await getAllUser_db(token)
       let data = {
         errCode: 0,
         user: user
@@ -166,12 +163,12 @@ let userDelete = (id) => {
   })
 }
 
-let logout = (id) => {
+let logout = (token) => {
   return new Promise(async (resolve, reject) => {
     try {
       let data = {}
-      if (id) {
-        let check = await logout_user(id)
+      if (token) {
+        let check = await logout_user(token)
         data.errCode = check.errCode
         data.errMessage = check.errMessage
       }

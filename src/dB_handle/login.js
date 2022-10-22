@@ -18,15 +18,14 @@ let check_user_by_email_login = (email) => {
       }
 
       if (user_email) {
-        const hash = bcrypt.hashSync(user_email.password, 10);
         let role = await db.Role.findOne({
           where: { id: user_email.roleId },
         })
         const token = jwt.sign(
           {
             email: user_email.email,
-            password: hash,
-            role: role.nameRole
+            role: role.nameRole,
+            id: user_email.id
           }, process.env.ACCESS_TOKEN_SECRET);
 
         await db.User.update({ token: token },
@@ -39,9 +38,7 @@ let check_user_by_email_login = (email) => {
         user.account = {
           email: user_email.email,
           status: user_email.status,
-          role: role.nameRole,
           token: token,
-          id: user_email.id
         }
       }
       resolve(user)

@@ -1,13 +1,15 @@
 import db from "../models/index"
 import jwt from "../../node_modules/jsonwebtoken"
 import bcrypt from 'bcryptjs'
+import verify_token from "../middleware/verify_token"
 
 
-let logout = (id) => {
+let logout = (token) => {
   return new Promise(async (resolve, reject) => {
     try {
+      let cur_token = await verify_token(token)
       let user_email = await db.User.findOne({
-        where: { id: id },
+        where: { id: cur_token.id },
         raw: true
       })
 
