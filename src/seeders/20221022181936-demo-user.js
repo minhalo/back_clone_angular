@@ -24,7 +24,7 @@ module.exports = {
       updatedAt: new Date()
     }], {});
     await queryInterface.bulkInsert('Users', [{
-      email: 'nguyenhoangminh@gmail.com',
+      email: 'admin@gmail.com',
       password: '$2a$12$RzZbZZG0ZWSXUeUYckoTXu53H.anMcpomtjdc5o0jp7glNIuQLCp6',
       status: 1,
       image: 2,
@@ -35,7 +35,7 @@ module.exports = {
       updatedAt: new Date()
     }], {});
     await queryInterface.bulkInsert('Users', [{
-      email: 'duongdoican1@gmail.com',
+      email: 'nguyenhoangminh@gmail.com',
       password: '$2a$12$RzZbZZG0ZWSXUeUYckoTXu53H.anMcpomtjdc5o0jp7glNIuQLCp6',
       status: 1,
       image: 2,
