@@ -5,7 +5,7 @@ let handleLogin = async (req, res) => {
   let password = req.body.password;
 
   let userData = await authenService.handleUserLogin(email, password)
-  console.log(userData);
+
   let data = {
     errCode: userData.errCode,
     message: userData.errMessage,

@@ -7,11 +7,7 @@ let getAllUser = (token) => {
   return new Promise(async (resolve, reject) => {
     try {
       let user = await getAllUser_db(token)
-      let data = {
-        errCode: 0,
-        user: user
-      }
-      resolve(data)
+      resolve(user)
     } catch (error) {
       reject(error)
     }
@@ -61,16 +57,8 @@ let userDelete = (id) => {
 let getOneUser = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let data = {
-        errCode: 0,
-        errMessage: "Get user successfully"
-      }
-
       let user = await getOneUser_db(id)
-      if (user) {
-        data.user = user
-      }
-      resolve(data)
+      resolve(user)
     } catch (error) {
       reject(error)
     }

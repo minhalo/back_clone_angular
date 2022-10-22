@@ -10,6 +10,7 @@ let initWebRoutes = (app) => {
   //Admin
   //Method GET
   router.get('/api/getAllUser', admin.admin_verify, userController.alluser);
+  router.get('/api/getSpecificUser', admin.admin_verify, userController.getSpecificUser);
 
   //Method PUT
   router.put('/api/banUser', admin.admin_verify, userController.banUser);
@@ -25,7 +26,7 @@ let initWebRoutes = (app) => {
 
   //All
   //Method GET
-  router.get('/api/getSpecificUser', userController.getSpecificUser);
+
 
   //Method POST
   router.post('/api/register', authenController.handleRegister);

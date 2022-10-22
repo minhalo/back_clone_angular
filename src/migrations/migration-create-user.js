@@ -30,6 +30,23 @@ module.exports = {
           key: "id"
         }
       },
+      name: {
+        type: Sequelize.STRING
+      },
+      age: {
+        type: Sequelize.INTEGER
+      },
+      address: {
+        type: Sequelize.STRING
+      },
+      gender: {
+        type: Sequelize.STRING
+      },
+      gmail: {
+        type: Sequelize.STRING
+      },
+
+
 
 
       createdAt: {

@@ -27,7 +27,8 @@ let handleUserReg = (email, password, cpassword) => {
             status: 1,
             roleId: 1,
             token: token,
-            image: 2
+            image: 2,
+            name: "New User"
           }
           await db.User.create(user_db)
 

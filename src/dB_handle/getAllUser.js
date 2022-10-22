@@ -1,6 +1,5 @@
 import db from "../models/index"
 import Op from "../db_useless/db_validate.js"
-import jwt from "../../node_modules/jsonwebtoken"
 import verify_token from "../middleware/verify_token"
 
 let getAllUser_db = (token) => {
@@ -9,7 +8,7 @@ let getAllUser_db = (token) => {
       let cur_token = await verify_token(token)
       let user_email = await db.User.findAll({
         where: { id: { [Op.not]: cur_token.id } },
-        attributes: { exclude: ['password', 'email', 'createdAt', 'updatedAt', 'RoleId', 'token'] },
+        attributes: { exclude: ['password', 'email', 'createdAt', 'updatedAt', 'token', 'age', 'address', 'gender', 'gmail', 'RoleId'] },
         order: [['id', 'ASC']]
       })
 
