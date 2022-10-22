@@ -1,6 +1,7 @@
 import express from "express";
 import userController from "../controllers/userController";
 import authenController from "../controllers/authenController";
+import dbsController from "../controllers/dbsController";
 import admin from "../middleware/admin"
 
 
@@ -11,6 +12,11 @@ let initWebRoutes = (app) => {
   //Method GET
   router.get('/api/getAllUser', admin.admin_verify, userController.alluser);
   router.get('/api/getSpecificUser', admin.admin_verify, userController.getSpecificUser);
+
+
+
+  //Method POST
+  router.post('/api/createRole', admin.admin_verify, userController.createRole);
 
   //Method PUT
   router.put('/api/banUser', admin.admin_verify, userController.banUser);
@@ -35,6 +41,13 @@ let initWebRoutes = (app) => {
   //Method PUT
   router.put('/api/logout', authenController.handleLogout);
 
+
+
+
+  //drop test
+
+  router.post('/api/dropTable', dbsController.dropTable);
+  router.post('/api/createTable', dbsController.createTable);
 
   return app.use("/", router)
 }

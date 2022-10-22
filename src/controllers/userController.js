@@ -35,8 +35,15 @@ let getSpecificUser = async (req, res) => {
   return res.status(200).json(userData)
 }
 
+let createRole = async (req, res) => {
+  let name = req.body.name
+  let userData = await userService.roleCreate(name)
+  return res.status(200).json(userData)
+}
+
 
 module.exports = {
+  createRole: createRole,
   alluser: alluser,
   banUser: banUser,
   deleteUser: deleteUser,

@@ -15,15 +15,10 @@ module.exports = {
       categoryId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Categorys",
+          model: "Categories",
           key: "id"
         }
       },
-      // categoryId: {
-      //   type: Sequelize.STRING
-      // },
-
-
 
       createdAt: {
         allowNull: false,

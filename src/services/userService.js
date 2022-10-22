@@ -2,6 +2,7 @@ import getAllUser_db from "../dB_handle/getAllUser"
 import ban_User from "../dB_handle/banUser"
 import del_User from "../dB_handle/delUser"
 import getOneUser_db from "../dB_handle/getOneUser"
+import create_role from "../dB_handle/createRole"
 
 let getAllUser = (token) => {
   return new Promise(async (resolve, reject) => {
@@ -65,9 +66,29 @@ let getOneUser = (id) => {
   })
 }
 
+let roleCreate = (name) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let data = {
+        errCode: 0,
+        errMessage: "Create role successfully"
+      }
+      let check = await create_role(name)
+      if (!check) {
+        data.errCode = 1,
+          data.errMessage = "Role already exists"
+      }
+      resolve(data)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 module.exports = {
   getAllUser: getAllUser,
   userBan: userBan,
   userDelete: userDelete,
-  getOneUser: getOneUser
+  getOneUser: getOneUser,
+  roleCreate: roleCreate
 }

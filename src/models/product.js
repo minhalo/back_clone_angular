@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Product.belongsTo(models.List, { foreignKey: "listId", as: "arc" })
+      Product.belongsTo(models.List, { foreignKey: "listId", as: "arcs" })
       // Role.hasOne(models.Role, {foreignKey: "accountId", as: "arc"})
 
     }
@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
     discount: DataTypes.INTEGER,
     timeleft: DataTypes.INTEGER,
     note: DataTypes.STRING,
-    listId: DataTypes.STRING
+    listId: DataTypes.INTEGER
 
   }, {
     sequelize,
