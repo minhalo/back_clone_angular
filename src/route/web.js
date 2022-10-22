@@ -1,5 +1,6 @@
 import express from "express";
 import userController from "../controllers/userController";
+import authenController from "../controllers/authenController";
 import admin from "../middleware/admin"
 
 
@@ -27,11 +28,11 @@ let initWebRoutes = (app) => {
   router.get('/api/getSpecificUser', userController.getSpecificUser);
 
   //Method POST
-  router.post('/api/register', userController.handleRegister);
-  router.post('/api/login', userController.handleLogin);
+  router.post('/api/register', authenController.handleRegister);
+  router.post('/api/login', authenController.handleLogin);
 
   //Method PUT
-  router.put('/api/logout', userController.handleLogout);
+  router.put('/api/logout', authenController.handleLogout);
 
 
   return app.use("/", router)

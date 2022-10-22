@@ -14,7 +14,6 @@ let token_expire = (token) => {
         check = true
       }
 
-
       resolve(check)
     } catch (error) {
       reject(error)
