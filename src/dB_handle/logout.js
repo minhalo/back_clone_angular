@@ -2,20 +2,14 @@ import db from "../models/index"
 import jwt from "../../node_modules/jsonwebtoken"
 import bcrypt from 'bcryptjs'
 
-let check_user_by_email_login = (email) => {
+
+let logout = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let check = false
-
       let user_email = await db.User.findOne({
-        where: { email: email },
+        where: { id: id },
         raw: true
       })
-
-
-      let user = {
-        isvalid: check,
-      }
 
       if (user_email) {
         const hash = bcrypt.hashSync(user_email.password, 10);
@@ -32,23 +26,15 @@ let check_user_by_email_login = (email) => {
         await db.User.update({ token: token },
           { where: { id: user_email.id } })
 
-
-        check = true
-        user.isvalid = check
-        user.password = user_email.password
-        user.account = {
-          email: user_email.email,
-          status: user_email.status,
-          role: role.nameRole,
-          token: token,
-          id: user_email.id
-        }
       }
-      resolve(user)
+      resolve({
+        errCode: 0,
+        errMessage: "Logout successfully"
+      })
     } catch (error) {
       reject(error)
     }
   })
 }
 
-module.exports = check_user_by_email_login
+module.exports = logout

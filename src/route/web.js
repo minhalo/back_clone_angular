@@ -1,25 +1,37 @@
 import express from "express";
-import homecontroller from "../controllers/homeController";
 import userController from "../controllers/userController";
-
+import admin from "../middleware/admin"
 
 
 let router = express.Router();
 
 let initWebRoutes = (app) => {
+  //Admin
   //Method GET
-  router.get('/api/login', userController.handleLogin);
+  router.get('/api/getAllUser', admin.admin_verify, userController.alluser);
 
+  //Method PUT
+  router.put('/api/banUser', admin.admin_verify, userController.banUser);
+
+  //Method DELETE
+  router.delete('/api/deleteUser', admin.admin_verify, userController.deleteUser);
+  //end Admin
+
+  //Method PUT
+
+  //User
+
+
+  //All
+  //Method GET
+  router.post('/api/login', userController.handleLogin);
 
   //Method POST
   router.post('/api/register', userController.handleRegister);
 
-
   //Method PUT
+  router.put('/api/logout', userController.handleLogout);
 
-
-
-  //Method DELETE
 
   return app.use("/", router)
 }
