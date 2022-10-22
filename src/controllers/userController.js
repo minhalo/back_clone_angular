@@ -81,11 +81,25 @@ let handleLogout = async (req, res) => {
   return res.status(200).json(data)
 }
 
+let getSpecificUser = async (req, res) => {
+  let id = req.query.id
+  let authorization = req.header("authorization")
+  let token = authorization.split(' ')[0]
+  let userData = await userService.getOneUser(token)
+  let data = {
+    errCode: userData.errCode,
+    message: userData.errMessage,
+  }
+  return res.status(200).json(data)
+}
+
+
 module.exports = {
   handleLogin: handleLogin,
   handleRegister: handleRegister,
   alluser: alluser,
   banUser: banUser,
   deleteUser: deleteUser,
-  handleLogout: handleLogout
+  handleLogout: handleLogout,
+  getSpecificUser: getSpecificUser
 }

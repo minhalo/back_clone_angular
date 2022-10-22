@@ -183,6 +183,26 @@ let logout = (token) => {
   })
 }
 
+let getOneUser = (token) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let data = {}
+      if (token) {
+        let check = await logout_user(token)
+        data.errCode = check.errCode
+        data.errMessage = check.errMessage
+      }
+      else {
+        data.errCode = 1
+        data.errMessage = "No account available"
+      }
+      resolve(data)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 
 module.exports = {
   handleUserLogin: handleUserLogin,
@@ -190,5 +210,6 @@ module.exports = {
   getAllUser: getAllUser,
   userBan: userBan,
   userDelete: userDelete,
-  logout: logout
+  logout: logout,
+  getOneUser: getOneUser
 }

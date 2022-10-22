@@ -24,10 +24,11 @@ let initWebRoutes = (app) => {
 
   //All
   //Method GET
-  router.post('/api/login', userController.handleLogin);
+  router.get('/api/getSpecificUser', userController.getSpecificUser);
 
   //Method POST
   router.post('/api/register', userController.handleRegister);
+  router.post('/api/login', userController.handleLogin);
 
   //Method PUT
   router.put('/api/logout', userController.handleLogout);
