@@ -28,7 +28,6 @@ let deleteRole = (id) => {
           { where: { id: id } })
       }
 
-
       resolve(data)
     } catch (error) {
       reject(error)

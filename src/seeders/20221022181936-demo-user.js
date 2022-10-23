@@ -42,6 +42,19 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }], {});
+    await queryInterface.bulkInsert('Categories', [{
+      name: 'Game',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }], {});
+    await queryInterface.bulkInsert('Categories', [{
+      name: 'Adobe',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }], {});
+
+
+
     await queryInterface.bulkInsert('Users', [{
       email: 'duongdoican@gmail.com',
       password: '$2a$12$RzZbZZG0ZWSXUeUYckoTXu53H.anMcpomtjdc5o0jp7glNIuQLCp6',

@@ -98,11 +98,14 @@ let adminUpdateUser = (id, name, address, gender, age, gmail) => {
   })
 }
 
+
+
 module.exports = {
   getAllUser: getAllUser,
   userBan: userBan,
   userDelete: userDelete,
   getOneUser: getOneUser,
   roleCreate: roleCreate,
-  adminUpdateUser: adminUpdateUser
+  adminUpdateUser: adminUpdateUser,
+
 }

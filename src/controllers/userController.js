@@ -49,7 +49,6 @@ let updateUserByAdmin = async (req, res) => {
   let gmail = req.body.gmail
   let id = req.query.id
 
-
   let userData = await userService.adminUpdateUser(id, name, address, gender, age, gmail)
   return res.status(200).json(userData)
 }

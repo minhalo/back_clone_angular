@@ -5,6 +5,7 @@ import dbsController from "../controllers/dbsController";
 import roleController from "../controllers/roleController";
 import admin from "../middleware/admin"
 import formController from "../controllers/formController"
+import productController from "../controllers/productController"
 
 
 let router = express.Router();
@@ -16,13 +17,12 @@ let initWebRoutes = (app) => {
   router.get('/api/getSpecificUser', admin.admin_verify, userController.getSpecificUser);
   router.get('/api/getAllRole', admin.admin_verify, roleController.getAllRole);
 
-
-
   //Method POST
   router.post('/api/createRole', admin.admin_verify, userController.createRole);
   router.post('/api/createNewUser', admin.admin_verify, authenController.createNewUser);
-
-
+  router.post('/api/createGender', admin.admin_verify, formController.createGender);
+  router.post('/api/createAddress', admin.admin_verify, formController.createAddress);
+  router.post('/api/createCategory', admin.admin_verify, productController.createCategory);
   //Method PUT
   router.put('/api/banUser', admin.admin_verify, userController.banUser);
   router.put('/api/updateUser', admin.admin_verify, userController.updateUserByAdmin);
@@ -37,7 +37,6 @@ let initWebRoutes = (app) => {
 
   //User
 
-
   //All
   //Method GET
   router.get('/api/getGender', formController.getGender);
@@ -49,9 +48,6 @@ let initWebRoutes = (app) => {
 
   //Method PUT
   router.put('/api/logout', authenController.handleLogout);
-
-
-
 
   //drop test
 

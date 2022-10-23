@@ -1,12 +1,5 @@
 import formService from "../services/formService"
 
-// let dropTable = async (req, res) => {
-//   let userData = await dbsService.dropTest()
-
-//   return res.status(200).json(userData)
-// }
-
-
 let getGender = async (req, res) => {
   let userData = await formService.formGender()
 
@@ -19,8 +12,24 @@ let getAddress = async (req, res) => {
   return res.status(200).json(userData)
 }
 
+let createGender = async (req, res) => {
+  let name = req.body.name
+  let userData = await formService.genderCreate(name)
+
+  return res.status(200).json(userData)
+}
+
+let createAddress = async (req, res) => {
+  let name = req.body.name
+  let userData = await formService.addressCreate(name)
+
+  return res.status(200).json(userData)
+}
+
 
 module.exports = {
   getGender: getGender,
-  getAddress: getAddress
+  getAddress: getAddress,
+  createGender: createGender,
+  createAddress: createAddress
 }
