@@ -19,7 +19,7 @@ let check_user_by_email_login = (email) => {
 
       if (user_email) {
         let role = await db.Role.findOne({
-          where: { id: user_email.roleId },
+          where: { id: user_email.RoleId },
         })
         const token = jwt.sign(
           {

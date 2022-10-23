@@ -23,7 +23,7 @@ module.exports = {
       token: {
         type: Sequelize.TEXT
       },
-      roleId: {
+      RoleId: {
         type: Sequelize.INTEGER,
         references: {
           model: "Roles",
@@ -36,11 +36,21 @@ module.exports = {
       age: {
         type: Sequelize.INTEGER
       },
-      address: {
-        type: Sequelize.STRING
+      AddressId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Addresses",
+          key: "id"
+        }
       },
-      gender: {
-        type: Sequelize.STRING
+      GenderId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Genders",
+          key: "id"
+        }
       },
       gmail: {
         type: Sequelize.STRING

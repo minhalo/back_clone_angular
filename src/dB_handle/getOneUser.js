@@ -9,7 +9,7 @@ let getOneUser_db = (id) => {
       })
 
       let role = await db.Role.findOne({
-        where: { id: user_email.roleId },
+        where: { id: user_email.RoleId },
       })
 
       let user = {

@@ -11,8 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.belongsTo(models.Role, { foreignKey: "roleId", as: "arc" })
-
+      User.belongsTo(models.Role, { foreignKey: "RoleId", as: "arc" })
+      User.belongsTo(models.Gender, { foreignKey: "GenderId", as: "arc1" })
+      User.belongsTo(models.Address, { foreignKey: "AddressId", as: "arc6" })
       // {
       //   onDelete: 'RESTRICT',
       //   onUpdate: 'RESTRICT'
@@ -25,12 +26,12 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     status: DataTypes.INTEGER,
     image: DataTypes.INTEGER,
-    roleId: DataTypes.INTEGER,
+    RoleId: DataTypes.INTEGER,
     token: DataTypes.TEXT,
     name: DataTypes.STRING,
     age: DataTypes.INTEGER,
-    address: DataTypes.STRING,
-    gender: DataTypes.STRING,
+    AddressId: DataTypes.INTEGER,
+    GenderId: DataTypes.INTEGER,
     gmail: DataTypes.STRING,
 
   }, {

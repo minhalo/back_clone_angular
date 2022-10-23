@@ -16,7 +16,7 @@ let logout = (token) => {
       if (user_email) {
         const hash = bcrypt.hashSync(user_email.password, 10);
         let role = await db.Role.findOne({
-          where: { id: user_email.roleId },
+          where: { id: user_email.RoleId },
         })
         const token = jwt.sign(
           {

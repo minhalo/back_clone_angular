@@ -7,7 +7,7 @@ let find_role = (email) => {
         where: { email: email }
       })
 
-      let role = user_email.roleId
+      let role = user_email.RoleId
       resolve(role)
     } catch (error) {
       reject(error)

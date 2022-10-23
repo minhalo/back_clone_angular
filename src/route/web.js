@@ -2,6 +2,7 @@ import express from "express";
 import userController from "../controllers/userController";
 import authenController from "../controllers/authenController";
 import dbsController from "../controllers/dbsController";
+import roleController from "../controllers/roleController";
 import admin from "../middleware/admin"
 
 
@@ -12,6 +13,7 @@ let initWebRoutes = (app) => {
   //Method GET
   router.get('/api/getAllUser', admin.admin_verify, userController.alluser);
   router.get('/api/getSpecificUser', admin.admin_verify, userController.getSpecificUser);
+  router.get('/api/getAllRole', admin.admin_verify, roleController.getAllRole);
 
 
 
