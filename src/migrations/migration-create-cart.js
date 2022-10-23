@@ -9,12 +9,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
 
-      userId: {
+      UserIds: {
         type: Sequelize.INTEGER,
 
       },
 
-      productId: {
+      ProductId: {
         type: Sequelize.INTEGER,
 
       },

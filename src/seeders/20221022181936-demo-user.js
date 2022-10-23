@@ -28,6 +28,11 @@ module.exports = {
       updatedAt: new Date()
     }], {});
     await queryInterface.bulkInsert('Addresses', [{
+      name: '(none)',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }], {});
+    await queryInterface.bulkInsert('Addresses', [{
       name: 'Ha Noi',
       createdAt: new Date(),
       updatedAt: new Date()
