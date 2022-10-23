@@ -23,6 +23,7 @@ let initWebRoutes = (app) => {
   router.post('/api/createGender', admin.admin_verify, formController.createGender);
   router.post('/api/createAddress', admin.admin_verify, formController.createAddress);
   router.post('/api/createCategory', admin.admin_verify, productController.createCategory);
+  router.post('/api/createList', admin.admin_verify, productController.createList);
   //Method PUT
   router.put('/api/banUser', admin.admin_verify, userController.banUser);
   router.put('/api/updateUser', admin.admin_verify, userController.updateUserByAdmin);
@@ -41,6 +42,7 @@ let initWebRoutes = (app) => {
   //Method GET
   router.get('/api/getGender', formController.getGender);
   router.get('/api/getAddress', formController.getAddress);
+  router.get('/api/getCategory', productController.getCategory);
 
   //Method POST
   router.post('/api/register', authenController.handleRegister);

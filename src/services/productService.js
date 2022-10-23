@@ -1,5 +1,6 @@
 import createCategory from "../dB_handle/createCategory"
-
+import getCategory from "../dB_handle/getCategory"
+import createList from "../dB_handle/createList"
 
 let categoryCreate = (name) => {
   return new Promise(async (resolve, reject) => {
@@ -18,6 +19,27 @@ let categoryCreate = (name) => {
       }
       resolve(data)
 
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+let categoryGet = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await getCategory()
+      resolve(user)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+let listCreate = (id, name) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await createList(id, name)
       resolve(user)
     } catch (error) {
       reject(error)
@@ -26,5 +48,7 @@ let categoryCreate = (name) => {
 }
 
 module.exports = {
-  categoryCreate: categoryCreate
+  categoryCreate: categoryCreate,
+  categoryGet: categoryGet,
+  listCreate: listCreate
 }
