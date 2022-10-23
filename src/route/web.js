@@ -4,6 +4,7 @@ import authenController from "../controllers/authenController";
 import dbsController from "../controllers/dbsController";
 import roleController from "../controllers/roleController";
 import admin from "../middleware/admin"
+import formController from "../controllers/formController"
 
 
 let router = express.Router();
@@ -19,9 +20,11 @@ let initWebRoutes = (app) => {
 
   //Method POST
   router.post('/api/createRole', admin.admin_verify, userController.createRole);
+  router.post('/api/createNewUser', admin.admin_verify, authenController.createNewUser);
 
   //Method PUT
   router.put('/api/banUser', admin.admin_verify, userController.banUser);
+  router.put('/api/updateUser', admin.admin_verify, userController.updateUserByAdmin);
 
   //Method DELETE
   router.delete('/api/deleteUser', admin.admin_verify, userController.deleteUser);
@@ -34,7 +37,8 @@ let initWebRoutes = (app) => {
 
   //All
   //Method GET
-
+  router.get('/api/getGender', formController.getGender);
+  router.get('/api/getAddress', formController.getAddress);
 
   //Method POST
   router.post('/api/register', authenController.handleRegister);

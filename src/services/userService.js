@@ -3,6 +3,7 @@ import ban_User from "../dB_handle/banUser"
 import del_User from "../dB_handle/delUser"
 import getOneUser_db from "../dB_handle/getOneUser"
 import create_role from "../dB_handle/createRole"
+import adminUpdate_User from "../dB_handle/updateUserByAdmin"
 
 let getAllUser = (token) => {
   return new Promise(async (resolve, reject) => {
@@ -85,10 +86,23 @@ let roleCreate = (name) => {
   })
 }
 
+let adminUpdateUser = (id, name, address, gender, age, gmail) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let check = await adminUpdate_User(id, name, address, gender, age, gmail)
+
+      resolve(check)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 module.exports = {
   getAllUser: getAllUser,
   userBan: userBan,
   userDelete: userDelete,
   getOneUser: getOneUser,
-  roleCreate: roleCreate
+  roleCreate: roleCreate,
+  adminUpdateUser: adminUpdateUser
 }

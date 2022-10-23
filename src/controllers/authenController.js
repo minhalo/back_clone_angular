@@ -45,8 +45,27 @@ let handleLogout = async (req, res) => {
   return res.status(200).json(data)
 }
 
+
+let createNewUser = async (req, res) => {
+  let email = req.body.email;
+  let password = req.body.password;
+  let role = req.body.role
+  let cpassword = req.body.cpassword
+
+  let userData = await authenService.newUserCreate(email, password, role, cpassword)
+
+  let data = {
+    errCode: userData.errCode,
+    message: userData.errMessage,
+  }
+
+  return res.status(200).json(data)
+
+}
+
 module.exports = {
   handleLogin: handleLogin,
   handleRegister: handleRegister,
   handleLogout: handleLogout,
+  createNewUser: createNewUser
 }

@@ -59,6 +59,62 @@ let handleUserReg = (email, password, cpassword) => {
   })
 }
 
+let newUserCreate = (email, password, role, cpassword) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let userData = {}
+      let user = await check_user_by_email(email)
+      let register_check_validator = await data_for_user(email, password, cpassword, cpassword)
+      let image = 2
+      if (role == 2) {
+        image = 1
+      }
+      if (register_check_validator.validate) {
+        if (!user) {
+          const hash = bcrypt.hashSync(password, 10);
+          const token = jwt.sign(
+            {
+              email: email,
+            }, process.env.ACCESS_TOKEN_SECRET);
+          let user_db = {
+            email: email,
+            password: hash,
+            status: 1,
+            RoleId: role,
+            token: token,
+            image: image,
+            name: "New User",
+            GenderId: 1,
+            AddressId: 1
+          }
+          await db.User.create(user_db)
+
+          userData.errCode = 0;
+          userData.errMessage = "Pass validation";
+        }
+        else {
+          userData.errCode = 1;
+          userData.errMessage = "Account already exists";
+        }
+
+      }
+      else {
+        if (register_check_validator.errors_pass) {
+          userData.errCode = 2;
+          userData.errMessage = register_check_validator.errors_pass;
+        }
+        if (register_check_validator.errors_email) {
+          userData.errCode = 1;
+          userData.errMessage = register_check_validator.errors_email;
+        }
+      }
+      resolve(userData)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 let handleUserLogin = (email, password) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -132,4 +188,5 @@ module.exports = {
   handleUserLogin: handleUserLogin,
   handleUserReg: handleUserReg,
   logout: logout,
+  newUserCreate: newUserCreate
 }

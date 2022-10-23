@@ -41,11 +41,25 @@ let createRole = async (req, res) => {
   return res.status(200).json(userData)
 }
 
+let updateUserByAdmin = async (req, res) => {
+  let name = req.body.name
+  let address = req.body.address
+  let gender = req.body.gender
+  let age = req.body.age
+  let gmail = req.body.gmail
+  let id = req.query.id
+
+
+  let userData = await userService.adminUpdateUser(id, name, address, gender, age, gmail)
+  return res.status(200).json(userData)
+}
+
 
 module.exports = {
   createRole: createRole,
   alluser: alluser,
   banUser: banUser,
   deleteUser: deleteUser,
-  getSpecificUser: getSpecificUser
+  getSpecificUser: getSpecificUser,
+  updateUserByAdmin: updateUserByAdmin
 }
