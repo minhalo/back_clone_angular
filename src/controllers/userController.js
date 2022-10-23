@@ -55,11 +55,14 @@ let updateUserByAdmin = async (req, res) => {
 }
 
 
+
+
 module.exports = {
   createRole: createRole,
   alluser: alluser,
   banUser: banUser,
   deleteUser: deleteUser,
   getSpecificUser: getSpecificUser,
-  updateUserByAdmin: updateUserByAdmin
+  updateUserByAdmin: updateUserByAdmin,
+
 }

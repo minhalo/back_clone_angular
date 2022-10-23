@@ -22,12 +22,15 @@ let initWebRoutes = (app) => {
   router.post('/api/createRole', admin.admin_verify, userController.createRole);
   router.post('/api/createNewUser', admin.admin_verify, authenController.createNewUser);
 
+
   //Method PUT
   router.put('/api/banUser', admin.admin_verify, userController.banUser);
   router.put('/api/updateUser', admin.admin_verify, userController.updateUserByAdmin);
+  router.put('/api/updateRole', admin.admin_verify, roleController.updateRole);
 
   //Method DELETE
   router.delete('/api/deleteUser', admin.admin_verify, userController.deleteUser);
+  router.delete('/api/deleteRole', admin.admin_verify, roleController.deleteRole);
   //end Admin
 
   //Method PUT
