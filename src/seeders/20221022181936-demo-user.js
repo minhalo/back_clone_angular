@@ -53,6 +53,61 @@ module.exports = {
       updatedAt: new Date()
     }], {});
 
+    await queryInterface.bulkInsert('Lists', [{
+      CategoryId: 1,
+      name: 'Pubg',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }], {});
+    await queryInterface.bulkInsert('Lists', [{
+      CategoryId: 1,
+      name: 'Valorant',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }], {});
+    await queryInterface.bulkInsert('Lists', [{
+      CategoryId: 1,
+      name: 'LOL',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }], {});
+    await queryInterface.bulkInsert('Lists', [{
+      CategoryId: 1,
+      name: 'King God Castle',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }], {});
+    await queryInterface.bulkInsert('Lists', [{
+      CategoryId: 1,
+      name: 'Freefire',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }], {});
+    await queryInterface.bulkInsert('Lists', [{
+      CategoryId: 1,
+      name: 'Fifa 0nline 4',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }], {});
+
+    await queryInterface.bulkInsert('Lists', [{
+      CategoryId: 2,
+      name: 'Photoshop',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }], {});
+    await queryInterface.bulkInsert('Lists', [{
+      CategoryId: 2,
+      name: 'Illustrator',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }], {});
+    await queryInterface.bulkInsert('Lists', [{
+      CategoryId: 2,
+      name: 'Premere',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }], {});
 
 
     await queryInterface.bulkInsert('Users', [{

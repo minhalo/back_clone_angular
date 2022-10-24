@@ -29,6 +29,10 @@ module.exports = {
       note: {
         type: Sequelize.TEXT
       },
+      image: {
+        type: Sequelize.INTEGER
+      },
+
 
       listId: {
         type: Sequelize.INTEGER,

@@ -24,6 +24,7 @@ let initWebRoutes = (app) => {
   router.post('/api/createAddress', admin.admin_verify, formController.createAddress);
   router.post('/api/createCategory', admin.admin_verify, productController.createCategory);
   router.post('/api/createList', admin.admin_verify, productController.createList);
+  router.post('/api/createProduct', admin.admin_verify, productController.createProduct);
   //Method PUT
   router.put('/api/banUser', admin.admin_verify, userController.banUser);
   router.put('/api/updateUser', admin.admin_verify, userController.updateUserByAdmin);
@@ -43,6 +44,8 @@ let initWebRoutes = (app) => {
   router.get('/api/getGender', formController.getGender);
   router.get('/api/getAddress', formController.getAddress);
   router.get('/api/getCategory', productController.getCategory);
+  router.get('/api/getList', productController.getList);
+  router.get('/api/getListByCat', productController.getListByCat);
 
   //Method POST
   router.post('/api/register', authenController.handleRegister);
