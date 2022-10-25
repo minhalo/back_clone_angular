@@ -37,7 +37,7 @@ let createProduct = async (req, res) => {
   if (name.length > 20) {
     return res.status(200).json({
       errCode: 1,
-      errMessage: "Name must be less than 10 characters"
+      errMessage: "Name must be less than 20 characters"
     })
   }
   if (title.length > 50) {
@@ -80,8 +80,79 @@ let createProduct = async (req, res) => {
 
   let userData = await productService.productCreate(id, name, title, status, price, discount, time, note, image)
   return res.status(200).json(userData)
+}
+
+let updateProduct = async (req, res) => {
+  let id = req.query.id
+  let { name, title, status, price, discount, time, note, image } = req.body
+  if (name.length > 20) {
+    return res.status(200).json({
+      errCode: 1,
+      errMessage: "Name must be less than 10 characters"
+    })
+  }
+  if (title.length > 50) {
+    return res.status(200).json({
+      errCode: 2,
+      errMessage: "Title must be less than 50 characters"
+    })
+  }
+  if (!isNumeric(status)) {
+    return res.status(200).json({
+      errCode: 3,
+      errMessage: "Status must be a number"
+    })
+  }
+  if (!isNumeric(price)) {
+    return res.status(200).json({
+      errCode: 4,
+      errMessage: "Price must be a number"
+    })
+  }
+  if (!isNumeric(discount)) {
+    return res.status(200).json({
+      errCode: 5,
+      errMessage: "Price must be a number"
+    })
+  }
+  if (!isNumeric(time)) {
+    return res.status(200).json({
+      errCode: 5,
+      errMessage: "Price must be a number"
+    })
+  }
+  if (!isNumeric(image)) {
+    return res.status(200).json({
+      errCode: 5,
+      errMessage: "Price must be a number"
+    })
+  }
 
 
+  let userData = await productService.productUpdate(id, name, title, status, price, discount, time, note, image)
+  return res.status(200).json(userData)
+}
+
+let getProduct = async (req, res) => {
+  let userData = await productService.productGet()
+  return res.status(200).json(userData)
+}
+
+let getProductByList = async (req, res) => {
+  let id = req.query.id
+  let userData = await productService.productByListGet(id)
+  return res.status(200).json(userData)
+}
+let getProductByPage = async (req, res) => {
+  let id = req.query.page
+  let userData = await productService.productByPageGet(id)
+  return res.status(200).json(userData)
+}
+
+let getPage = async (req, res) => {
+  let userData = await productService.pageGet()
+
+  return res.status(200).json(userData)
 }
 
 module.exports = {
@@ -90,5 +161,10 @@ module.exports = {
   createList: createList,
   getList: getList,
   getListByCat: getListByCat,
-  createProduct: createProduct
+  createProduct: createProduct,
+  updateProduct: updateProduct,
+  getProduct: getProduct,
+  getProductByList: getProductByList,
+  getProductByPage: getProductByPage,
+  getPage: getPage
 }

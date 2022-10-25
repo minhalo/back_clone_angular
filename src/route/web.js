@@ -29,6 +29,7 @@ let initWebRoutes = (app) => {
   router.put('/api/banUser', admin.admin_verify, userController.banUser);
   router.put('/api/updateUser', admin.admin_verify, userController.updateUserByAdmin);
   router.put('/api/updateRole', admin.admin_verify, roleController.updateRole);
+  router.put('/api/updateProduct', admin.admin_verify, productController.updateProduct);
 
   //Method DELETE
   router.delete('/api/deleteUser', admin.admin_verify, userController.deleteUser);
@@ -46,6 +47,10 @@ let initWebRoutes = (app) => {
   router.get('/api/getCategory', productController.getCategory);
   router.get('/api/getList', productController.getList);
   router.get('/api/getListByCat', productController.getListByCat);
+  router.get('/api/getProduct', productController.getProduct);
+  router.get('/api/getProductByList', productController.getProductByList);
+  router.get('/api/getProductByPage', productController.getProductByPage);
+  router.get('/api/getPage', productController.getPage);
 
   //Method POST
   router.post('/api/register', authenController.handleRegister);

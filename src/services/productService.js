@@ -4,6 +4,11 @@ import createList from "../dB_handle/createList"
 import getList from "../dB_handle/getList"
 import getListByCat from "../dB_handle/getListByCat"
 import createProduct from "../dB_handle/createProduct"
+import updateProduct from "../dB_handle/updateProduct"
+import getProduct from "../dB_handle/getProduct"
+import getProductByList from "../dB_handle/getProductByList"
+import getProductByPage from "../dB_handle/getProductByPage"
+import getPage from "../dB_handle/getPage"
 
 let categoryCreate = (name) => {
   return new Promise(async (resolve, reject) => {
@@ -84,11 +89,72 @@ let productCreate = (id, name, title, status, price, discount, time, note, image
   })
 }
 
+let productUpdate = (id, name, title, status, price, discount, time, note, image) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await updateProduct(id, name, title, status, price, discount, time, note, image)
+
+      resolve(user)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+let productGet = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await getProduct()
+      resolve(user)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+let productByListGet = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await getProductByList(id)
+      resolve(user)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+let productByPageGet = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await getProductByPage(id)
+      resolve(user)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+let pageGet = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await getPage()
+      resolve(user)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 module.exports = {
   categoryCreate: categoryCreate,
   categoryGet: categoryGet,
   listCreate: listCreate,
   listGet: listGet,
   listByCatGet: listByCatGet,
-  productCreate: productCreate
+  productCreate: productCreate,
+  productUpdate: productUpdate,
+  productGet: productGet,
+  productByListGet: productByListGet,
+  productByPageGet: productByPageGet,
+  pageGet: pageGet
 }
