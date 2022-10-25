@@ -155,6 +155,16 @@ let getPage = async (req, res) => {
   return res.status(200).json(userData)
 }
 
+let getProductByPageList = async (req, res) => {
+  let ListId = req.query.ListId
+  let PageId = req.query.PageId
+
+
+  let userData = await productService.productByPageListGet(ListId, PageId)
+
+  return res.status(200).json(userData)
+}
+
 module.exports = {
   createCategory: createCategory,
   getCategory: getCategory,
@@ -166,5 +176,6 @@ module.exports = {
   getProduct: getProduct,
   getProductByList: getProductByList,
   getProductByPage: getProductByPage,
-  getPage: getPage
+  getPage: getPage,
+  getProductByPageList: getProductByPageList
 }
