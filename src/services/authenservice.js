@@ -141,7 +141,7 @@ let handleUserLogin = (email, password) => {
 
               token: user.account.token,
               status: user.account.status,
-
+              name: user.account.name
             }
           }
 

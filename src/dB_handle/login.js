@@ -36,6 +36,7 @@ let check_user_by_email_login = (email) => {
         user.isvalid = check
         user.password = user_email.password
         user.account = {
+          name: user_email.name,
           email: user_email.email,
           status: user_email.status,
           token: token,

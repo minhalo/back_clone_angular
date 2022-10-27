@@ -14,6 +14,7 @@ let handleLogin = async (req, res) => {
   if (!userData.errCode) {
     data.token = userData.token
     data.status = userData.status
+    data.name = userData.name
   }
   return res.status(200).json(data)
 }
@@ -36,6 +37,7 @@ let handleRegister = async (req, res) => {
 
 let handleLogout = async (req, res) => {
   let authorization = req.header("authorization")
+
   let token = authorization.split(' ')[0]
   let userData = await authenService.logout(token)
   let data = {

@@ -26,7 +26,7 @@ let initWebRoutes = (app) => {
   router.post('/api/createList', admin.admin_verify, productController.createList);
   router.post('/api/createProduct', admin.admin_verify, productController.createProduct);
   //Method PUT
-  router.put('/api/banUser', admin.admin_verify, userController.banUser);
+  router.patch('/api/banUser', admin.admin_verify, userController.banUser);
   router.put('/api/updateUser', admin.admin_verify, userController.updateUserByAdmin);
   router.put('/api/updateRole', admin.admin_verify, roleController.updateRole);
   router.put('/api/updateProduct', admin.admin_verify, productController.updateProduct);
@@ -48,21 +48,21 @@ let initWebRoutes = (app) => {
   //Method GET
   router.get('/api/getGender', formController.getGender);
   router.get('/api/getAddress', formController.getAddress);
-  router.get('/api/getCategory', productController.getCategory);
-  router.get('/api/getList', productController.getList);
-  router.get('/api/getListByCat', productController.getListByCat);
-  router.get('/api/getProduct', productController.getProduct);
-  router.get('/api/getProductByList', productController.getProductByList);
-  router.get('/api/getProductByPage', productController.getProductByPage);
-  router.get('/api/getPage', productController.getPage);
-  router.get('/api/getProductByPageList', productController.getProductByPageList);
+  router.get('/api/category', productController.getCategory);
+  router.get('/api/list', productController.getList);
+  router.get('/api/category/list', productController.getListByCat);
+  router.get('/api/product', productController.getProduct);
+  router.get('/api/category/list/product', productController.getProductByList);
+  router.get('/api/product/page', productController.getProductByPage);
+  router.get('/api/page', productController.getPage);
+  router.get('/api/page/category/list/product', productController.getProductByPageList);
 
   //Method POST
   router.post('/api/register', authenController.handleRegister);
   router.post('/api/login', authenController.handleLogin);
 
   //Method PUT
-  router.put('/api/logout', authenController.handleLogout);
+  router.get('/api/logout', authenController.handleLogout);
 
   //drop test
 
