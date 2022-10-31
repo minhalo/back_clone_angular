@@ -120,6 +120,7 @@ module.exports = {
       name: 'New User',
       GenderId: 1,
       AddressId: 1,
+      coin: 100000,
       createdAt: new Date(),
       updatedAt: new Date()
     }], {});
@@ -133,6 +134,7 @@ module.exports = {
       token: "",
       name: 'New User',
       AddressId: 1,
+      coin: 100000,
       createdAt: new Date(),
       updatedAt: new Date()
     }], {});
@@ -146,6 +148,7 @@ module.exports = {
       name: 'New User',
       GenderId: 1,
       AddressId: 1,
+      coin: 100000,
       createdAt: new Date(),
       updatedAt: new Date()
     }], {});

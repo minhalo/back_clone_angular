@@ -8,8 +8,9 @@ let pageGet = () => {
       let page = resultArray[0].Page
 
       resolve({
-        Page: Number(String(page)[0]) + 1
+        page: ((page / 10) - 1) * 10
       })
+
     } catch (error) {
       reject(error)
     }

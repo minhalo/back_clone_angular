@@ -39,7 +39,9 @@ let check_user_by_email_login = (email) => {
           name: user_email.name,
           email: user_email.email,
           status: user_email.status,
+          role: role.nameRole,
           token: token,
+          coin: user_email.coin
         }
       }
       resolve(user)

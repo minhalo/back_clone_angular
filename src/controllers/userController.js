@@ -4,7 +4,8 @@ import userService from "../services/userService"
 let alluser = async (req, res) => {
   let authorization = req.header("authorization")
   let token = authorization.split(' ')[0]
-  let userData = await userService.getAllUser(token)
+  let id = req.query.page
+  let userData = await userService.getAllUser(token, id)
 
   return res.status(200).json(userData)
 }
@@ -53,7 +54,22 @@ let updateUserByAdmin = async (req, res) => {
   return res.status(200).json(userData)
 }
 
+let getProfile = async (req, res) => {
+  let authorization = req.header("authorization")
 
+  let token = authorization.split(' ')[0]
+
+  let userData = await userService.profileGet(token)
+  return res.status(200).json(userData)
+}
+
+
+let searchPage = async (req, res) => {
+  let name = req.params.name
+
+  let userData = await userService.pageSearch(name)
+  return res.status(200).json(userData)
+}
 
 
 module.exports = {
@@ -63,5 +79,7 @@ module.exports = {
   deleteUser: deleteUser,
   getSpecificUser: getSpecificUser,
   updateUserByAdmin: updateUserByAdmin,
+  getProfile: getProfile,
+  searchPage: searchPage
 
 }

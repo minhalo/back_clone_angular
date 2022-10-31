@@ -13,7 +13,8 @@ let router = express.Router();
 let initWebRoutes = (app) => {
   //Admin
   //Method GET
-  router.get('/api/getAllUser', admin.admin_verify, userController.alluser);
+  router.get('/api/user/page', admin.admin_verify, userController.alluser);
+  router.get('/api/user/page/search', admin.admin_verify, userController.searchPage);
   router.get('/api/getSpecificUser', admin.admin_verify, userController.getSpecificUser);
   router.get('/api/getAllRole', admin.admin_verify, roleController.getAllRole);
 
@@ -56,7 +57,7 @@ let initWebRoutes = (app) => {
   router.get('/api/product/page', productController.getProductByPage);
   router.get('/api/page', productController.getPage);
   router.get('/api/page/category/list/product', productController.getProductByPageList);
-
+  router.get('/api/user/profile', userController.getProfile);
   //Method POST
   router.post('/api/register', authenController.handleRegister);
   router.post('/api/login', authenController.handleLogin);

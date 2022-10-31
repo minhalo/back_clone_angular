@@ -36,6 +36,9 @@ module.exports = {
       age: {
         type: Sequelize.INTEGER
       },
+      coin: {
+        type: Sequelize.INTEGER
+      },
       AddressId: {
         type: Sequelize.INTEGER,
         allowNull: false,

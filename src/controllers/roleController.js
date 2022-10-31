@@ -24,5 +24,6 @@ let deleteRole = async (req, res) => {
 module.exports = {
   getAllRole: getAllRole,
   updateRole: updateRole,
-  deleteRole: deleteRole
+  deleteRole: deleteRole,
+
 }

@@ -4,11 +4,13 @@ import del_User from "../dB_handle/delUser"
 import getOneUser_db from "../dB_handle/getOneUser"
 import create_role from "../dB_handle/createRole"
 import adminUpdate_User from "../dB_handle/updateUserByAdmin"
+import getProfile from "../dB_handle/getProfile"
+import searchPage from "../dB_handle/searchPage"
 
-let getAllUser = (token) => {
+let getAllUser = (token, id) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let user = await getAllUser_db(token)
+      let user = await getAllUser_db(token, id)
       resolve(user)
     } catch (error) {
       reject(error)
@@ -98,7 +100,29 @@ let adminUpdateUser = (id, name, address, gender, age, gmail) => {
   })
 }
 
+let profileGet = (token) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let check = await getProfile(token)
 
+      resolve(check)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+let pageSearch = (name) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let check = await searchPage(name)
+
+      resolve(check)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
 
 module.exports = {
   getAllUser: getAllUser,
@@ -107,5 +131,6 @@ module.exports = {
   getOneUser: getOneUser,
   roleCreate: roleCreate,
   adminUpdateUser: adminUpdateUser,
-
+  profileGet: profileGet,
+  pageSearch: pageSearch
 }

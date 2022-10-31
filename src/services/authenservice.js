@@ -30,7 +30,8 @@ let handleUserReg = (email, password, cpassword) => {
             image: 2,
             name: "New User",
             GenderId: 1,
-            AddressId: 1
+            AddressId: 1,
+            coin: 0
           }
           await db.User.create(user_db)
 
@@ -141,7 +142,9 @@ let handleUserLogin = (email, password) => {
 
               token: user.account.token,
               status: user.account.status,
-              name: user.account.name
+              name: user.account.name,
+              role: user.account.role,
+              coin: user.account.coin
             }
           }
 

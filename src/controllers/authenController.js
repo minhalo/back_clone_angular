@@ -15,6 +15,9 @@ let handleLogin = async (req, res) => {
     data.token = userData.token
     data.status = userData.status
     data.name = userData.name
+    data.role = userData.role
+    data.coin = userData.coin
+
   }
   return res.status(200).json(data)
 }
