@@ -14,13 +14,15 @@ let initWebRoutes = (app) => {
   //Admin
   //Method GET
   router.get('/api/user/page', admin.admin_verify, userController.alluser);
-  router.get('/api/user/page/search', admin.admin_verify, userController.searchPage);
+  router.get('/api/user/page/searchAll', admin.admin_verify, userController.searchAll);
+  router.post('/api/user/page/search', admin.admin_verifican, userController.searchPage);
+  router.get('/api/user/page/search/Page', admin.admin_verify, userController.searchPageByPage);
   router.get('/api/getSpecificUser', admin.admin_verify, userController.getSpecificUser);
   router.get('/api/getAllRole', admin.admin_verify, roleController.getAllRole);
 
   //Method POST
   router.post('/api/createRole', admin.admin_verify, userController.createRole);
-  router.post('/api/createNewUser', admin.admin_verify, authenController.createNewUser);
+  router.post('/api/createNewUser', admin.admin_verifican, authenController.createNewUser);
   router.post('/api/createGender', admin.admin_verify, formController.createGender);
   router.post('/api/createAddress', admin.admin_verify, formController.createAddress);
   router.post('/api/createCategory', admin.admin_verify, productController.createCategory);

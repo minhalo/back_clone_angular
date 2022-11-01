@@ -22,9 +22,33 @@ let admin_verify = async (req, res, next) => {
 
 }
 
+
+let admin_verifican = async (req, res, next) => {
+  let authorization = req.body.authorization
+  if (authorization) {
+
+    let token = authorization.split(' ')[0]
+
+    let token_check = authorization.split(' ')[1]
+
+    let cur_token = await verify_token(token)
+    if (cur_token.role == 'Admin' && token_check == 'bearer') {
+      next()
+    }
+    else {
+      return res.status(401).json("Authentication failed")
+    }
+  }
+  else {
+    return res.status(401).json("Authentication failed")
+  }
+
+
+}
+
 let admin_checkout = async (req, res, next) => {
   let token = req.body.token
-  console.log(token);
+
   let user = await verify()
   next()
 }
@@ -54,5 +78,6 @@ let verify_token = async (token) => {
 
 module.exports = {
   admin_verify: admin_verify,
-  admin_checkout: admin_checkout
+  admin_checkout: admin_checkout,
+  admin_verifican: admin_verifican
 }

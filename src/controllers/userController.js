@@ -65,12 +65,33 @@ let getProfile = async (req, res) => {
 
 
 let searchPage = async (req, res) => {
-  let name = req.params.name
+  let authorization = req.body.authorization
+  let name = req.body.name
+  let id = req.body.page
+  let token = authorization.split(' ')[0]
 
-  let userData = await userService.pageSearch(name)
+  let userData = await userService.pageSearch(token, name, id)
   return res.status(200).json(userData)
 }
 
+
+let searchPageByPage = async (req, res) => {
+  let authorization = req.header("authorization")
+  let name = req.query.name
+
+  let token = authorization.split(' ')[0]
+
+  let userData = await userService.pageByPageSearch(token, name)
+  return res.status(200).json(userData)
+}
+
+let searchAll = async (req, res) => {
+  let authorization = req.header("authorization")
+  let token = authorization.split(' ')[0]
+
+  let userData = await userService.allSearch(token)
+  return res.status(200).json(userData)
+}
 
 module.exports = {
   createRole: createRole,
@@ -80,6 +101,7 @@ module.exports = {
   getSpecificUser: getSpecificUser,
   updateUserByAdmin: updateUserByAdmin,
   getProfile: getProfile,
-  searchPage: searchPage
-
+  searchPage: searchPage,
+  searchPageByPage: searchPageByPage,
+  searchAll: searchAll
 }

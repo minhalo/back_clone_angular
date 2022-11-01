@@ -21,7 +21,7 @@ let getProductByPage = (id) => {
         cancel = 0
       }
 
-      // console.log(resultArray);
+
       resolve(b)
     } catch (error) {
       reject(error)

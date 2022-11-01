@@ -10,7 +10,7 @@ let adminUpdate_User = (id, name, address, gender, age, gmail) => {
         errCode: 0,
         errMessage: "Update successfully"
       }
-      console.log(isNumeric(age));
+
 
       if (!name) {
         data.errCode = 1,
