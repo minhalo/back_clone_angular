@@ -37,7 +37,7 @@ let initWebRoutes = (app) => {
   router.put('/api/updateAddress', admin.admin_verify, formController.updateAddress);
 
   //Method DELETE
-  router.delete('/api/deleteUser', admin.admin_verifican, userController.deleteUser);
+  router.delete('/api/deleteUser', admin.admin_verify, userController.deleteUser);
   router.delete('/api/deleteRole', admin.admin_verify, roleController.deleteRole);
   router.delete('/api/deleteGender', admin.admin_verify, formController.deleteGender);
   router.delete('/api/deleteAddress', admin.admin_verify, formController.deleteAddress);

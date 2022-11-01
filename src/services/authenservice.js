@@ -86,7 +86,8 @@ let newUserCreate = (email, password, role, cpassword) => {
             image: image,
             name: "New User",
             GenderId: 1,
-            AddressId: 1
+            AddressId: 1,
+            coin: 0
           }
           await db.User.create(user_db)
 
