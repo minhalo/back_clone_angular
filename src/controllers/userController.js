@@ -11,7 +11,7 @@ let alluser = async (req, res) => {
 }
 
 let banUser = async (req, res) => {
-  let id = req.query.id
+  let id = req.body.id
   let userData = await userService.userBan(id)
   let data = {
     errCode: userData.errCode,
@@ -21,7 +21,7 @@ let banUser = async (req, res) => {
 }
 
 let deleteUser = async (req, res) => {
-  let id = req.query.id
+  let id = req.body.id
   let userData = await userService.userDelete(id)
   let data = {
     errCode: userData.errCode,
