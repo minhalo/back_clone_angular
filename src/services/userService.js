@@ -8,6 +8,7 @@ import getProfile from "../dB_handle/getProfile"
 import searchPage from "../dB_handle/searchPage"
 import searchPageByPage from "../dB_handle/searchPageByPage"
 import seachAll from "../dB_handle/seachAll"
+import getUpdateUser from "../dB_handle/getUpdateUser"
 
 let getAllUser = (token, id) => {
   return new Promise(async (resolve, reject) => {
@@ -90,10 +91,10 @@ let roleCreate = (name) => {
   })
 }
 
-let adminUpdateUser = (id, name, address, gender, age, gmail) => {
+let adminUpdateUser = (id, name, address, gender, age, gmail, role, coin) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let check = await adminUpdate_User(id, name, address, gender, age, gmail)
+      let check = await adminUpdate_User(id, name, address, gender, age, gmail, role, coin)
 
       resolve(check)
     } catch (error) {
@@ -150,6 +151,18 @@ let allSearch = (token) => {
   })
 }
 
+let updateUserGet = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let check = await getUpdateUser(id)
+
+      resolve(check)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 module.exports = {
   getAllUser: getAllUser,
   userBan: userBan,
@@ -160,5 +173,6 @@ module.exports = {
   profileGet: profileGet,
   pageSearch: pageSearch,
   pageByPageSearch: pageByPageSearch,
-  allSearch: allSearch
+  allSearch: allSearch,
+  updateUserGet: updateUserGet
 }

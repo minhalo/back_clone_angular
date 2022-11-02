@@ -20,6 +20,8 @@ let initWebRoutes = (app) => {
   router.get('/api/getSpecificUser', admin.admin_verify, userController.getSpecificUser);
   router.get('/api/getAllRole', admin.admin_verify, roleController.getAllRole);
 
+  router.post('/api/getUpdateUser', admin.admin_verifican, userController.getUpdateUser);
+
   //Method POST
   router.post('/api/createRole', admin.admin_verify, userController.createRole);
   router.post('/api/createNewUser', admin.admin_verifican, authenController.createNewUser);
@@ -30,7 +32,7 @@ let initWebRoutes = (app) => {
   router.post('/api/createProduct', admin.admin_verify, productController.createProduct);
   //Method PUT
   router.patch('/api/banUser', admin.admin_verifican, userController.banUser);
-  router.put('/api/updateUser', admin.admin_verify, userController.updateUserByAdmin);
+  router.put('/api/updateUser', admin.admin_verifican, userController.updateUserByAdmin);
   router.put('/api/updateRole', admin.admin_verify, roleController.updateRole);
   router.put('/api/updateProduct', admin.admin_verify, productController.updateProduct);
   router.put('/api/updateGender', admin.admin_verify, formController.updateGender);

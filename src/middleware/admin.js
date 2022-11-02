@@ -4,6 +4,7 @@ import token_expired from "../dB_handle/token_exprire"
 
 let admin_verify = async (req, res, next) => {
   let authorization = req.header("authorization")
+  console.log(authorization);
   if (authorization) {
     let token = authorization.split(' ')[0]
     let token_check = authorization.split(' ')[1]

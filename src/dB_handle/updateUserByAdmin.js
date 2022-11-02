@@ -2,7 +2,7 @@ import db from "../models/index"
 import isNumeric from "../Validators/isNum"
 
 
-let adminUpdate_User = (id, name, address, gender, age, gmail) => {
+let adminUpdate_User = (id, name, address, gender, age, gmail, role, coin) => {
   return new Promise(async (resolve, reject) => {
     try {
       let userData = {}
@@ -16,24 +16,33 @@ let adminUpdate_User = (id, name, address, gender, age, gmail) => {
         data.errCode = 1,
           data.errMessage = "please enter name"
       }
-      if (!age || !isNumeric(age)) {
+      if (!address) {
         data.errCode = 2,
+          data.errMessage = "please enter address"
+      }
+      if (!age || !Number.isInteger(age)) {
+        data.errCode = 3,
           data.errMessage = "Invalid age"
       }
       if (!gmail) {
-        data.errCode = 1,
+        data.errCode = 4,
           data.errMessage = "please enter gmail"
       }
-      if (id && name && address && gender && age && gmail && isNumeric(age)) {
-        // let user = await db.User.findOne({
-        //   where: { id: id }
-        // })
+      if (!coin || !Number.isInteger(coin)) {
+        data.errCode = 5,
+          data.errMessage = "please enter coin"
+      }
+
+      if (id && name && address && gender && age && gmail && Number.isInteger(age)) {
+
         userData = {
           name: name,
           AddressId: address,
           GenderId: gender,
           gmail: gmail,
-          age: age
+          age: age,
+          RoleId: role,
+          coin: coin
         }
         await db.User.update(userData,
           { where: { id: id } })

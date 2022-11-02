@@ -48,9 +48,12 @@ let updateUserByAdmin = async (req, res) => {
   let gender = req.body.gender
   let age = req.body.age
   let gmail = req.body.gmail
-  let id = req.query.id
+  let id = req.body.id
+  let role = req.body.role
+  let coin = req.body.coin
 
-  let userData = await userService.adminUpdateUser(id, name, address, gender, age, gmail)
+
+  let userData = await userService.adminUpdateUser(id, name, address, gender, age, gmail, role, coin)
   return res.status(200).json(userData)
 }
 
@@ -93,6 +96,13 @@ let searchAll = async (req, res) => {
   return res.status(200).json(userData)
 }
 
+let getUpdateUser = async (req, res) => {
+  let id = req.query.id
+
+  let userData = await userService.updateUserGet(id)
+  return res.status(200).json(userData)
+}
+
 module.exports = {
   createRole: createRole,
   alluser: alluser,
@@ -103,5 +113,6 @@ module.exports = {
   getProfile: getProfile,
   searchPage: searchPage,
   searchPageByPage: searchPageByPage,
-  searchAll: searchAll
+  searchAll: searchAll,
+  getUpdateUser: getUpdateUser
 }
