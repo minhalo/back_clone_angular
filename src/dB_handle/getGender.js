@@ -6,8 +6,7 @@ let getGender = (token) => {
     try {
 
       let gender = await db.Gender.findAll({
-        attributes: { exclude: ['createdAt', 'updatedAt'] },
-        order: [['id', 'ASC']]
+
       })
 
       resolve(gender)

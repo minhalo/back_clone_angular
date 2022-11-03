@@ -6,6 +6,8 @@ import updateGender from "../dB_handle/updateGender"
 import updateAddress from "../dB_handle/updateAddress"
 import deleteGender from "../dB_handle/delGender"
 import deleteAddress from "../dB_handle/delAddress"
+import searchGender from "../dB_handle/searchGender"
+import searchAddress from "../dB_handle/searchAddress"
 
 let formGender = (name) => {
   return new Promise(async (resolve, reject) => {
@@ -133,7 +135,40 @@ let addressDelete = (id) => {
   })
 }
 
+let genderSearch = (name) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      // let data = {
+      //   errCode: 0,
+      //   errMessage: "Delete gender successfully"
+      // }
+      let data = await searchGender(name)
+      resolve(data)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+let addressSearch = (name) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      // let data = {
+      //   errCode: 0,
+      //   errMessage: "Delete gender successfully"
+      // }
+      let data = await searchAddress(name)
+      resolve(data)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+
 module.exports = {
+  addressSearch: addressSearch,
+  genderSearch: genderSearch,
   formGender: formGender,
   formAddress: formAddress,
   genderCreate: genderCreate,

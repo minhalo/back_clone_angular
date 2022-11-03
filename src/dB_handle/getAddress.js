@@ -5,10 +5,7 @@ let getAddress = (token) => {
   return new Promise(async (resolve, reject) => {
     try {
 
-      let address = await db.Address.findAll({
-        attributes: { exclude: ['createdAt', 'updatedAt'] },
-        order: [['id', 'ASC']]
-      })
+      let address = await db.Address.findAll({})
 
       resolve(address)
     } catch (error) {

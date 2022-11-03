@@ -14,16 +14,33 @@ let getAddress = async (req, res) => {
 
 let createGender = async (req, res) => {
   let name = req.body.name
-  let userData = await formService.genderCreate(name)
+  if (name) {
+    let userData = await formService.genderCreate(name)
+    return res.status(200).json(userData)
+  }
+  else {
+    return res.status(200).json({
+      errCode: 1,
+      errMessage: "invalid gender"
+    })
+  }
 
-  return res.status(200).json(userData)
 }
 
 let createAddress = async (req, res) => {
   let name = req.body.name
-  let userData = await formService.addressCreate(name)
 
-  return res.status(200).json(userData)
+  if (name) {
+    let userData = await formService.addressCreate(name)
+    return res.status(200).json(userData)
+  }
+  else {
+    return res.status(200).json({
+      errCode: 1,
+      errMessage: "Invalid address"
+    })
+  }
+
 }
 
 let updateGender = async (req, res) => {
@@ -54,7 +71,22 @@ let deleteAddress = async (req, res) => {
   return res.status(200).json(userData)
 }
 
+let searchGender = async (req, res) => {
+  let name = req.body.name
+  let userData = await formService.genderSearch(name)
+  return res.status(200).json(userData)
+}
+
+let searchAddress = async (req, res) => {
+  let name = req.body.name
+  let userData = await formService.addressSearch(name)
+  return res.status(200).json(userData)
+}
+
+
 module.exports = {
+  searchAddress: searchAddress,
+  searchGender: searchGender,
   getGender: getGender,
   getAddress: getAddress,
   createGender: createGender,

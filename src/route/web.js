@@ -27,8 +27,8 @@ let initWebRoutes = (app) => {
   router.post('/api/getUpdateUser', admin.admin_verifican, userController.getUpdateUser);
   router.post('/api/createRole', admin.admin_verifican, userController.createRole);
   router.post('/api/createNewUser', admin.admin_verifican, authenController.createNewUser);
-  router.post('/api/createGender', admin.admin_verify, formController.createGender);
-  router.post('/api/createAddress', admin.admin_verify, formController.createAddress);
+  router.post('/api/createGender', admin.admin_verifican, formController.createGender);
+  router.post('/api/createAddress', admin.admin_verifican, formController.createAddress);
   router.post('/api/createCategory', admin.admin_verify, productController.createCategory);
   router.post('/api/createList', admin.admin_verify, productController.createList);
   router.post('/api/createProduct', admin.admin_verify, productController.createProduct);
@@ -67,7 +67,8 @@ let initWebRoutes = (app) => {
   //Method POST
   router.post('/api/register', authenController.handleRegister);
   router.post('/api/login', authenController.handleLogin);
-
+  router.post('/api/searchGender', formController.searchGender);
+  router.post('/api/searchAddress', formController.searchAddress);
   //Method PUT
   router.get('/api/logout', authenController.handleLogout);
 
