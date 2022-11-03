@@ -20,10 +20,12 @@ let initWebRoutes = (app) => {
   router.get('/api/getSpecificUser', admin.admin_verify, userController.getSpecificUser);
   router.get('/api/getAllRole', admin.admin_verify, roleController.getAllRole);
 
-  router.post('/api/getUpdateUser', admin.admin_verifican, userController.getUpdateUser);
+
 
   //Method POST
-  router.post('/api/createRole', admin.admin_verify, userController.createRole);
+  router.post('/api/searchRole', admin.admin_verifican, roleController.searchRole);
+  router.post('/api/getUpdateUser', admin.admin_verifican, userController.getUpdateUser);
+  router.post('/api/createRole', admin.admin_verifican, userController.createRole);
   router.post('/api/createNewUser', admin.admin_verifican, authenController.createNewUser);
   router.post('/api/createGender', admin.admin_verify, formController.createGender);
   router.post('/api/createAddress', admin.admin_verify, formController.createAddress);

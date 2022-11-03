@@ -21,9 +21,17 @@ let deleteRole = async (req, res) => {
   return res.status(200).json(userData)
 }
 
+let searchRole = async (req, res) => {
+  let name = req.body.name
+
+  let userData = await roleService.roleSearch(name)
+  return res.status(200).json(userData)
+}
+
+
 module.exports = {
   getAllRole: getAllRole,
   updateRole: updateRole,
   deleteRole: deleteRole,
-
+  searchRole: searchRole
 }

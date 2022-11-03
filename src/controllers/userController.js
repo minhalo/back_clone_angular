@@ -38,8 +38,18 @@ let getSpecificUser = async (req, res) => {
 
 let createRole = async (req, res) => {
   let name = req.body.name
-  let userData = await userService.roleCreate(name)
-  return res.status(200).json(userData)
+
+  if (name) {
+    let userData = await userService.roleCreate(name)
+    return res.status(200).json(userData)
+  }
+  else {
+    return res.status(200).json({
+      errCode: 1,
+      errMessage: "Invalid role name"
+    })
+  }
+
 }
 
 let updateUserByAdmin = async (req, res) => {

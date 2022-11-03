@@ -1,6 +1,7 @@
 import get_all_role from "../dB_handle/getRole"
 import updateRole from "../dB_handle/updateRole"
 import deleteRole from "../dB_handle/delRole"
+import searchRole from "../dB_handle/searchRole"
 
 let getRole = () => {
   return new Promise(async (resolve, reject) => {
@@ -35,8 +36,20 @@ let roleDelete = (id) => {
   })
 }
 
+let roleSearch = (name) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await searchRole(name)
+      resolve(user)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 module.exports = {
   getRole: getRole,
   roleUpdate: roleUpdate,
-  roleDelete: roleDelete
+  roleDelete: roleDelete,
+  roleSearch: roleSearch
 }

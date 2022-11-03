@@ -6,7 +6,7 @@ let get_all_role = () => {
     try {
       let role = await db.Role.findAll({
         order: [['id', 'ASC']],
-        attributes: { exclude: ['createdAt', 'updatedAt'] },
+
       })
 
       resolve(role)
