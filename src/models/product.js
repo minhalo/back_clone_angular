@@ -48,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
     timeleft: DataTypes.INTEGER,
     note: DataTypes.TEXT,
     listId: DataTypes.INTEGER,
-    image: DataTypes.TEXT,
+    image: DataTypes.TEXT('long'),
 
   }, {
     sequelize,

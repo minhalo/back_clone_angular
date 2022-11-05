@@ -30,7 +30,7 @@ module.exports = {
         type: Sequelize.TEXT
       },
       image: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT('long')
       },
 
 

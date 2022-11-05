@@ -53,8 +53,9 @@ let getListByCat = async (req, res) => {
 }
 
 let createProduct = async (req, res) => {
-  let id = req.query.ListId
-  let { name, title, status, price, discount, time, note, image } = req.body
+
+  let { name, title, status, price, discount, time, note, image, id } = req.body
+  // console.log(name, title, status, price, discount, time, note, id);
   if (name.length > 20) {
     return res.status(200).json({
       errCode: 1,
@@ -67,36 +68,36 @@ let createProduct = async (req, res) => {
       errMessage: "Title must be less than 50 characters"
     })
   }
-  if (!isNumeric(status)) {
-    return res.status(200).json({
-      errCode: 3,
-      errMessage: "Status must be a number"
-    })
-  }
-  if (!isNumeric(price)) {
-    return res.status(200).json({
-      errCode: 4,
-      errMessage: "Price must be a number"
-    })
-  }
-  if (!isNumeric(discount)) {
-    return res.status(200).json({
-      errCode: 5,
-      errMessage: "Price must be a number"
-    })
-  }
-  if (!isNumeric(time)) {
-    return res.status(200).json({
-      errCode: 5,
-      errMessage: "Price must be a number"
-    })
-  }
-  if (image) {
-    return res.status(200).json({
-      errCode: 5,
-      errMessage: "Need image"
-    })
-  }
+  // if (!isNumeric(status)) {
+  //   return res.status(200).json({
+  //     errCode: 3,
+  //     errMessage: "Status must be a number"
+  //   })
+  // }
+  // if (!isNumeric(price)) {
+  //   return res.status(200).json({
+  //     errCode: 4,
+  //     errMessage: "Price must be a number"
+  //   })
+  // }
+  // if (!isNumeric(discount)) {
+  //   return res.status(200).json({
+  //     errCode: 5,
+  //     errMessage: "Price must be a number"
+  //   })
+  // }
+  // if (!isNumeric(time)) {
+  //   return res.status(200).json({
+  //     errCode: 5,
+  //     errMessage: "Price must be a number"
+  //   })
+  // }
+  // if (image) {
+  //   return res.status(200).json({
+  //     errCode: 5,
+  //     errMessage: "Need image"
+  //   })
+  // }
 
 
   let userData = await productService.productCreate(id, name, title, status, price, discount, time, note, image)

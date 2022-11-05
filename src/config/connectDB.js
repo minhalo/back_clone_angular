@@ -5,7 +5,8 @@ const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize('angular_back', 'root', null, {
   host: 'localhost',
   dialect: 'mysql',
-  logging: false
+  logging: false,
+  acquireTimeout: 28000
 });
 
 let connectDB = async () => {
