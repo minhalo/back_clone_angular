@@ -8,6 +8,10 @@ import deleteGender from "../dB_handle/delGender"
 import deleteAddress from "../dB_handle/delAddress"
 import searchGender from "../dB_handle/searchGender"
 import searchAddress from "../dB_handle/searchAddress"
+import searchCategory from "../dB_handle/searchCategory"
+import deleteCategory from "../dB_handle/deleteCategory"
+import deleteList from "../dB_handle/deleteList"
+import searchList from "../dB_handle/searchList"
 
 let formGender = (name) => {
   return new Promise(async (resolve, reject) => {
@@ -165,6 +169,58 @@ let addressSearch = (name) => {
   })
 }
 
+let categorySearch = (name) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let data = await searchCategory(name)
+      resolve(data)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+let listSearch = (name) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let data = await searchList(name)
+      resolve(data)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+let categoryDelete = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let data = {
+        errCode: 0,
+        errMessage: "Delete category successfully"
+      }
+      await deleteCategory(id)
+      resolve(data)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+let listDelete = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let data = {
+        errCode: 0,
+        errMessage: "Delete list successfully"
+      }
+      await deleteList(id)
+      resolve(data)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 
 module.exports = {
   addressSearch: addressSearch,
@@ -176,5 +232,9 @@ module.exports = {
   genderUpdate: genderUpdate,
   addressUpdate: addressUpdate,
   genderDelete: genderDelete,
-  addressDelete: addressDelete
+  addressDelete: addressDelete,
+  categorySearch: categorySearch,
+  categoryDelete: categoryDelete,
+  listDelete: listDelete,
+  listSearch: listSearch
 }

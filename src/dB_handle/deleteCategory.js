@@ -1,17 +1,19 @@
 import db from "../models/index"
 
 
-let getCategory = (token) => {
+let deleteCategory = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
 
-      let category = await db.Category.findAll({})
+      await db.Category.destroy(
+        { where: { id: id } })
 
-      resolve(category)
+
+      resolve(true)
     } catch (error) {
       reject(error)
     }
   })
 }
 
-module.exports = getCategory
+module.exports = deleteCategory

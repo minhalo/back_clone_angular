@@ -48,8 +48,13 @@ let categoryGet = () => {
 let listCreate = (id, name) => {
   return new Promise(async (resolve, reject) => {
     try {
+      let data = {
+        errCode: 0,
+        errMessage: "Create list successfully"
+      }
+
       let user = await createList(id, name)
-      resolve(user)
+      resolve(data)
     } catch (error) {
       reject(error)
     }
@@ -171,5 +176,6 @@ module.exports = {
   productByPageGet: productByPageGet,
   pageGet: pageGet,
   productByPageListGet: productByPageListGet,
-  productByPageListGet: productByPageListGet
+  productByPageListGet: productByPageListGet,
+
 }

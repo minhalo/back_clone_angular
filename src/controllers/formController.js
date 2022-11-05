@@ -83,6 +83,30 @@ let searchAddress = async (req, res) => {
   return res.status(200).json(userData)
 }
 
+let searchCategory = async (req, res) => {
+  let name = req.body.name
+  let userData = await formService.categorySearch(name)
+  return res.status(200).json(userData)
+}
+
+let searchList = async (req, res) => {
+  let name = req.body.name
+  let userData = await formService.listSearch(name)
+  return res.status(200).json(userData)
+}
+
+let deleteCategory = async (req, res) => {
+  let id = req.query.id
+  let userData = await formService.categoryDelete(id)
+  return res.status(200).json(userData)
+}
+
+let deleteList = async (req, res) => {
+  let id = req.query.id
+  let userData = await formService.listDelete(id)
+  return res.status(200).json(userData)
+}
+
 
 module.exports = {
   searchAddress: searchAddress,
@@ -94,5 +118,9 @@ module.exports = {
   updateGender: updateGender,
   updateAddress: updateAddress,
   deleteGender: deleteGender,
-  deleteAddress: deleteAddress
+  deleteAddress: deleteAddress,
+  searchCategory: searchCategory,
+  searchList: searchList,
+  deleteCategory: deleteCategory,
+  deleteList: deleteList
 }

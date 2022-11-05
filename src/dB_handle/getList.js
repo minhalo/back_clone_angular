@@ -5,10 +5,7 @@ let getList = (token) => {
   return new Promise(async (resolve, reject) => {
     try {
 
-      let list = await db.List.findAll({
-        attributes: { exclude: ['createdAt', 'updatedAt'] },
-        order: [['id', 'ASC']]
-      })
+      let list = await db.List.findAll({})
 
       resolve(list)
     } catch (error) {

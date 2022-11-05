@@ -24,14 +24,16 @@ let initWebRoutes = (app) => {
 
   //Method POST
   router.post('/api/searchRole', admin.admin_verifican, roleController.searchRole);
+  router.post('/api/searchCategory', admin.admin_verifican, formController.searchCategory);
+  router.post('/api/searchList', admin.admin_verifican, formController.searchList);
   router.post('/api/getUpdateUser', admin.admin_verifican, userController.getUpdateUser);
   router.post('/api/createRole', admin.admin_verifican, userController.createRole);
   router.post('/api/createNewUser', admin.admin_verifican, authenController.createNewUser);
   router.post('/api/createGender', admin.admin_verifican, formController.createGender);
   router.post('/api/createAddress', admin.admin_verifican, formController.createAddress);
-  router.post('/api/createCategory', admin.admin_verify, productController.createCategory);
-  router.post('/api/createList', admin.admin_verify, productController.createList);
-  router.post('/api/createProduct', admin.admin_verify, productController.createProduct);
+  router.post('/api/createCategory', admin.admin_verifican, productController.createCategory);
+  router.post('/api/createList', admin.admin_verifican, productController.createList);
+  router.post('/api/createProduct', admin.admin_verifican, productController.createProduct);
   //Method PUT
   router.patch('/api/banUser', admin.admin_verifican, userController.banUser);
   router.put('/api/updateUser', admin.admin_verifican, userController.updateUserByAdmin);
@@ -45,6 +47,9 @@ let initWebRoutes = (app) => {
   router.delete('/api/deleteRole', admin.admin_verify, roleController.deleteRole);
   router.delete('/api/deleteGender', admin.admin_verify, formController.deleteGender);
   router.delete('/api/deleteAddress', admin.admin_verify, formController.deleteAddress);
+  router.delete('/api/deleteCategory', admin.admin_verify, formController.deleteCategory);
+  router.delete('/api/deleteList', admin.admin_verify, formController.deleteList);
+
   //end Admin
 
   //Method PUT
