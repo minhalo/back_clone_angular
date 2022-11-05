@@ -55,49 +55,54 @@ let getListByCat = async (req, res) => {
 let createProduct = async (req, res) => {
 
   let { name, title, status, price, discount, time, note, image, id } = req.body
-  // console.log(name, title, status, price, discount, time, note, id);
-  if (name.length > 20) {
+  if (!id) {
+    return res.status(200).json({
+      errCode: 8,
+      errMessage: "Invalid id"
+    })
+  }
+  if (!name || name.length > 20) {
     return res.status(200).json({
       errCode: 1,
-      errMessage: "Name must be less than 20 characters"
+      errMessage: "Invalid name"
     })
   }
-  if (title.length > 50) {
+  if (!title || title.length > 50) {
     return res.status(200).json({
       errCode: 2,
-      errMessage: "Title must be less than 50 characters"
+      errMessage: "Invalid title"
     })
   }
-  // if (!isNumeric(status)) {
-  //   return res.status(200).json({
-  //     errCode: 3,
-  //     errMessage: "Status must be a number"
-  //   })
-  // }
-  // if (!isNumeric(price)) {
-  //   return res.status(200).json({
-  //     errCode: 4,
-  //     errMessage: "Price must be a number"
-  //   })
-  // }
-  // if (!isNumeric(discount)) {
-  //   return res.status(200).json({
-  //     errCode: 5,
-  //     errMessage: "Price must be a number"
-  //   })
-  // }
-  // if (!isNumeric(time)) {
-  //   return res.status(200).json({
-  //     errCode: 5,
-  //     errMessage: "Price must be a number"
-  //   })
-  // }
-  // if (image) {
-  //   return res.status(200).json({
-  //     errCode: 5,
-  //     errMessage: "Need image"
-  //   })
-  // }
+  if (!isNumeric(status)) {
+    return res.status(200).json({
+      errCode: 3,
+      errMessage: "Status must be a number"
+    })
+  }
+  if (!isNumeric(price)) {
+    return res.status(200).json({
+      errCode: 4,
+      errMessage: "Price must be a number"
+    })
+  }
+  if (!isNumeric(discount)) {
+    return res.status(200).json({
+      errCode: 5,
+      errMessage: "Discount must be a number"
+    })
+  }
+  if (!isNumeric(time)) {
+    return res.status(200).json({
+      errCode: 6,
+      errMessage: "Time must be a number"
+    })
+  }
+  if (!image) {
+    return res.status(200).json({
+      errCode: 7,
+      errMessage: "Need image"
+    })
+  }
 
 
   let userData = await productService.productCreate(id, name, title, status, price, discount, time, note, image)
