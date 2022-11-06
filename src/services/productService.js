@@ -10,6 +10,7 @@ import getProductByList from "../dB_handle/getProductByList"
 import getProductByPage from "../dB_handle/getProductByPage"
 import getPage from "../dB_handle/getPage"
 import getProductByPageList from "../dB_handle/getProductByPageList"
+import detail from "../dB_handle/detail"
 
 let categoryCreate = (name) => {
   return new Promise(async (resolve, reject) => {
@@ -162,6 +163,17 @@ let productByPageListGet = (ListId, PageId) => {
   })
 }
 
+let getdetail = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = await detail(id)
+      resolve(user)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 
 module.exports = {
   categoryCreate: categoryCreate,
@@ -177,5 +189,5 @@ module.exports = {
   pageGet: pageGet,
   productByPageListGet: productByPageListGet,
   productByPageListGet: productByPageListGet,
-
+  getdetail: getdetail
 }

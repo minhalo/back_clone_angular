@@ -69,6 +69,7 @@ let initWebRoutes = (app) => {
   router.get('/api/page', productController.getPage);
   router.get('/api/page/category/list/product', productController.getProductByPageList);
   router.get('/api/user/profile', userController.getProfile);
+  router.get('/api/user/product/detail', productController.detail);
   //Method POST
   router.post('/api/register', authenController.handleRegister);
   router.post('/api/login', authenController.handleLogin);
