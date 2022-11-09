@@ -75,6 +75,8 @@ let initWebRoutes = (app) => {
   router.post('/api/login', authenController.handleLogin);
   router.post('/api/searchGender', formController.searchGender);
   router.post('/api/searchAddress', formController.searchAddress);
+
+  router.post('/api/addToCart', productController.addToCart);
   //Method PUT
   router.get('/api/logout', authenController.handleLogout);
 

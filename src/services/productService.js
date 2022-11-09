@@ -11,6 +11,7 @@ import getProductByPage from "../dB_handle/getProductByPage"
 import getPage from "../dB_handle/getPage"
 import getProductByPageList from "../dB_handle/getProductByPageList"
 import detail from "../dB_handle/detail"
+import addToCart from "../dB_handle/addToCart"
 
 let categoryCreate = (name) => {
   return new Promise(async (resolve, reject) => {
@@ -174,8 +175,25 @@ let getdetail = (id) => {
   })
 }
 
+let addCart = (userId, productId, total) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      // let data = {
+      //   errCode: 0,
+      //   errMessage: 'add successfully'
+      // }
+      let data = await addToCart(userId, productId, total)
+      resolve(data)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+
 
 module.exports = {
+  addCart: addCart,
   categoryCreate: categoryCreate,
   categoryGet: categoryGet,
   listCreate: listCreate,

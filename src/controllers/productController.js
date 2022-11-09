@@ -26,7 +26,7 @@ let getCategory = async (req, res) => {
 let createList = async (req, res) => {
   let name = req.body.name
   let id = req.body.id
-  console.log(name, id);
+
   if (name) {
     let userData = await productService.listCreate(id, name)
     return res.status(200).json(userData)
@@ -199,7 +199,26 @@ let detail = async (req, res) => {
   return res.status(200).json(userData)
 }
 
+let addToCart = async (req, res) => {
+  let userId = req.body.userId
+  let productId = req.body.productId
+  let total = req.body.total
+
+
+  if (userId && productId) {
+    let userData = await productService.addCart(userId, productId, total)
+    return res.status(200).json(userData)
+  }
+  else {
+    return res.status(200).json({
+      errCode: 1,
+      errMessage: 'No sl'
+    })
+  }
+}
+
 module.exports = {
+  addToCart: addToCart,
   createCategory: createCategory,
   getCategory: getCategory,
   createList: createList,
