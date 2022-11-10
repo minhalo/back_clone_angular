@@ -263,7 +263,14 @@ let getMes = async (req, res) => {
 
 }
 
+let getSuggestGame = async (req, res) => {
+  let userData = await productService.gameSuggestGet()
+  return res.status(200).json(userData)
+
+}
+
 module.exports = {
+  getSuggestGame: getSuggestGame,
   getMes: getMes,
   createMessage: createMessage,
   deleteCart: deleteCart,

@@ -17,6 +17,7 @@ import cartMe from "../dB_handle/cartMe"
 import deleteCart from "../dB_handle/deleteCart"
 import createMessage from "../dB_handle/createMessage"
 import getMes from "../dB_handle/getMes"
+import getSuggestGame from "../dB_handle/getSuggestGame"
 
 let categoryCreate = (name) => {
   return new Promise(async (resolve, reject) => {
@@ -246,7 +247,19 @@ let mesGet = (ProductId) => {
   })
 }
 
+let gameSuggestGet = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let data = await getSuggestGame()
+      resolve(data)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 module.exports = {
+  gameSuggestGet: gameSuggestGet,
   mesGet: mesGet,
   messageCreate: messageCreate,
   cartDelete: cartDelete,

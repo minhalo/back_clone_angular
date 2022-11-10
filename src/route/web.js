@@ -71,6 +71,7 @@ let initWebRoutes = (app) => {
   router.get('/api/user/profile', userController.getProfile);
   router.get('/api/user/product/detail', productController.detail);
   router.get('/api/getMes', productController.getMes);
+  router.get('/api/getSuggestGame', productController.getSuggestGame);
   //Method POST
   router.post('/api/register', authenController.handleRegister);
   router.post('/api/login', authenController.handleLogin);
