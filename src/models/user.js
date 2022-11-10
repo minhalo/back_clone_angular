@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsTo(models.Gender, { foreignKey: "GenderId", as: "arc1" })
       User.belongsTo(models.Address, { foreignKey: "AddressId", as: "arc6" })
       User.hasMany(models.Cart, { foreignKey: "UserId", as: "arc9" })
+      User.hasMany(models.Message, { foreignKey: "UserId", as: "arc10" })
       // {
       //   onDelete: 'RESTRICT',
       //   onUpdate: 'RESTRICT'

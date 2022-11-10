@@ -15,6 +15,8 @@ import addToCart from "../dB_handle/addToCart"
 import badge from "../dB_handle/badge"
 import cartMe from "../dB_handle/cartMe"
 import deleteCart from "../dB_handle/deleteCart"
+import createMessage from "../dB_handle/createMessage"
+import getMes from "../dB_handle/getMes"
 
 let categoryCreate = (name) => {
   return new Promise(async (resolve, reject) => {
@@ -222,8 +224,31 @@ let cartDelete = (id) => {
   })
 }
 
+let messageCreate = (UserId, ProductId, message) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let data = await createMessage(UserId, ProductId, message)
+      resolve(data)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+let mesGet = (ProductId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let data = await getMes(ProductId)
+      resolve(data)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
 
 module.exports = {
+  mesGet: mesGet,
+  messageCreate: messageCreate,
   cartDelete: cartDelete,
   myCart: myCart,
   badges: badges,

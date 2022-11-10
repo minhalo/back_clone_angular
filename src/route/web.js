@@ -70,6 +70,7 @@ let initWebRoutes = (app) => {
   router.get('/api/page/category/list/product', productController.getProductByPageList);
   router.get('/api/user/profile', userController.getProfile);
   router.get('/api/user/product/detail', productController.detail);
+  router.get('/api/getMes', productController.getMes);
   //Method POST
   router.post('/api/register', authenController.handleRegister);
   router.post('/api/login', authenController.handleLogin);
@@ -77,6 +78,9 @@ let initWebRoutes = (app) => {
   router.post('/api/searchAddress', formController.searchAddress);
   router.post('/api/badge', productController.badge);
   router.post('/api/cartme', productController.cartme);
+  router.post('/api/updateMe', authenController.updateMe);
+
+  router.post('/api/createMessage', productController.createMessage);
 
 
   router.post('/api/addToCart', productController.addToCart);

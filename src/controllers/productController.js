@@ -241,8 +241,31 @@ let deleteCart = async (req, res) => {
   return res.status(200).json(userData)
 
 }
+let createMessage = async (req, res) => {
+  let authorization = req.body.authorization
+
+  let UserId = authorization.split(' ')[0]
+
+  let ProductId = req.body.ProductId
+  let message = req.body.message
+  let userData = await productService.messageCreate(UserId, ProductId, message)
+  return res.status(200).json(userData)
+
+}
+
+let getMes = async (req, res) => {
+
+
+  let ProductId = req.query.ProductId
+
+  let userData = await productService.mesGet(ProductId)
+  return res.status(200).json(userData)
+
+}
 
 module.exports = {
+  getMes: getMes,
+  createMessage: createMessage,
   deleteCart: deleteCart,
   cartme: cartme,
   badge: badge,

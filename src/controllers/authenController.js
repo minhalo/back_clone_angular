@@ -68,7 +68,29 @@ let createNewUser = async (req, res) => {
 
 }
 
+let updateMe = async (req, res) => {
+  let authorization = req.body.authorization
+  let token = authorization.split(' ')[0]
+  let name = req.body.name;
+  let age = req.body.age;
+  let gender = req.body.gender
+  let address = req.body.address
+  let gmail = req.body.gmail
+
+
+  let userData = await authenService.meUpdate(token, name, age, gender, address, gmail)
+
+  let data = {
+    errCode: userData.errCode,
+    message: userData.errMessage,
+  }
+
+  return res.status(200).json(data)
+
+}
+
 module.exports = {
+  updateMe: updateMe,
   handleLogin: handleLogin,
   handleRegister: handleRegister,
   handleLogout: handleLogout,

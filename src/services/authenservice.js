@@ -6,6 +6,7 @@ import check_user_by_email_login from '../dB_handle/login'
 import data_for_user_login from "../Validators/login"
 import jwt from "../../node_modules/jsonwebtoken"
 import logout_user from "../dB_handle/logout"
+import updateMe from "../dB_handle/updateMe"
 
 let handleUserReg = (email, password, cpassword) => {
   return new Promise(async (resolve, reject) => {
@@ -188,7 +189,21 @@ let logout = (token) => {
   })
 }
 
+let meUpdate = (token, name, age, gender, address, gmail) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+
+      let data = await updateMe(token, name, age, gender, address, gmail)
+
+      resolve(data)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 module.exports = {
+  meUpdate: meUpdate,
   handleUserLogin: handleUserLogin,
   handleUserReg: handleUserReg,
   logout: logout,
