@@ -48,9 +48,7 @@ let admin_verifican = async (req, res, next) => {
 }
 
 let admin_checkout = async (req, res, next) => {
-  let token = req.body.token
 
-  let user = await verify()
   next()
 }
 
