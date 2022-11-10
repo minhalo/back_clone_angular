@@ -75,15 +75,24 @@ let initWebRoutes = (app) => {
   router.post('/api/login', authenController.handleLogin);
   router.post('/api/searchGender', formController.searchGender);
   router.post('/api/searchAddress', formController.searchAddress);
+  router.post('/api/badge', productController.badge);
+  router.post('/api/cartme', productController.cartme);
+
 
   router.post('/api/addToCart', productController.addToCart);
   //Method PUT
   router.get('/api/logout', authenController.handleLogout);
 
+
+  router.delete('/api/deleteCart', productController.deleteCart);
+
+
   //drop test
 
   router.post('/api/dropTable', dbsController.dropTable);
   router.post('/api/createTable', dbsController.createTable);
+
+
 
   return app.use("/", router)
 }

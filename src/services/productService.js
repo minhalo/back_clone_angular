@@ -12,6 +12,9 @@ import getPage from "../dB_handle/getPage"
 import getProductByPageList from "../dB_handle/getProductByPageList"
 import detail from "../dB_handle/detail"
 import addToCart from "../dB_handle/addToCart"
+import badge from "../dB_handle/badge"
+import cartMe from "../dB_handle/cartMe"
+import deleteCart from "../dB_handle/deleteCart"
 
 let categoryCreate = (name) => {
   return new Promise(async (resolve, reject) => {
@@ -178,10 +181,6 @@ let getdetail = (id) => {
 let addCart = (userId, productId, total) => {
   return new Promise(async (resolve, reject) => {
     try {
-      // let data = {
-      //   errCode: 0,
-      //   errMessage: 'add successfully'
-      // }
       let data = await addToCart(userId, productId, total)
       resolve(data)
     } catch (error) {
@@ -190,9 +189,44 @@ let addCart = (userId, productId, total) => {
   })
 }
 
+let badges = (token) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let data = await badge(token)
+      resolve(data)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+let myCart = (UserId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let data = await cartMe(UserId)
+      resolve(data)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+let cartDelete = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let data = await deleteCart(id)
+      resolve(data)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
 
 
 module.exports = {
+  cartDelete: cartDelete,
+  myCart: myCart,
+  badges: badges,
   addCart: addCart,
   categoryCreate: categoryCreate,
   categoryGet: categoryGet,

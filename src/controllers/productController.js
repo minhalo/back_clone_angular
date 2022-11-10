@@ -217,7 +217,35 @@ let addToCart = async (req, res) => {
   }
 }
 
+let badge = async (req, res) => {
+  let authorization = req.body.authorization
+
+  let token = authorization.split(' ')[0]
+  let userData = await productService.badges(token)
+  return res.status(200).json(userData)
+
+}
+
+let cartme = async (req, res) => {
+  let authorization = req.body.authorization
+
+  let UserId = authorization.split(' ')[0]
+  let userData = await productService.myCart(UserId)
+  return res.status(200).json(userData)
+
+}
+
+let deleteCart = async (req, res) => {
+  let id = req.query.id
+  let userData = await productService.cartDelete(id)
+  return res.status(200).json(userData)
+
+}
+
 module.exports = {
+  deleteCart: deleteCart,
+  cartme: cartme,
+  badge: badge,
   addToCart: addToCart,
   createCategory: createCategory,
   getCategory: getCategory,
